@@ -20,23 +20,23 @@
         }
     };
 
-    window.fill = new window.ol.style.Fill({
+    fill = new ol.style.Fill({
         color: 'rgba(0,91,170, 0.4)'
     });
-    window.stroke = new window.ol.style.Stroke({
+    stroke = new ol.style.Stroke({
         color: '#000',
         width: 2
     });
 
-    window.styles = [
-        new window.ol.style.Style({
-            image: new window.ol.style.Circle({
-                fill: window.fill,
-                stroke: window.stroke,
+    styles = [
+        new ol.style.Style({
+            image: new ol.style.Circle({
+                fill: fill,
+                stroke: stroke,
                 radius: 5
             }),
-            fill: window.fill,
-            stroke: window.stroke
+            fill: fill,
+            stroke: stroke
         })
     ];
     document.querySelector('.navbar-brand').innerText = "Shape Tester";
