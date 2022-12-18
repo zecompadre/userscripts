@@ -39,7 +39,7 @@
             stroke: window.stroke
         })
     ];
-    document.querySelector('.navbar-brand').innerText = "Idealista Shape Test";
+    document.querySelector('.navbar-brand').innerText = "Shape Tester";
     document.querySelector('.navbar-nav').remove();
 
     document.querySelector('.btn-group-vertical').style.display = "none";
