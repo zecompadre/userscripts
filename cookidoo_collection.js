@@ -38,7 +38,9 @@
     button.onclick = function() {
 
         var allText = [];
-
+        
+        allText.push(window.location.href);
+        allText.push('');
         var title = document.querySelector('.collection-header__title');
         allText.push("Cookidoo®: Colecção \"" + title.innerText + "\"");
         allText.push('');
