@@ -3,6 +3,7 @@
     'use strict';
 
     var holder = document.querySelector(".l-tile");
+    holder.style.marginTop = "0";
 
     var button = document.createElement("span");
     button.classList.add('button');
