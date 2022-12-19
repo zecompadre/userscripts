@@ -17,6 +17,9 @@
     button.onclick = function() {
 
         var allText = [];
+        
+        allText.push(window.location.href);
+        allText.push('');
 
         var title = document.querySelector(".recipe-card__title");
         allText.push(title.innerText);
