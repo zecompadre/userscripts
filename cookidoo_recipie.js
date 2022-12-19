@@ -11,8 +11,8 @@
     button.style.textAlign = "center";
     button.style.marginBottom = "10px";
     button.style.width = "100%";
-    holder.insertBefore(button, holder.firstChild);
-    //button.appendBefore(holder);
+    
+    button.appendBefore(holder);
 
     button.onclick = function() {
 
