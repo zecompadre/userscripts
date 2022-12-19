@@ -23,7 +23,7 @@
 
     var holder = document.querySelector(".l-content.l-header-offset.collection-header > .g-wrapper");
 
-     document.querySelector(".l-content.l-header-offset").style.marginTop = "5.5rem";
+    document.querySelector(".l-header-offset").style.marginTop = "5.5rem";
 
     var button = document.createElement("span");
     button.classList.add('button');
