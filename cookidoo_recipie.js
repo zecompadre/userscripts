@@ -4,6 +4,8 @@
 
     var holder = document.querySelector(".l-tile");
     holder.style.marginTop = "0";
+    
+    document.querySelector(".l-header-offset-small").style.marginTop = "5.5rem";
 
     var button = document.createElement("span");
     button.classList.add('button');
