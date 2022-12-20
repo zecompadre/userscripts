@@ -29,44 +29,48 @@
         allText.push('');
 
         var ingredients = document.getElementById("ingredients");
-        var i_groups = ingredients.querySelectorAll("core-list-section h4");
-        allText.push('Ingredientes');
-        i_groups.forEach(h => {
-            allText.push('');
-            if(h.innerText !== '')
-            {
-                allText.push(h.innerText);
-            }
-            var g_ingredients = h.nextElementSibling;
-            g_ingredients.querySelectorAll('li').forEach(li => {
-                allText.push(li.innerText);
+        if(ingredients) {
+            var groups = ingredients.querySelectorAll("core-list-section h4");
+            allText.push('Ingredientes');
+            groups.forEach(h => {
+                allText.push('');
+                if(h.innerText !== '')
+                {
+                    allText.push(h.innerText);
+                }
+                var inner = h.nextElementSibling;
+                inner.querySelectorAll('li').forEach(li => {
+                    allText.push(li.innerText);
+                });
             });
-        });
+        }
 
         var preparation = document.getElementById("preparation-steps");
-        var p_groups = preparation.querySelectorAll("core-list-section h4,core-list-section h3");
-        allText.push('');
-        allText.push('Preparação');
-        p_groups.forEach(h=> {
+        if(preparation) {
+            var groups = preparation.querySelectorAll("core-list-section h4,core-list-section h3");
             allText.push('');
-            if(h.innerText !== 'Preparação')
-            {
-                allText.push(h.innerText);
-            }
-            var g_ingredients =h.nextElementSibling;
-            g_ingredients.querySelectorAll('li').forEach(li => {
-                allText.push(decodeURIComponent(li.innerText));
+            allText.push('Preparação');
+            groups.forEach(h=> {
+                allText.push('');
+                if(h.innerText !== 'Preparação')
+                {
+                    allText.push(h.innerText);
+                }
+                var inner =h.nextElementSibling;
+                inner.querySelectorAll('li').forEach(li => {
+                    allText.push(decodeURIComponent(li.innerText));
+                });
             });
-        });
-
+        }
+        
         var tips = document.getElementById("hints-and-tricks");
         if(tips){
-            var t_groups = tips.querySelectorAll("h3");
+            var groups = tips.querySelectorAll("h3");
             allText.push('');
-            t_groups.forEach(h => {
+            groups.forEach(h => {
                 allText.push(h.innerText);
-                var g_ingredients = h.nextElementSibling;
-                g_ingredients.querySelectorAll('li').forEach(li => {
+                var inner = h.nextElementSibling;
+                inner.querySelectorAll('li').forEach(li => {
                     allText.push(decodeURIComponent(li.innerText));
                 });
             });
@@ -74,12 +78,12 @@
         
         var collections = document.getElementById("in-collections");
         if(collections){
-            var t_groups = collections.querySelectorAll("h3");
+            var groups = collections.querySelectorAll("h3");
             allText.push('');
-            t_groups.forEach(h => {
+            groups.forEach(h => {
                 allText.push(h.innerText);
-                var g_ingredients = h.nextElementSibling;
-                g_ingredients.querySelectorAll('li').forEach(li => {
+                var inner = h.nextElementSibling;
+                inner.querySelectorAll('li').forEach(li => {
                     allText.push(decodeURIComponent(li.innerText));
                 });
             });
