@@ -71,6 +71,20 @@
                 });
             });
         }
+        
+        var collections = document.getElementById("in-collections");
+        if(collections){
+            var t_groups = tips.querySelectorAll("h3");
+            allText.push('');
+            t_groups.forEach(h => {
+                allText.push(h.innerText);
+                var g_ingredients = h.nextElementSibling;
+                g_ingredients.querySelectorAll('li').forEach(li => {
+                    allText.push(decodeURIComponent(li.innerText));
+                });
+            });
+        }
+        
 
         console.clear();
 
