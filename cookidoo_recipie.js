@@ -84,7 +84,10 @@
                 allText.push(h.innerText);
                 var inner = h.nextElementSibling;
                 inner.querySelectorAll('li').forEach(li => {
-                    allText.push(decodeURIComponent(li.innerText));
+                    //Cookidoo® Itália: Colecção "Dolci americani"
+                    var name = li.querySelector("div");
+                    var country = name.querySelector("span");
+                    allText.push(country.innerText);
                 });
             });
         }
