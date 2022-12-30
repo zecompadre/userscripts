@@ -14,7 +14,9 @@
     button.innerText = 'Copiar';
     button.style.textAlign = "center";
     button.style.marginBottom = "10px";
-    button.style.width = "100%";
+    //button.style.width = "100%";
+    button.style.position = "fixed";
+    button.style.zIndex  = "9999";
 
     button.appendBefore(holder);
 
