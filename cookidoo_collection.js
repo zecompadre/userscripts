@@ -15,7 +15,7 @@
         button.classList.add('button--primary');
         li.appendChild(button);
 
-        a.onclick = function() {
+        button.onclick = function() {
 
             var allText = [];
 
