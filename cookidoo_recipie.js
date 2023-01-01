@@ -7,6 +7,7 @@
     li.classList.add('core-nav__item');
     li.classList.add('authenticated-only');
     li.appendBefore(holder);
+    holder.insertBefore(li, holder.firstChild);
     
     var a = document.createElement("a");
     
@@ -93,9 +94,7 @@
             });
         }
 
-
         console.clear();
-
         console.log(allText.join('\n'));
 
         copyToCipboard(allText.join('\n'));
