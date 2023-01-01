@@ -3,24 +3,20 @@
 (function() {
     'use strict';
 
-    var holder = document.querySelector(".l-tile");
-    holder.style.marginTop = "0";
+    var holder = document.querySelector(".core-nav__container .core-nav__main-links");
 
-    document.querySelector(".l-header-offset-small").style.marginTop = "5.5rem";
+    var li = document.createElement("li");
+    li.classList.add('core-nav__item');
+    li.classList.add('authenticated-only');
+    li.appendBefore(holder);
+    
+    var a = document.createElement("a");
+    
+    a.innerText = 'Copiar';
+    a.classList.add('core-nav__link');
+    a.appendTo(a);
 
-    var button = document.createElement("span");
-    button.classList.add('button');
-    button.classList.add('button--primary');
-    button.innerText = 'Copiar';
-    button.style.textAlign = "center";
-    button.style.marginBottom = "10px";
-    //button.style.width = "100%";
-    button.style.position = "fixed";
-    button.style.zIndex  = "9999";
-
-    button.appendBefore(holder);
-
-    button.onclick = function() {
+    a.onclick = function() {
 
         var allText = [];
 
