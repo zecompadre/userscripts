@@ -1,105 +1,106 @@
 (function() {
     'use strict';
 
-    var holder = document.querySelector(".core-nav__container .core-nav__main-links");
+    var holder = document.querySelector(".core-nav__container .core-nav__main-links.authenticated-only");
+    if(holder)
+    {
+        var li = document.createElement("li");
+        li.classList.add('core-nav__item');
+        li.appendBefore(holder);
+        holder.insertBefore(li, holder.firstChild);
 
-    var li = document.createElement("li");
-    li.classList.add('core-nav__item');
-    li.classList.add('authenticated-only');
-    li.appendBefore(holder);
-    holder.insertBefore(li, holder.firstChild);
-    
-    var a = document.createElement("a");
-    
-    a.innerText = 'Copiar';
-    a.classList.add('core-nav__link');
-    li.appendChild(a);
+        var a = document.createElement("a");
 
-    a.onclick = function() {
+        a.innerText = 'Copiar';
+        a.classList.add('core-nav__link');
+        a.setAttribute("href", "#");
+        li.appendChild(a);
 
-        var allText = [];
+        a.onclick = function() {
 
-        allText.push(window.location.href);
-        allText.push('');
+            var allText = [];
 
-        var title = document.querySelector(".recipe-card__title");
-        allText.push(title.innerText);
-        allText.push('');
+            allText.push(window.location.href);
+            allText.push('');
 
-        var groups = [];
+            var title = document.querySelector(".recipe-card__title");
+            allText.push(title.innerText);
+            allText.push('');
 
-        var ingredients = document.getElementById("ingredients");
-        if(ingredients) {
-            groups = ingredients.querySelectorAll("core-list-section h4");
-            allText.push('Ingredientes');
-            groups.forEach(h => {
+            var groups = [];
+
+            var ingredients = document.getElementById("ingredients");
+            if(ingredients) {
+                groups = ingredients.querySelectorAll("core-list-section h4");
+                allText.push('Ingredientes');
+                groups.forEach(h => {
+                    allText.push('');
+                    if(h.innerText !== '')
+                    {
+                        allText.push(h.innerText);
+                    }
+                    var inner = h.nextElementSibling;
+                    inner.querySelectorAll('li').forEach(li => {
+                        allText.push(li.innerText);
+                    });
+                });
+            }
+
+            var preparation = document.getElementById("preparation-steps");
+            if(preparation) {
+                groups = preparation.querySelectorAll("core-list-section h4,core-list-section h3");
                 allText.push('');
-                if(h.innerText !== '')
-                {
-                    allText.push(h.innerText);
-                }
-                var inner = h.nextElementSibling;
-                inner.querySelectorAll('li').forEach(li => {
-                    allText.push(li.innerText);
+                allText.push('Preparação');
+                groups.forEach(h=> {
+                    allText.push('');
+                    if(h.innerText !== 'Preparação')
+                    {
+                        allText.push(h.innerText);
+                    }
+                    var inner =h.nextElementSibling;
+                    inner.querySelectorAll('li').forEach(li => {
+                        allText.push(li.innerText);
+                    });
                 });
-            });
-        }
+            }
 
-        var preparation = document.getElementById("preparation-steps");
-        if(preparation) {
-            groups = preparation.querySelectorAll("core-list-section h4,core-list-section h3");
-            allText.push('');
-            allText.push('Preparação');
-            groups.forEach(h=> {
+            var tips = document.getElementById("hints-and-tricks");
+            if(tips){
+                groups = tips.querySelectorAll("h3");
                 allText.push('');
-                if(h.innerText !== 'Preparação')
-                {
+                groups.forEach(h => {
                     allText.push(h.innerText);
-                }
-                var inner =h.nextElementSibling;
-                inner.querySelectorAll('li').forEach(li => {
-                    allText.push(li.innerText);
+                    var inner = h.nextElementSibling;
+                    inner.querySelectorAll('li').forEach(li => {
+                        allText.push(li.innerText);
+                    });
                 });
-            });
-        }
+            }
 
-        var tips = document.getElementById("hints-and-tricks");
-        if(tips){
-            groups = tips.querySelectorAll("h3");
-            allText.push('');
-            groups.forEach(h => {
-                allText.push(h.innerText);
-                var inner = h.nextElementSibling;
-                inner.querySelectorAll('li').forEach(li => {
-                    allText.push(li.innerText);
+            var collections = document.getElementById("in-collections");
+            if(collections){
+                groups = collections.querySelectorAll("h3");
+                allText.push('');
+                groups.forEach(h => {
+                    allText.push(h.innerText);
+                    var inner = h.nextElementSibling;
+                    inner.querySelectorAll('li').forEach(li => {
+                        //Cookidoo® Itália: Colecção "Dolci americani"
+                        var name = li.querySelector("div");
+                        var country = name.querySelector("span");
+                        var countryName = country.innerText.split(",")[1].trim() ;
+                        country.remove();
+                        allText.push("Cookidoo® " + countryName + ": Colecção \"" +name.innerText+ "\"");
+                    });
                 });
-            });
-        }
+            }
 
-        var collections = document.getElementById("in-collections");
-        if(collections){
-            groups = collections.querySelectorAll("h3");
-            allText.push('');
-            groups.forEach(h => {
-                allText.push(h.innerText);
-                var inner = h.nextElementSibling;
-                inner.querySelectorAll('li').forEach(li => {
-                    //Cookidoo® Itália: Colecção "Dolci americani"
-                    var name = li.querySelector("div");
-                    var country = name.querySelector("span");
-                    var countryName = country.innerText.split(",")[1].trim() ;
-                    country.remove();
-                    allText.push("Cookidoo® " + countryName + ": Colecção \"" +name.innerText+ "\"");
-                });
-            });
-        }
+            console.clear();
+            console.log(allText.join('\n'));
 
-        console.clear();
-        console.log(allText.join('\n'));
+            copyToCipboard(allText.join('\n'));
 
-        copyToCipboard(allText.join('\n'));
-
-        return false;
-    };
-
+            return false;
+        };
+    }
 })();
