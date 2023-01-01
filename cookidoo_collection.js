@@ -12,7 +12,7 @@
 
         var button = document.createElement("button");
         button.innerText = 'Copiar';
-        buttonclassList.add('button--primary');
+        button.classList.add('button--primary');
         li.appendChild(button);
 
         a.onclick = function() {
