@@ -14,7 +14,7 @@
     
     a.innerText = 'Copiar';
     a.classList.add('core-nav__link');
-    a.appendTo(a);
+    li.appendChild(a);
 
     a.onclick = function() {
 
