@@ -9,12 +9,10 @@
         li.appendBefore(holder);
         holder.insertBefore(li, holder.firstChild);
 
-        var a = document.createElement("a");
-
-        a.innerText = 'Copiar';
-        a.classList.add('core-nav__link');
-        a.setAttribute("href", "#");
-        li.appendChild(a);
+        var button = document.createElement("button");
+        button.innerText = 'Copiar';
+        buttonclassList.add('button--primary');
+        li.appendChild(button);
 
         a.onclick = function() {
 
