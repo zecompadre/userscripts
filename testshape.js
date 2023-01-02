@@ -29,7 +29,7 @@
         
         $("#map").height(map);
         var buttons = $(".btn-group.btn-group-md").outerHeight();
-        var text = doc - (bar + map + buttons + 20);
+        var text = doc - (bar + map + buttons + 30);
         $("#wktStringTextArea").height(text);
     }
     window.onresize = resizeText;
