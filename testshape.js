@@ -19,6 +19,19 @@
             console.error("pasteWKT:", error.message);
         }
     };
+    
+    /* globals $ */
+    async function resizeText() {
+        var doc = $(document).height();
+        var bar = $(".navbar").outerHeight();
+        $("#map").height((doc / 5) * 3);
+        var map = $("#map").outerHeight();
+        var buttons = $(".btn-group.btn-group-md").outerHeight();
+        var text = doc - (bar + map + buttons + 20);
+        $("#wktStringTextArea").css("height", text);
+    }
+    window.onresize = resizeText;
+    resizeText();
 
     fill = new ol.style.Fill({
         color: 'rgba(0,91,170, 0.4)'
