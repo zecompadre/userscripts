@@ -11,8 +11,7 @@
             if(text.indexOf("POLYGON") !== -1)
             {
                 document.getElementById("wktStringTextArea").value = text;
-                var btn = document.querySelector('.btn-group.btn-group-md button:last-of-type');
-                btn.click();
+                plotWKT();
             }
         }
         catch (error) {
