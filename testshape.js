@@ -27,7 +27,7 @@
         $("#map").height(map);
         var buttons = $(".btn-group.btn-group-md").outerHeight();
         var text = doc - (bar + map + buttons + 20);
-        $("#wktStringTextArea").css("height", text);
+        $("#wktStringTextArea").height(text);
     }
     window.onresize = resizeText;
     resizeText();
