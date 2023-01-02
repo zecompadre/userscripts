@@ -23,11 +23,12 @@
     function resizeText() {
         var doc = $(document).height();
         var bar = $(".navbar").outerHeight();
-        var map = (doc / 5) * 3;
+        var map = parseInt((doc / 5) * 3);
         
         console.log(map);
         
-        $("#map,.ol-unselectable").height(map);
+        $("#map").height(map);
+        $(".ol-unselectable").attr("height", map);
         
         var buttons = $(".btn-group.btn-group-md").outerHeight();
         var text = doc - (bar + map + buttons + 30);
