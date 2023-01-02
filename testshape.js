@@ -23,13 +23,7 @@
     function resizeText() {
         var doc = $(document).height();
         var bar = $(".navbar").outerHeight();
-        var map = parseInt((doc / 5) * 3);
-        
-        console.log(map);
-        
-        $("#map").css("height", map + "px !important");
-        $(".ol-unselectable").attr("height", map);
-        
+        var map = $("#map").outerHeight();
         var buttons = $(".btn-group.btn-group-md").outerHeight();
         var text = doc - (bar + map + buttons + 30);
         $("#wktStringTextArea").height(text);
