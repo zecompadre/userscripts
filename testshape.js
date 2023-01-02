@@ -27,7 +27,8 @@
         
         console.log(map);
         
-        $("#map").height(map);
+        $("#map,.ol-unselectable").height(map);
+        
         var buttons = $(".btn-group.btn-group-md").outerHeight();
         var text = doc - (bar + map + buttons + 30);
         $("#wktStringTextArea").height(text);
