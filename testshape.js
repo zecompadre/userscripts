@@ -27,7 +27,7 @@
         
         console.log(map);
         
-        $("#map").height(map);
+        $("#map").css("height", map + "px !important");
         $(".ol-unselectable").attr("height", map);
         
         var buttons = $(".btn-group.btn-group-md").outerHeight();
