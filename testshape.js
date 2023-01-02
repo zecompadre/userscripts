@@ -1,6 +1,15 @@
 
 (function() {
     'use strict';
+    
+    /* globals $ */
+    var doc = $(document).height();
+    var bar = $(".navbar").outerHeight();
+    var map = $("#map").outerHeight();
+    var buttons = $(".btn-group.btn-group-md").outerHeight();
+    var text = doc - (bar + map + buttons + 20);
+    $("#wktStringTextArea").css("height", text);
+    
     async function pasteImage() {
         try {
             const permission = await navigator.permissions.query({ name: 'clipboard-read' });
