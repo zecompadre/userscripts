@@ -51,7 +51,6 @@
     ];
     document.querySelector('.navbar-brand').innerText = "Shape Tester";
     document.querySelector('.navbar-nav').remove();
-
     document.querySelector('.btn-group-vertical').style.display = "none";
     document.getElementById("wktStringTextArea").style.fontSize = "0.75rem";
     
