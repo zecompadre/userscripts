@@ -24,6 +24,9 @@
         var doc = $(document).height();
         var bar = $(".navbar").outerHeight();
         var map = (doc / 5) * 3;
+        
+        console.log(map);
+        
         $("#map").height(map);
         var buttons = $(".btn-group.btn-group-md").outerHeight();
         var text = doc - (bar + map + buttons + 20);
