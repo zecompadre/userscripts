@@ -1,16 +1,7 @@
 
 (function() {
     'use strict';
-    
-    /* globals $ */
-    var doc = $(document).height();
-    var bar = $(".navbar").outerHeight();
-    var map = $("#map").outerHeight();
-    var buttons = $(".btn-group.btn-group-md").outerHeight();
-    var text = doc - (bar + map + buttons + 20);
-    $("#wktStringTextArea").css("height", text);
-    
-    async function pasteImage() {
+    async function pasteWKT() {
         try {
             const permission = await navigator.permissions.query({ name: 'clipboard-read' });
             if (permission.state === 'denied') {
@@ -25,7 +16,7 @@
             }
         }
         catch (error) {
-            console.error(error.message);
+            console.error("pasteWKT:", error.message);
         }
     };
 
@@ -53,5 +44,7 @@
 
     document.querySelector('.btn-group-vertical').style.display = "none";
     document.getElementById("wktStringTextArea").style.fontSize = "0.75rem";
-    pasteImage();
+    
+    pasteWKT();
+    
 })();
