@@ -20,11 +20,11 @@
     };
     
     /* globals $ */
-    async function resizeText() {
+    function resizeText() {
         var doc = $(document).height();
         var bar = $(".navbar").outerHeight();
-        $("#map").height((doc / 5) * 3);
-        var map = $("#map").outerHeight();
+        var map = (doc / 5) * 3;
+        $("#map").height(map);
         var buttons = $(".btn-group.btn-group-md").outerHeight();
         var text = doc - (bar + map + buttons + 20);
         $("#wktStringTextArea").css("height", text);
