@@ -87,7 +87,7 @@
             msg.classList.add("warning");
             msg.style.width = "100%";
             msg.style.textAlign = "center";
-            msg.innerHTML = "SHAPE "+titleCase(text)+", copiada para o clipboard<br />Verificar -> <a href='https://zecompadre.github.io/openstreetmap-wkt-playground/' target='_shapetest'>Idealista Shape Test!</a>";
+            msg.innerHTML = "SHAPE "+titleCase(text)+", copiada para o clipboard<br />Verificar -> <a href='https://zecompadre.github.io/wkt-playground/' target='_shapetest'> Shape Test!</a>";
 
             var close = document.createElement("a");
             close.classList.add("icon-close");
