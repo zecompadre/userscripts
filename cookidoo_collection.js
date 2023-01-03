@@ -1,9 +1,7 @@
-(function() {
+(function () {
     'use strict';
-
     var holder = document.querySelector(".core-nav__container .core-nav__main-links.authenticated-only");
-    if(holder)
-    {
+    if (holder) {
         var li = document.createElement("li");
         li.classList.add('core-nav__item');
         li.appendBefore(holder);
@@ -14,7 +12,7 @@
         button.classList.add('button--primary');
         li.appendChild(button);
 
-        button.onclick = function() {
+        button.onclick = function () {
 
             var allText = [];
 
@@ -34,7 +32,7 @@
                 allText.push(li.innerText);
             });
             allText.push('');
-            allText.push("[cookidoo url='"+window.location.href+"']");
+            allText.push("[cookidoo url='" + window.location.href + "']");
 
             console.clear();
 

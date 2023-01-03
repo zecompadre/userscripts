@@ -1,4 +1,4 @@
-(function() {
+(function () {
     'use strict';
     async function pasteWKT() {
         try {
@@ -7,8 +7,7 @@
                 throw new Error('Not allowed to read clipboard.');
             }
             const text = await navigator.clipboard.readText();
-            if(text.indexOf("POLYGON") !== -1)
-            {
+            if (text.indexOf("POLYGON") !== -1) {
                 document.getElementById("wktStringTextArea").value = text;
                 plotWKT();
             }
@@ -17,7 +16,7 @@
             console.error("pasteWKT:", error.message);
         }
     };
-    
+
     /* globals $ */
     function resizeText() {
         var doc = $(document).height();
@@ -53,7 +52,7 @@
     document.querySelector('.navbar-nav').remove();
     document.querySelector('.btn-group-vertical').style.display = "none";
     document.getElementById("wktStringTextArea").style.fontSize = "0.75rem";
-    
+
     pasteWKT();
-    
+
 })();
