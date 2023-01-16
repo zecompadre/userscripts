@@ -1,7 +1,7 @@
 (function () {
 	'use strict';
 
-	var holder = jQuery("h1.post-title.entry-title");
+	var holder = jQuery(".copy-post-url");
 
 	var button = jQuery('span');
 	button.append('<i class="fa fa-clipboard"></i> Partilhar');
@@ -20,5 +20,5 @@
 
 		return false;
 	});
-	holder.append(button);
+	holder.after(button);
 })();
