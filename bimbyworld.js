@@ -3,8 +3,8 @@
 
 	var holder = jQuery(".copy-post-url");
 
-	var button = jQuery('<span></span>');
-	button.append('<i class="fa fa-share"></i> Partilhar');
+	var button = jQuery('<span class="copy-post-url"></span>');
+	button.append('<span class="copy-post-url-button"><i class="fa fa-share"></i> Partilhar</span>');
 	holder.after(button);
 
 	button.on("onclick", function () {
