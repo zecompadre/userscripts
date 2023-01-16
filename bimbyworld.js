@@ -20,5 +20,5 @@
 
 		return false;
 	});
-	holder.after(button);
+	holder.insertAfter(button);
 })();
