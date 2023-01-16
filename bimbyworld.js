@@ -12,7 +12,7 @@
 		var socialtocopy = jQuery('#h_socialtocopy').val().replaceAll(/\[br\]/ig, '\n');
 		var link = jQuery('link[rel="canonical"').attr("href");
 
-		var result = title + "\nVeja aqui: " + link + "\n" + socialtocopy + "\nVeja aqui: " + link;
+		var result = title + "\nVeja aqui:" + link + "\n" + socialtocopy + "\nVeja aqui: " + link;
 
 		console.clear();
 		console.log(result);
