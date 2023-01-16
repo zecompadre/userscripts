@@ -1,12 +1,12 @@
 (function () {
 	'use strict';
 
-	var holder = jQuery(".post-title.entry-title").get(0);
+	var holder = jQuery("h1.post-title.entry-title");
 
 	var button = document.createElement("button");
 	button.innerText = 'Partilhar';
 	button.classList.add('button--primary');
-	holder.appendChild(button);
+	holder.append(button);
 
 	button.onclick = function () {
 
