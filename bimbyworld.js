@@ -3,9 +3,8 @@
 
 	var holder = jQuery("h1.post-title.entry-title");
 
-	var button = jQuery('<span class="simplefavorite-button  shareit-post-url-button" style="box-shadow:none;-webkit-box-shadow:none;-moz-box-shadow:none;"><i class="fas fa-heart" style="color: rgb(0, 0, 0);"></i> Partilhar</span>');
-	holder.append(button);
-
+	var button = jQuery('span');
+	button.append('<i class="fa fa-clipboard"></i> Partilhar');
 	button.on("onclick", function () {
 
 		var title = document.querySelector("meta[property='og:title']").getAttribute("content");
@@ -21,5 +20,5 @@
 
 		return false;
 	});
-
+	holder.append(button);
 })();
