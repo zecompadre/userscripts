@@ -5,9 +5,11 @@
 
 	var button = jQuery('span');
 	button.append('<i class="fa fa-share"></i> Partilhar');
+	holder.after(button);
+
 	button.on("onclick", function () {
 
-		var title = document.querySelector("meta[property='og:title']").getAttribute("content");
+		var title = jQuery("meta[property='og:title']").attr("content");
 		var socialtocopy = jQuery('#h_socialtocopy').val().replaceAll(/\[br\]/ig, '\n');
 		var link = jQuery('link[rel="canonical"').attr("href");
 
@@ -16,10 +18,9 @@
 		console.clear();
 		console.log(result);
 
-
 		copyToCipboard(result);
 
 		return false;
 	});
-	button.insertAfter(holder);
+
 })();
