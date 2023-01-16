@@ -1,7 +1,7 @@
 (function () {
 	'use strict';
 
-	var holder = jQuery(".post-title.entry-title");
+	var holder = jQuery(".post-title.entry-title").get(0);
 
 	var button = document.createElement("button");
 	button.innerText = 'Copiar';
