@@ -16,6 +16,7 @@
 		console.clear();
 		console.log(result);
 
+
 		copyToCipboard(result);
 
 		return false;
