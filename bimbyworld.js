@@ -3,12 +3,10 @@
 
 	var holder = jQuery("h1.post-title.entry-title");
 
-	var button = document.createElement("button");
-	button.innerText = 'Partilhar';
-	button.classList.add('button--primary');
+	var button = jQuery('<span class="simplefavorite-button share-post-url-button" style="box-shadow:none;-webkit-box-shadow:none;-moz-box-shadow:none;"><i class="fas fa-heart" style="color: rgb(0, 0, 0);"></i> Partilhar</span>');
 	holder.append(button);
 
-	button.onclick = function () {
+	button.on("onclick", function () {
 
 		var title = document.querySelector("meta[property='og:title']").getAttribute("content");
 		var socialtocopy = jQuery('#h_socialtocopy').val().replaceAll(/\[br\]/ig, '\n');
@@ -22,6 +20,6 @@
 		copyToCipboard(result);
 
 		return false;
-	};
+	});
 
 })();
