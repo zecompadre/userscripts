@@ -3,11 +3,11 @@
 
 	var holder = jQuery(".copy-post-url");
 
-	var button = jQuery('<span class="copy-post-url"></span>');
+	var button = jQuery('<span class="copy-post-url" style="margin-left: 5px;"></span>');
 	button.append('<span class="copy-post-url-button"><i class="fa fa-share"></i> Partilhar</span>');
 	holder.after(button);
 
-	button.on("onclick", function () {
+	button.on("click", function () {
 
 		var title = jQuery("meta[property='og:title']").attr("content");
 		var socialtocopy = jQuery('#h_socialtocopy').val().replaceAll(/\[br\]/ig, '\n');
