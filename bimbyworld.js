@@ -3,7 +3,7 @@
 
 	var holder = jQuery(".copy-post-url");
 
-	var button = jQuery('span');
+	var button = jQuery('<span></span>');
 	button.append('<i class="fa fa-share"></i> Partilhar');
 	holder.after(button);
 
