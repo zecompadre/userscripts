@@ -4,7 +4,7 @@
 	var holder = jQuery(".post-title.entry-title").get(0);
 
 	var button = document.createElement("button");
-	button.innerText = 'Copiar';
+	button.innerText = 'Partilhar';
 	button.classList.add('button--primary');
 	holder.appendChild(button);
 
@@ -20,6 +20,8 @@
 		console.log(result);
 
 		copyToCipboard(result);
+
+		return false;
 	};
 
 })();
