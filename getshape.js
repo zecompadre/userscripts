@@ -28,8 +28,8 @@
             var data = [];
             var shapeType = "POLYGON((###))";
             window.DrawManager.getCollection().forEach(col => {
-                var polygons = col.latLngs.cd.reduce((x, c, v) => {
-                    var data = c.cd.reduce((k, b, u) => {
+                var polygons = col.latLngs.getArray().reduce((x, c, v) => {
+                    var data = c.getArray().reduce((k, b, u) => {
                         k.push(b.lng() + " " + b.lat());
                         return k;
                     }, []);
