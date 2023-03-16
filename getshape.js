@@ -1,6 +1,6 @@
 (function () {
     window.addEventListener('load', function () {
-        //setTimeout(function() {
+        setTimeout(function() {
 
         var closeMsg = function (e) {
             var msg = document.getElementById("map-shape-message");
@@ -107,6 +107,6 @@
             return false;
         };
 
-        //}, 3000);
+        }, 3000);
     }, false);
 })();
