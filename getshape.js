@@ -39,6 +39,17 @@
 
                 data.push(polygons.join(","));
             });
+            
+            var newData = [];
+            if(data.lenght > 0)
+            {
+                data.forEach(pol => {
+                    var tmp = pol;
+                    tmp.push(pol[0]):
+                    newData.push(tmp);
+                });
+                data = newData;
+            }
 
             if (data.length > 1) {
                 shapeType = "MULTIPOLYGON(((###)))";
