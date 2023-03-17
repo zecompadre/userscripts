@@ -45,7 +45,7 @@
             {
                 data.forEach(pol => {
                     var tmp = pol;
-                    tmp.push(pol[0]):
+                    tmp.push(pol[0]);
                     newData.push(tmp);
                 });
                 data = newData;
