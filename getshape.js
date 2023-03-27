@@ -1,10 +1,7 @@
-
-
 (function () {
    
     window.addEventListener('load', function () {
         //setTimeout(function() {
-
         var closeMsg = function (e) {
             var msg = document.getElementById("map-shape-message");
             if (msg) {
