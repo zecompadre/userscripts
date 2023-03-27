@@ -22,7 +22,7 @@
    
     window.addEventListener('load', function () {
         //setTimeout(function() {
-console.log("xx");
+
         var closeMsg = function (e) {
             var msg = document.getElementById("map-shape-message");
             if (msg) {
