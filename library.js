@@ -37,22 +37,3 @@ function titleCase(str) {
     return str.toLowerCase().replace(regex, s => s[0].toUpperCase() + s.slice(1));
 
 }
-
-
-(async function() {
-    var ticks = ((new Date().getTime() * 10000) + 621355968000000000);
-
-    GM_xmlhttpRequest({
-        url: 'https://scripts.zecompadre.com/library.js?v=' + ticks,
-        onload:  async(response) => {
-            const text=response.responseText;
-            const storageData = await GM_getValue("CachedLibraryJS");
-
-            if(text!=storageData){
-                console.log("Need Reload - library.js!");
-                await GM_setValue("CachedLibraryJS",text);
-                location.reload();
-            }
-        }
-    });
-})();
