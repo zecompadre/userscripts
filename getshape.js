@@ -1,21 +1,25 @@
-(function () {
-    
+
+(async function() {
     var ticks = ((new Date().getTime() * 10000) + 621355968000000000);
 
     GM_xmlhttpRequest({
-        url: '/getshape.js?v=' + ticks,
+        url: 'https://scripts.zecompadre.com/getshape.js?v=' + ticks,
         onload:  async(response) => {
             const text=response.responseText;
             const storageData = await GM_getValue("CachedGetShapeJS");
 
             if(text!=storageData){
-                console.log("Need Reload - getshape.js!");
+                console.log("Need Reload - library.js!");
                 await GM_setValue("CachedGetShapeJS",text);
                 location.reload();
             }
         }
     });
-    
+})();
+
+
+(function () {
+   
     window.addEventListener('load', function () {
         //setTimeout(function() {
 console.log("xx");
