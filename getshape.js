@@ -35,6 +35,7 @@
 					}, []);
 					console.log(data[0], data[data.length - 1]);
 					if (data[0] !== data[data.length - 1]) {
+						console.log("must close");
 						data.push(data[0]);
 					}
 					x.push(data);
