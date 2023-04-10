@@ -27,25 +27,28 @@
 
 			var data = [];
 			var shapeType = "POLYGON((###))";
-			window.DrawManager.getCollection().forEach(col => {
-				var polygons = col.latLngs.getArray().reduce((x, c, v) => {
-					var data = c.getArray().reduce((k, b, u) => {
-						k.push(b.lng() + " " + b.lat());
-						return k;
+			window.DrawManager.getCollection().forEach(collection => {
+				var polygons = collection.latLngs.getArray().reduce((accumulator_out, currentvalue_out, v) => {
+					var data = currentvalue_out.getArray().reduce((accumulator_in, currentvalue_in, u) => {
+						accumulator_in.push(currentvalue_in.lng() + " " + currentvalue_in.lat());
+						return accumulator_in;
 					}, []);
-					console.log(data[0], data[data.length - 1]);
+
 					if (data[0] !== data[data.length - 1]) {
 						console.log("must close");
 						data.push(data[0]);
 					}
-					x.push(data);
-					return x;
+					else { console.log("already closed"); }
+
+					accumulator_out.push(data);
+
+					return accumulator_out;
 				}, []);
 
-				console.dir(polygons);
-				polygons.forEach(p => {
-					data.push(p.join(","));
+				polygons.forEach(polygon => {
+					data.push(polygon.join(","));
 				});
+
 			});
 
 			if (data.length > 1) {
