@@ -38,6 +38,8 @@
 					return x;
 				}, []);
 
+				console.dir(polygons);
+
 				data.push(polygons.join(","));
 			});
 
