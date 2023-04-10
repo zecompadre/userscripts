@@ -33,7 +33,7 @@
 						k.push(b.lng() + " " + b.lat());
 						return k;
 					}, []);
-					data.push(data[0]);
+					//data.push(data[0]);
 					x.push(data);
 					return x;
 				}, []);
