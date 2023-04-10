@@ -39,8 +39,9 @@
 				}, []);
 
 				console.dir(polygons);
-
-				data.push(polygons.join(","));
+				polygons.forEach(p => {
+					data.push(p.join(","));
+				});
 			});
 
 			if (data.length > 1) {
