@@ -33,7 +33,10 @@
 						k.push(b.lng() + " " + b.lat());
 						return k;
 					}, []);
-					//data.push(data[0]);
+					console.log(data[0], data[data.length - 1]);
+					if (data[0] !== data[data.length - 1]) {
+						data.push(data[0]);
+					}
 					x.push(data);
 					return x;
 				}, []);
