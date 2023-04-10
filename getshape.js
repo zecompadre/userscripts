@@ -1,112 +1,114 @@
 (function () {
-    window.addEventListener('load', function () {
-        //setTimeout(function() {
+	window.addEventListener('load', function () {
+		//setTimeout(function() {
 
-        var closeMsg = function (e) {
-            var msg = document.getElementById("map-shape-message");
-            if (msg) {
-                msg.remove();
-            }
-            msg = document.getElementById("map-undo-message");
-            if (msg) {
-                msg.remove();
-            }
-            return false;
-        };
+		var closeMsg = function (e) {
+			var msg = document.getElementById("map-shape-message");
+			if (msg) {
+				msg.remove();
+			}
+			msg = document.getElementById("map-undo-message");
+			if (msg) {
+				msg.remove();
+			}
+			return false;
+		};
 
-        var filter = document.getElementById("listing-filter");
-        var button = document.createElement("li");
-        button.innerHTML = '<a id="listing-shape-button" href="/" title="Copiar Shape" class="btn regular smaller icon-draw"> Copiar Shape</a>';
-        filter.insertBefore(button, filter.firstChild);
+		var filter = document.getElementById("listing-filter");
+		var button = document.createElement("li");
+		button.innerHTML = '<a id="listing-shape-button" href="/" title="Copiar Shape" class="btn regular smaller icon-draw"> Copiar Shape</a>';
+		filter.insertBefore(button, filter.firstChild);
 
-        addStyle('.btn.regular.smaller.icon-draw::before { color: white; }\n.btn.regular.smaller.icon-draw{ background-color: #005baa; color: white; box-shadow: none;}');
+		addStyle('.btn.regular.smaller.icon-draw::before { color: white; }\n.btn.regular.smaller.icon-draw{ background-color: #005baa; color: white; box-shadow: none;}');
 
-        button.onclick = function (e) {
+		button.onclick = function (e) {
 
-            closeMsg();
+			closeMsg();
 
-            var data = [];
-            var shapeType = "POLYGON((###))";
-            window.DrawManager.getCollection().forEach(col => {
-                var polygons = col.latLngs.cd.reduce((x, c, v) => {
-                    var data = c.cd.reduce((k, b, u) => {
-                        k.push(b.lng() + " " + b.lat());
-                        return k;
-                    }, []);
-                    x.push(data);
-                    return x;
-                }, []);
+			var data = [];
+			var shapeType = "POLYGON((###))";
+			window.DrawManager.getCollection().forEach(col => {
+				var polygons = col.latLngs.cd.reduce((x, c, v) => {
+					var data = c.cd.reduce((k, b, u) => {
+						k.push(b.lng() + " " + b.lat());
+						return k;
+					}, []);
+					x.push(data);
+					return x;
+				}, []);
 
-                data.push(polygons.join(","));
-            });
+				console.dir(polygons);
 
-            if (data.length > 1) {
-                shapeType = "MULTIPOLYGON(((###)))";
-            }
+				data.push(polygons.join(","));
+			});
 
-            copyToCipboard(shapeType.replace("###", data.join("),(")));
+			if (data.length > 1) {
+				shapeType = "MULTIPOLYGON(((###)))";
+			}
 
-            var bc = document.querySelectorAll(".breadcrumb-navigation > li > a");
-            var cur = document.querySelector(".breadcrumb-navigation-current-level");
+			copyToCipboard(shapeType.replace("###", data.join("),(")));
 
-            if (bc.length === 0) {
-                bc = document.querySelectorAll(".breadcrumb-geo > ul > li > a");
-                cur = document.querySelector(".breadcrumb-geo > ul > li:last-child");
-            }
+			var bc = document.querySelectorAll(".breadcrumb-navigation > li > a");
+			var cur = document.querySelector(".breadcrumb-navigation-current-level");
 
-            var text = "Zona visível";
-            if (bc) {
-                var bcText = [];
-                bc.forEach(a => {
-                    bcText.push(a.innerText);
-                });
-                if (cur) {
-                    bcText.push(cur.innerText);
-                }
-                if (bcText.length > 0) {
-                    text = bcText.join(", ");
-                }
-            }
+			if (bc.length === 0) {
+				bc = document.querySelectorAll(".breadcrumb-geo > ul > li > a");
+				cur = document.querySelector(".breadcrumb-geo > ul > li:last-child");
+			}
 
-            var msg = document.getElementById("map-undo-message");
-            if (msg) {
-                msg.remove();
-            }
+			var text = "Zona visível";
+			if (bc) {
+				var bcText = [];
+				bc.forEach(a => {
+					bcText.push(a.innerText);
+				});
+				if (cur) {
+					bcText.push(cur.innerText);
+				}
+				if (bcText.length > 0) {
+					text = bcText.join(", ");
+				}
+			}
 
-            msg = document.createElement("div");
-            msg.id = "map-shape-message";
-            msg.classList.add("map-message");
-            msg.classList.add("feedback");
-            msg.classList.add("contextual");
-            msg.classList.add("warning");
-            msg.style.width = "100%";
-            msg.style.textAlign = "center";
-            msg.innerHTML = "SHAPE " + titleCase(text) + ", copiada para o clipboard<br />Verificar -> <a href='https://wkt-playground.zecompadre.com/' target='_shapetest'> Shape Test!</a>";
+			var msg = document.getElementById("map-undo-message");
+			if (msg) {
+				msg.remove();
+			}
 
-            var close = document.createElement("a");
-            close.classList.add("icon-close");
-            close.classList.add("close-btn");
-            close.style.cursor = "pointer";
-            close.style.position = "absolute";
-            close.style.right = "5px";
-            close.style.top = "5px";
+			msg = document.createElement("div");
+			msg.id = "map-shape-message";
+			msg.classList.add("map-message");
+			msg.classList.add("feedback");
+			msg.classList.add("contextual");
+			msg.classList.add("warning");
+			msg.style.width = "100%";
+			msg.style.textAlign = "center";
+			msg.innerHTML = "SHAPE " + titleCase(text) + ", copiada para o clipboard<br />Verificar -> <a href='https://wkt-playground.zecompadre.com/' target='_shapetest'> Shape Test!</a>";
 
-            close.onclick = closeMsg;
+			var close = document.createElement("a");
+			close.classList.add("icon-close");
+			close.classList.add("close-btn");
+			close.style.cursor = "pointer";
+			close.style.position = "absolute";
+			close.style.right = "5px";
+			close.style.top = "5px";
 
-            msg.appendChild(close);
+			close.onclick = closeMsg;
 
-            var map = document.getElementById("map-placeholder");
+			msg.appendChild(close);
 
-            var shapeclose = document.querySelector(".delete-cross-button.icon-close");
-            if (shapeclose) {
-                document.querySelector(".delete-cross-button.icon-close").onclick = closeMsg;
-            }
+			var map = document.getElementById("map-placeholder");
 
-            map.insertBefore(msg, map.firstChild);
+			var shapeclose = document.querySelector(".delete-cross-button.icon-close");
+			if (shapeclose) {
+				document.querySelector(".delete-cross-button.icon-close").onclick = closeMsg;
+			}
 
-            return false;
-        };
+			map.insertBefore(msg, map.firstChild);
 
-        //}, 3000);
-    }, false);
+			return false;
+		};
+
+		//}, 3000);
+	}, false);
 })();
