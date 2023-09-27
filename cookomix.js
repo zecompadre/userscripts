@@ -60,7 +60,7 @@
 				});
 			}
 			else {
-				var next = document.querySelector("dl.ingredients");
+				var next = sidebar.querySelector("dl.ingredients");
 				var ingredients = next.querySelectorAll('DT,DD');
 
 				var tmpIngredient = "";
