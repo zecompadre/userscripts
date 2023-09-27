@@ -12,7 +12,7 @@
 		buttonholder.insertBefore(li, buttonholder.firstChild);
 
 		var button = document.createElement("a");
-		button.addAttribute("href", "javascript:void(0)");
+		button.setAttribute("href", "javascript:void(0)");
 		li.appendChild(button);
 
 		var span = document.createElement("span");
