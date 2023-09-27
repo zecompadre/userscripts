@@ -39,7 +39,7 @@
 
 
 
-			if (groups) {
+			if (groups.length > 0) {
 
 				console.log('groups')
 
