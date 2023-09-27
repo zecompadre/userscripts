@@ -39,6 +39,8 @@
 			var groups = sidebar.querySelectorAll(".ribbon.ingredients");
 			if (groups) {
 				groups.forEach(g => {
+					allText.push(g.innerText);
+
 					var next = g.nextElementSibling;
 
 					var ingredients = next.querySelectorAll('DT,DD');
