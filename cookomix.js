@@ -34,7 +34,7 @@
 			allText.push('');
 
 
-			var groups = document.querySelector(".ribbon.ingredients");
+			var groups = document.querySelectorAll(".ribbon.ingredients");
 			if (groups) {
 				groups.forEach(g => {
 					var ingredients = g.nextElementSibling;
