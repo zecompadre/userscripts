@@ -34,12 +34,23 @@
 			allText.push('');
 
 
-			var groups = document.querySelectorAll(".ribbon.ingredients");
+			var sidebar = document.querySelector("#sidebar");
+
+			var groups = sidebar.querySelectorAll(".ribbon.ingredients");
 			if (groups) {
 				groups.forEach(g => {
 					var ingredients = g.nextElementSibling;
-
-					console.log(ingredients);
+					var tmpIngredient = "";
+					groups.forEach(i => {
+						if (i.tagName == "DT") {
+							tmpIngredient = i.innerText;
+						}
+						else if (i.tagName == "DD") {
+							tmpIngredient += " " + i.innerText;
+							allText.push(tmpIngredient);
+							tmpIngredient = '';
+						}
+					});
 				});
 			}
 
