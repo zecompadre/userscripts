@@ -33,11 +33,16 @@
 			allText.push(title.innerText);
 			allText.push('');
 
-
 			var sidebar = document.querySelector("#sidebar");
 
 			var groups = sidebar.querySelectorAll(".ribbon.ingredients");
+
+
+
 			if (groups) {
+
+				console.log('groups')
+
 				groups.forEach(g => {
 					allText.push('');
 					allText.push(g.innerText);
@@ -60,6 +65,8 @@
 				});
 			}
 			else {
+				console.log('no groups')
+
 				var next = sidebar.querySelector("dl.ingredients");
 				var ingredients = next.querySelectorAll('DT,DD');
 
