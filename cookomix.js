@@ -82,18 +82,18 @@
 			}
 
 			var inside = document.querySelector(".instructions.dsb-select");
-			var groups = inside.querySelectorAll("ol");
+			var next = inside.querySelector("ol");
+			var steps = next.querySelectorAll('.step-title,li');
+			if (steps.length > 0) {
 
-			if (groups.length > 0) {
-
-				groups.forEach(g => {
-					if (g.classList.contains('step-title')) {
+				steps.forEach(s => {
+					if (s.classList.contains('step-title')) {
 						allText.push('');
-						allText.push(g.innerText);
+						allText.push(s.innerText);
 					}
 					else {
-						if (g.tagName == "LI") {
-							allText.push(g.innerText);
+						if (s.tagName == "LI") {
+							allText.push(s.innerText);
 						}
 					}
 				});
