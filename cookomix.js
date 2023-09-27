@@ -12,7 +12,10 @@
 		buttonholder.insertBefore(li, buttonholder.firstChild);
 
 		var button = document.createElement("a");
-		button.innerHtml = '<span>Copiar</span>';
+
+		var span = document.createElement("span");
+		span.innerText = 'Copiar';
+		button.appendChild(span);
 
 		li.appendChild(button);
 
