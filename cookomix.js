@@ -5,8 +5,8 @@
 		var buttonholder = document.querySelector("#menu-cookomix");
 		var li = document.createElement("li");
 		li.classList.add('core-nav__item');
-		li.appendBefore(holder);
-		holder.insertBefore(li, holder.firstChild);
+		li.appendBefore(buttonholder);
+		buttonholder.insertBefore(li, buttonholder.firstChild);
 
 		var button = document.createElement("button");
 		button.innerText = 'Copiar';
