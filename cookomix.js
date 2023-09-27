@@ -39,7 +39,10 @@
 			var groups = sidebar.querySelectorAll(".ribbon.ingredients");
 			if (groups) {
 				groups.forEach(g => {
-					var ingredients = g.nextElementSibling;
+					var next = g.nextElementSibling;
+
+					var ingredients = next.querySelectorAll('DT,DD');
+
 					var tmpIngredient = "";
 					ingredients.forEach(i => {
 						if (i.tagName == "DT") {
