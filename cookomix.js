@@ -26,10 +26,12 @@
 			allText.push(window.location.href);
 			allText.push('');
 
-			var title = document.querySelector(".entry-title");
+			var title = document.querySelector(".content-title .entry-title");
 
 			allText.push(title.innerText);
 
+			var author = document.querySelector(".content-title a");
+			allText.push('Cookomix[' + author.innerText + ']');
 
 			var sidebar = document.querySelector("#sidebar");
 
