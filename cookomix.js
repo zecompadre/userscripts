@@ -65,7 +65,7 @@
 							});
 						}
 			*/
-			console.clear();
+			//console.clear();
 			console.log(allText.join('\n'));
 
 			copyToCipboard(allText.join('\n'));
