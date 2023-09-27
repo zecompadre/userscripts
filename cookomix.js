@@ -2,6 +2,7 @@
 	'use strict';
 	var holder = document.querySelector(".recipe.type-recipe");
 	if (holder) {
+		var buttonholder = document.querySelector("#menu-cookomix");
 		var li = document.createElement("li");
 		li.classList.add('core-nav__item');
 		li.appendBefore(holder);
