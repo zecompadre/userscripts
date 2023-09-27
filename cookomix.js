@@ -87,6 +87,7 @@
 
 				steps.forEach(s => {
 					if (s.classList.contains('step-title')) {
+						allText.push('');
 						allText.push(s.innerText);
 					}
 					else {
@@ -94,7 +95,6 @@
 							allText.push(s.innerText);
 						}
 					}
-					allText.push('');
 				});
 
 			}
