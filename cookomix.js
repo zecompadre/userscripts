@@ -28,18 +28,14 @@
 
 			var title = document.querySelector(".entry-title");
 
-			console.log(title)
-
 			allText.push(title.innerText);
-			allText.push('');
+
 
 			var sidebar = document.querySelector("#sidebar");
 
 			var groups = sidebar.querySelectorAll(".ribbon.ingredients");
 
 			if (groups.length > 0) {
-
-				console.log('groups')
 
 				groups.forEach(g => {
 					allText.push('');
@@ -60,10 +56,11 @@
 							tmpIngredient = '';
 						}
 					});
+
 				});
 			}
 			else {
-				console.log('no groups')
+				allText.push('');
 
 				var next = sidebar.querySelector("dl.ingredients");
 				var ingredients = next.querySelectorAll('DT,DD');
@@ -90,7 +87,6 @@
 
 				steps.forEach(s => {
 					if (s.classList.contains('step-title')) {
-						allText.push('');
 						allText.push(s.innerText);
 					}
 					else {
@@ -98,28 +94,13 @@
 							allText.push(s.innerText);
 						}
 					}
+					allText.push('');
 				});
 
 			}
-			/*
-						var preparation = document.getElementById("preparation-steps");
-						if (preparation) {
-							groups = preparation.querySelectorAll("core-list-section h4,core-list-section h3");
-							allText.push('');
-							allText.push('Preparação');
-							groups.forEach(h => {
-								allText.push('');
-								if (h.innerText !== 'Preparação') {
-									allText.push(h.innerText);
-								}
-								var inner = h.nextElementSibling;
-								inner.querySelectorAll('li').forEach(li => {
-									allText.push(li.innerText);
-								});
-							});
-						}
-			*/
-			//console.clear();
+
+			console.clear();
+
 			console.log(allText.join('\n'));
 
 			copyToCipboard(allText.join('\n'));
