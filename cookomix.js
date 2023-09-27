@@ -81,6 +81,8 @@
 				});
 			}
 
+			allText.push('');
+
 			var inside = document.querySelector(".instructions.dsb-select");
 			var next = inside.querySelector("ol");
 			var steps = next.querySelectorAll('.step-title,li');
