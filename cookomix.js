@@ -37,8 +37,6 @@
 
 			var groups = sidebar.querySelectorAll(".ribbon.ingredients");
 
-
-
 			if (groups.length > 0) {
 
 				console.log('groups')
@@ -83,7 +81,24 @@
 				});
 			}
 
+			var inside = document.querySelector(".instructions.dsb-select");
+			var groups = inside.querySelectorAll("ol");
 
+			if (groups.length > 0) {
+
+				groups.forEach(g => {
+					if (g.classList.contains('step-title')) {
+						allText.push('');
+						allText.push(g.innerText);
+					}
+					else {
+						if (g.tagName == "LI") {
+							allText.push(g.innerText);
+						}
+					}
+				});
+
+			}
 			/*
 						var preparation = document.getElementById("preparation-steps");
 						if (preparation) {
