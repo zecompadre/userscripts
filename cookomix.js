@@ -33,12 +33,21 @@
 			allText.push(title.innerText);
 			allText.push('');
 
-			var groups = [];
+
+			var groups = document.querySelector(".ribbon.ingredients");
+			if (groups) {
+				groups.forEach(g => {
+					var ingredients = g.nextElementSibling;
+
+					console.log(ingredients);
+				}
+			}
+
 
 			var ingredients = document.querySelector("dl.ingredients");
 			if (ingredients) {
 				var innerEle = ingredients.querySelectorAll("dt,dd");
-				console.log(innerEle)
+				//console.log(innerEle)
 
 				/*
 								allText.push('Ingredientes');
