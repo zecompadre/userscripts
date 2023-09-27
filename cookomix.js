@@ -4,13 +4,16 @@
 	if (holder) {
 		var buttonholder = document.querySelector("#menu-cookomix");
 		var li = document.createElement("li");
-		li.classList.add('core-nav__item');
+		li.classList.add('menu-item');
+		li.classList.add('menu-item-type-post_type');
+		li.classList.add('menu-item-object-page');
+		li.classList.add('menu-item-9');
 		li.appendBefore(buttonholder);
 		buttonholder.insertBefore(li, buttonholder.firstChild);
 
-		var button = document.createElement("button");
-		button.innerText = 'Copiar';
-		button.classList.add('button--primary');
+		var button = document.createElement("a");
+		button.innerHtml = '<span>Copiar</span>';
+
 		li.appendChild(button);
 
 		button.onclick = function () {
