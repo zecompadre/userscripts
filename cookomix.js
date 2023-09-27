@@ -31,7 +31,7 @@
 			allText.push(title.innerText);
 
 			var author = document.querySelector(".content-title a");
-			allText.push('Cookomix[' + author.innerText + ']');
+			allText.push('Cookomix [' + author.innerText + ']');
 
 			var sidebar = document.querySelector("#sidebar");
 
