@@ -39,6 +39,7 @@
 			var groups = sidebar.querySelectorAll(".ribbon.ingredients");
 			if (groups) {
 				groups.forEach(g => {
+					allText.push('');
 					allText.push(g.innerText);
 
 					var next = g.nextElementSibling;
@@ -58,27 +59,24 @@
 					});
 				});
 			}
+			else {
+				var next = document.querySelector("dl.ingredients");
+				var ingredients = next.querySelectorAll('DT,DD');
 
-
-			var ingredients = document.querySelector("dl.ingredients");
-			if (ingredients) {
-				var innerEle = ingredients.querySelectorAll("dt,dd");
-				//console.log(innerEle)
-
-				/*
-								allText.push('Ingredientes');
-								groups.forEach(h => {
-									allText.push('');
-									if (h.innerText !== '') {
-										allText.push(h.innerText);
-									}
-									var inner = h.nextElementSibling;
-									inner.querySelectorAll('li').forEach(li => {
-										allText.push(li.innerText);
-									});
-								});
-				*/
+				var tmpIngredient = "";
+				ingredients.forEach(i => {
+					if (i.tagName == "DT") {
+						tmpIngredient = i.innerText;
+					}
+					else if (i.tagName == "DD") {
+						tmpIngredient += " " + i.innerText;
+						allText.push(tmpIngredient);
+						tmpIngredient = '';
+					}
+				});
 			}
+
+
 			/*
 						var preparation = document.getElementById("preparation-steps");
 						if (preparation) {
