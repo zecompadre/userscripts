@@ -41,7 +41,7 @@
 				groups.forEach(g => {
 					var ingredients = g.nextElementSibling;
 					var tmpIngredient = "";
-					groups.forEach(i => {
+					ingredients.forEach(i => {
 						if (i.tagName == "DT") {
 							tmpIngredient = i.innerText;
 						}
