@@ -40,7 +40,7 @@
 					var ingredients = g.nextElementSibling;
 
 					console.log(ingredients);
-				}
+				});
 			}
 
 
