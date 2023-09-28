@@ -2,6 +2,7 @@
 	'use strict';
 	var holder = document.querySelector(".recipe.type-recipe");
 	if (holder) {
+		/*
 		var buttonholder = document.querySelector("#menu-cookomix");
 		var li = document.createElement("li");
 		li.classList.add('menu-item');
@@ -18,6 +19,11 @@
 		var span = document.createElement("span");
 		span.innerText = 'Copiar';
 		button.appendChild(span);
+*/
+
+		var button = document.createElement("button");
+		button.setAttribute('style', 'position: fixed; width: 140px; top: 120px; right: -120px; z-index: 999999; background-color: rgb(66, 133, 244); color: rgb(255, 255, 255); opacity: 0.8; border: none; border-radius: 4px; padding: 10px 16px; font-size: 18px; cursor: pointer; transition: right 0.3s ease 0s;');
+		button.innerText = 'Copiar';
 
 		button.onclick = function () {
 
