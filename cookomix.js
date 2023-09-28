@@ -26,6 +26,13 @@
 		button.innerText = 'Copiar';
 		document.body.appendChild(button);
 
+		button.onmouseover = function (e) {
+			e.target.style.right = '0';
+		};
+		button.onmouseout = function (e) {
+			e.target.style.right = '-120px';
+		};
+
 		button.onclick = function () {
 
 			var allText = [];
