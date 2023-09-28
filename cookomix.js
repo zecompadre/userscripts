@@ -2,19 +2,9 @@
 	'use strict';
 
 	var button = document.createElement("button");
-	button.classList.add('button-pushable');
-
-	var span_shadow = document.createElement("span");
-	span_shadow.classList.add('button-shadow');
-	button.appendChild(span_shadow);
-	var span_edge = document.createElement("span");
-	span_edge.classList.add('button-edge');
-	button.appendChild(span_edge);
-	var span_front = document.createElement("span");
-	span_front.classList.add('button-front');
-	span_front.classList.add('text');
-	span_front.innerText = 'Copiar';
-	button.appendChild(span_front);
+	button.classList.add('button');
+	button.setAttribute('role', 'button');
+	button.innerText = 'Copiar';
 
 	document.body.appendChild(button);
 
