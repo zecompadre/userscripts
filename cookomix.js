@@ -2,8 +2,20 @@
 	'use strict';
 
 	var button = document.createElement("button");
-	button.setAttribute('style', 'position: fixed; width: 140px; top: -30px; right: calc(50% - 70px); z-index: 999999; background-color: rgb(66, 133, 244); color: rgb(255, 255, 255); opacity: 0.8; border: none; border-radius: 4px; padding: 10px 16px; font-size: 18px; cursor: pointer; transition: right 0.3s ease 0s;');
-	button.innerText = 'Copiar';
+	button.classList.add('button-82-pushable');
+
+	var span_shadow = document.createElement("span");
+	button.classList.add('button-82-shadow');
+	button.appendChild(span_shadow);
+	var span_edge = document.createElement("span");
+	button.classList.add('button-82-edge');
+	button.appendChild(span_edge);
+	var span_front = document.createElement("span");
+	button.classList.add('button-82-front');
+	button.classList.add('text');
+	span_front.innerText = 'Copiar';
+	button.appendChild(span_front);
+
 	document.body.appendChild(button);
 
 	button.onmouseover = function (e) {
