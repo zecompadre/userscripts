@@ -22,15 +22,15 @@
 */
 
 		var button = document.createElement("button");
-		button.setAttribute('style', 'position: fixed; width: 140px; top: 120px; right: -120px; z-index: 999999; background-color: rgb(66, 133, 244); color: rgb(255, 255, 255); opacity: 0.8; border: none; border-radius: 4px; padding: 10px 16px; font-size: 18px; cursor: pointer; transition: right 0.3s ease 0s;');
+		button.setAttribute('style', 'position: fixed; width: 140px; top: -20px; right: calc(50% - 70px); z-index: 999999; background-color: rgb(66, 133, 244); color: rgb(255, 255, 255); opacity: 0.8; border: none; border-radius: 4px; padding: 10px 16px; font-size: 18px; cursor: pointer; transition: right 0.3s ease 0s;');
 		button.innerText = 'Copiar';
 		document.body.appendChild(button);
 
 		button.onmouseover = function (e) {
-			e.target.style.right = '0';
+			e.target.style.top = '0';
 		};
 		button.onmouseout = function (e) {
-			e.target.style.right = '-120px';
+			e.target.style.top = '-20px';
 		};
 
 		button.onclick = function () {
