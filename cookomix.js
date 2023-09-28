@@ -24,7 +24,7 @@
 		var button = document.createElement("button");
 		button.setAttribute('style', 'position: fixed; width: 140px; top: 120px; right: -120px; z-index: 999999; background-color: rgb(66, 133, 244); color: rgb(255, 255, 255); opacity: 0.8; border: none; border-radius: 4px; padding: 10px 16px; font-size: 18px; cursor: pointer; transition: right 0.3s ease 0s;');
 		button.innerText = 'Copiar';
-		document.appendChild(button);
+		document.body.appendChild(button);
 
 		button.onclick = function () {
 
