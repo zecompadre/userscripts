@@ -2,7 +2,7 @@
 	'use strict';
 
 	var button = document.createElement("button");
-	button.classList.add('button');
+	button.classList.add('button-copy');
 	button.setAttribute('role', 'button');
 	button.innerText = 'Copiar';
 
