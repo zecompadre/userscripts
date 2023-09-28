@@ -9,7 +9,7 @@
 	color: #fff;
 	cursor: pointer;
 	display: inline-flex;
-	font-family: "JetBrains Mono", monospace;
+	font-family: Verdana, monospace;
 	height: 48px;
 	justify-content: center;
 	line-height: 1;
@@ -24,7 +24,7 @@
 	-webkit-user-select: none;
 	touch-action: manipulation;
 	white-space: nowrap;
-	font-size: 18px;
+	font-size: 14px;
 }
 
 .button-copy {
