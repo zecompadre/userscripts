@@ -5,14 +5,14 @@
 	button.classList.add('button-82-pushable');
 
 	var span_shadow = document.createElement("span");
-	button.classList.add('button-82-shadow');
+	span_shadow.classList.add('button-82-shadow');
 	button.appendChild(span_shadow);
 	var span_edge = document.createElement("span");
-	button.classList.add('button-82-edge');
+	span_edge.classList.add('button-82-edge');
 	button.appendChild(span_edge);
 	var span_front = document.createElement("span");
-	button.classList.add('button-82-front');
-	button.classList.add('text');
+	span_front.classList.add('button-82-front');
+	span_front.classList.add('text');
 	span_front.innerText = 'Copiar';
 	button.appendChild(span_front);
 
