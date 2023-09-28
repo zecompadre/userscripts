@@ -1,7 +1,7 @@
 /* CSS */
 
 
-.button-82-pushable {
+.button-pushable {
 	position: relative;
 	border: none;
 	background: transparent;
@@ -14,15 +14,16 @@
 	touch-action: manipulation;
 }
 
-.button-82-pushable {
-	top: 0;
-	position: absolute;
+.button-pushable {
+	top: 10px;
+	position: fixed;
 	height: 40px;
 	width: 200px;
 	right: calc(50% - 100px);
+	z-index: 9999999;
 }
 
-.button-82-shadow {
+.button-shadow {
 	position: absolute;
 	top: 0;
 	left: 0;
@@ -36,7 +37,7 @@
 		transform 600ms cubic-bezier(.3, .7, .4, 1);
 }
 
-.button-82-edge {
+.button-edge {
 	position: absolute;
 	top: 0;
 	left: 0;
@@ -50,7 +51,7 @@
 			hsl(340deg 100% 16%) 100%);
 }
 
-.button-82-front {
+.button-front {
 	display: block;
 	position: relative;
 	padding: 12px 27px;
@@ -65,39 +66,39 @@
 }
 
 @media (min-width: 768px) {
-	.button-82-front {
+	.button-front {
 		font-size: 1.25rem;
 		padding: 12px 42px;
 	}
 }
 
-.button-82-pushable:hover {
+.button-pushable:hover {
 	filter: brightness(110%);
 	-webkit-filter: brightness(110%);
 }
 
-.button-82-pushable:hover .button-82-front {
+.button-pushable:hover .button-front {
 	transform: translateY(-6px);
 	transition:
 		transform 250ms cubic-bezier(.3, .7, .4, 1.5);
 }
 
-.button-82-pushable:active .button-82-front {
+.button-pushable:active .button-front {
 	transform: translateY(-2px);
 	transition: transform 34ms;
 }
 
-.button-82-pushable:hover .button-82-shadow {
+.button-pushable:hover .button-shadow {
 	transform: translateY(4px);
 	transition:
 		transform 250ms cubic-bezier(.3, .7, .4, 1.5);
 }
 
-.button-82-pushable:active .button-82-shadow {
+.button-pushable:active .button-shadow {
 	transform: translateY(1px);
 	transition: transform 34ms;
 }
 
-.button-82-pushable:focus:not(:focus-visible) {
+.button-pushable:focus:not(:focus-visible) {
 	outline: none;
 }
