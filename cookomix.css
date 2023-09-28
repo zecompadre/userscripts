@@ -5,7 +5,6 @@
 	background-color: #5e8e79;
 	border-radius: 4px;
 	border-width: 0;
-	box-shadow: rgba(45, 35, 66, 0.4) 0 2px 4px, rgba(45, 35, 66, 0.3) 0 7px 13px -3px, #D6D6E7 0 -3px 0 inset;
 	box-sizing: border-box;
 	color: #fff;
 	cursor: pointer;
@@ -21,12 +20,10 @@
 	position: relative;
 	text-align: left;
 	text-decoration: none;
-	transition: box-shadow .15s, transform .15s;
 	user-select: none;
 	-webkit-user-select: none;
 	touch-action: manipulation;
 	white-space: nowrap;
-	will-change: box-shadow, transform;
 	font-size: 18px;
 }
 
@@ -39,19 +36,11 @@
 	z-index: 9999999;
 }
 
-
-.button-copy:focus {
-	box-shadow: #D6D6E7 0 0 0 1.5px inset, rgba(45, 35, 66, 0.4) 0 2px 4px, rgba(45, 35, 66, 0.3) 0 7px 13px -3px, #D6D6E7 0 -3px 0 inset !important;
-}
-
+.button-copy:active,
+.button-copy:focus,
 .button-copy:hover {
-	box-shadow: rgba(45, 35, 66, 0.4) 0 4px 8px, rgba(45, 35, 66, 0.3) 0 7px 13px -3px, #D6D6E7 0 -3px 0 inset !important;
+	border: 1px solid #5e8e79 !important;
 	transform: translateY(-2px) !important;
 	background: #fff !important;
 	color: #5e8e79 !important;
-}
-
-.button-copy:active {
-	box-shadow: #D6D6E7 0 3px 7px inset !important;
-	transform: translateY(2px) !important;
 }
