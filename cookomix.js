@@ -18,13 +18,6 @@
 
 	document.body.appendChild(button);
 
-	button.onmouseover = function (e) {
-		e.target.style.top = '0';
-	};
-	button.onmouseout = function (e) {
-		e.target.style.top = '-30px';
-	};
-
 	button.onclick = function () {
 
 		var allText = [];

@@ -1,6 +1,7 @@
 /* CSS */
 .button-82-pushable {
-	position: relative;
+	position: fixed;
+	top: 0;
 	border: none;
 	background: transparent;
 	padding: 0;
@@ -10,6 +11,8 @@
 	user-select: none;
 	-webkit-user-select: none;
 	touch-action: manipulation;
+	-ms-transform: translateY(-50%);
+	transform: translateY(-50%);
 }
 
 .button-82-shadow {
