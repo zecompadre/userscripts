@@ -24,12 +24,13 @@
 	touch-action: manipulation;
 	white-space: nowrap;
 	font-size: 14px;
-	top: 10px;
+	top: 4px;
 	position: fixed;
-	height: 40px;
+	height: 36px;
 	width: 200px;
 	right: calc(50% - 100px);
 	z-index: 9999999;
+	line-height: 36px;
 }
 
 .button-copy:active,
