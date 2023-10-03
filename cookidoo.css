@@ -1,0 +1,44 @@
+/* CSS */
+.button-copy {
+	align-items: center;
+	appearance: none;
+	background-color: #5e8e79;
+	border-radius: 4px;
+	border-width: 0;
+	box-sizing: border-box;
+	color: #fff;
+	cursor: pointer;
+	display: inline-flex;
+	font-family: Verdana, monospace;
+	justify-content: center;
+	line-height: 1;
+	list-style: none;
+	overflow: hidden;
+	padding-left: 16px;
+	padding-right: 16px;
+	position: relative;
+	text-align: left;
+	text-decoration: none;
+	user-select: none;
+	-webkit-user-select: none;
+	touch-action: manipulation;
+	white-space: nowrap;
+	font-size: 14px;
+	top: 4px;
+	position: fixed;
+	height: 36px;
+	width: 200px;
+	right: calc(50% - 100px);
+	z-index: 9999999;
+	line-height: 36px;
+}
+
+.button-copy:active,
+.button-copy:focus,
+.button-copy:hover {
+	border: 1px solid #5e8e79 !important;
+	transform: translateY(-2px) !important;
+	background: #fff !important;
+	color: #5e8e79 !important;
+	transition: background-color 0.5s ease;
+}
