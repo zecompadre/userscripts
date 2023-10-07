@@ -39,17 +39,8 @@
 	line-height: 36px;
 }
 
-.button-copy:active,
-.button-copy:focus,
-.button-copy:hover {
-	background: var(--second-color) !important;
-	color: var(--text-color) !important;
-	transform: translateY(-2px) !important;
-	transition: background-color 0.5s ease;
-}
-
-.button-copy:hover:before {
-	border: 1px solid var(--main-color);
+.button-copy:before {
+	border: 1px solid var(--second-color);
 	content: "";
 	display: block;
 	position: absolute;
@@ -60,8 +51,16 @@
 	pointer-events: none;
 }
 
-.button-copy:before {
-	border: 1px solid var(--second-color);
+
+.button-copy:hover {
+	background: var(--second-color) !important;
+	color: var(--text-color) !important;
+	transform: translateY(-2px) !important;
+	transition: background-color 0.5s ease;
+}
+
+.button-copy:hover:before {
+	border: 1px solid var(--main-color);
 	content: "";
 	display: block;
 	position: absolute;
