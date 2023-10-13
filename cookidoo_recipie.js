@@ -81,8 +81,12 @@
 						//Cookidoo® Itália: Colecção "Dolci americani"
 						var name = li.querySelector("div");
 						var country = name.querySelector("span");
-						var countryName = country.innerText.split(",")[1].trim();
-						country.remove();
+						if (country) {
+							var countryName = country.innerText.split(",")[1].trim();
+							country.remove();
+						}
+						else
+							countryName = "Portugal"
 						allText.push("Cookidoo® " + countryName + ": Colecção \"" + name.innerText + "\"");
 					});
 				});
