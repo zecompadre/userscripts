@@ -6,17 +6,14 @@
 }
 .button-copy .icon-draw
 {
-	adding-top: 8.25rem; */
-    /* padding-bottom: .25rem; */
-    /* width: 24px; */
+	adding-top: 8.25rem; 
     line-height: 24px;
     height: 24px;
-    /* position: relative; */
-    position: absolute;
+        position: absolute;
     padding-right: 12px;
     width: 24px;
     top: 3px;
-    /* vertical-align: middle;
+    
 }
 
 .button-copy .icon-text
