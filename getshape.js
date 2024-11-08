@@ -15,16 +15,11 @@
 		};
 		
 		var button = document.createElement("button");
-		button.classList.add('btn');
-		button.classList.add('regular');
-		button.classList.add('smaller');
-		button.classList.add('icon-draw');
+		button.classList.add('button-copy');
 		button.setAttribute('role', 'button');
 		button.innerText = 'Copiar Shape';
-
+		
 		document.body.appendChild(button);
-
-		addStyle('.btn.regular.smaller.icon-draw::before { color: white; }\n.btn.regular.smaller.icon-draw{ background-color: #005baa; color: white; box-shadow: none;}');
 
 		button.onclick = function (e) {
 
