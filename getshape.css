@@ -72,6 +72,7 @@
 
 .idealista
 {
+	
 	    border: solid .0625rem #e5e6e1;
     border-radius: 1rem;	
 	background-color: #edfca2;
@@ -93,6 +94,13 @@
 	width: 200px;
 	right: calc(50% - 100px);
 	z-index: 9999999;
+
+	
+    font-weight: inherit;
+    font-style: inherit;
+    font-size: 100%;
+    font-family: inherit;
+    vertical-align: baseline;
 
 }
 
