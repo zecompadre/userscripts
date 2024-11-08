@@ -17,7 +17,14 @@
 		var button = document.createElement("button");
 		button.classList.add('button-copy');
 		button.setAttribute('role', 'button');
-		button.innerHtml = '<span class="icon-draw"></span>Copiar Shape';
+		
+
+		var icon = document.createElement("span");
+icon.classList.add('icon-draw');
+		
+				document.body.appendChild(icon);
+
+		button.innertext = 'Copiar Shape';
 		
 		document.body.appendChild(button);
 
