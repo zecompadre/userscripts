@@ -22,7 +22,7 @@
 		var icon = document.createElement("span");
 icon.classList.add('icon-draw');
 		
-				document.body.appendChild(icon);
+				button.appendChild(icon);
 
 		button.innertext = 'Copiar Shape';
 		
