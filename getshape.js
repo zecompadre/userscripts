@@ -14,13 +14,13 @@
 			return false;
 		};
 		
-	var button = document.createElement("button");
-	button.classList.add('btn');
+		var button = document.createElement("button");
+		button.classList.add('btn');
 		button.classList.add('regular');
 		button.classList.add('smaller');
 		button.classList.add('icon-draw');
-	button.setAttribute('role', 'button');
-	button.innerText = 'Copiar Shape';
+		button.setAttribute('role', 'button');
+		button.innerText = 'Copiar Shape';
 
 		document.body.appendChild(button);
 
