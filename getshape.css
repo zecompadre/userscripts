@@ -6,9 +6,11 @@
 }
 .button-copy .icon-draw:before
 {
-	color: #b62682;
-	margin-right: .125rem;
-    vertical-align: middle;s
+    color: #b62682;
+    margin-right: .25rem;
+    vertical-align: middle;
+    font-size: 1.25rem;
+    font-weight: 600;
 }
 
 .button-copy
