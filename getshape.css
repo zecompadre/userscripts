@@ -72,7 +72,8 @@
 
 .idealista
 {
-	
+	    border: solid .0625rem #e5e6e1;
+    border-radius: 1rem;	
 	background-color: #edfca2;
     border-color: #b1d004;
     box-sizing: border-box;
@@ -81,17 +82,17 @@
     margin-top: .375rem;
 	        margin: .45rem 0;
 
+
 		padding-left: 16px;
 	padding-right: 16px;
 	position: relative;
 	font-size: 14px;
-	top: 4px;
+	top: 0;
 	position: fixed;
 	height: 36px;
 	width: 200px;
 	right: calc(50% - 100px);
 	z-index: 9999999;
-	line-height: 36px;
 
 }
 
