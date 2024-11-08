@@ -20,11 +20,10 @@
 		
 
 		var icon = document.createElement("span");
-icon.classList.add('icon-draw');
-		
-				button.appendChild(icon);
+		icon.classList.add('icon-draw');
+		button.appendChild(icon);
 
-		button.innertext = 'Copiar Shape';
+		button.innerText = 'Copiar Shape';
 		
 		document.body.appendChild(button);
 
