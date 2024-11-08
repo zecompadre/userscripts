@@ -4,6 +4,12 @@
 	--second-color: #b0b912;
 	--text-color: #fff;
 }
+.button-copy .icon-draw:before
+{
+	color: #b62682;
+	margin-right: .125rem;
+    vertical-align: middle;s
+}
 
 .button-copy
 {
