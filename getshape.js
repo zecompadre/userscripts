@@ -17,7 +17,7 @@
 		var button = document.createElement("button");
 		button.classList.add('button-copy');
 		button.setAttribute('role', 'button');
-		button.innerText = '<span class="icon-draw"></span>Copiar Shape';
+		button.innerHtml = '<span class="icon-draw"></span>Copiar Shape';
 		
 		document.body.appendChild(button);
 
