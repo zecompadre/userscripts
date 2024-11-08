@@ -14,8 +14,13 @@
 			return false;
 		};
 		
-		var button = document.createElement("li");
-		button.innerHTML = '<a id="listing-shape-button" href="/" title="Copiar Shape" class="btn regular smaller icon-draw"> Copiar Shape</a>';
+	var button = document.createElement("button");
+	button.classList.add('btn');
+		button.classList.add('regular');
+		button.classList.add('smaller');
+		button.classList.add('icon-draw');
+	button.setAttribute('role', 'button');
+	button.innerText = 'Copiar Shape';
 
 		document.body.appendChild(button);
 
