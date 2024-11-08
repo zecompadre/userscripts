@@ -14,10 +14,10 @@
 			return false;
 		};
 
-		var filter = document.getElementById("listing-filter");
+		var filter = document.getElementById("listing-view-button");
 		var button = document.createElement("li");
 		button.innerHTML = '<a id="listing-shape-button" href="/" title="Copiar Shape" class="btn regular smaller icon-draw"> Copiar Shape</a>';
-		filter.insertBefore(button, filter.firstChild);
+		filter.insertBefore(button, filter);
 
 		addStyle('.btn.regular.smaller.icon-draw::before { color: white; }\n.btn.regular.smaller.icon-draw{ background-color: #005baa; color: white; box-shadow: none;}');
 
