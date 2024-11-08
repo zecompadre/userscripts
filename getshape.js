@@ -23,6 +23,7 @@
 		button.appendChild(icon);
 
 		var text = document.createElement("span");
+		icon.classList.add('icon-text');
 		text.innerText = 'Copiar Shape';
 		button.appendChild(text);
 		
