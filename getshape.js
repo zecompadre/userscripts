@@ -123,7 +123,7 @@
 
 			map.insertBefore(msg, map.firstChild);
 
-			document.getElementById("shapetest")click()
+			document.getElementById("shapetest").click()
 
 			return false;
 		};
