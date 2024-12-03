@@ -1,5 +1,8 @@
 (function () {
 
+	//var validator = "https://wkt-playground.zecompadre.com";
+	var validator = "https://wkt-plotter.zecompadre.com";
+
 	window.addEventListener('load', function () {
 		//setTimeout(function() {
 		var closeMsg = function (e) {
@@ -13,11 +16,11 @@
 			}
 			return false;
 		};
-		
+
 		var button = document.createElement("button");
 		button.classList.add('button-copy');
 		button.setAttribute('role', 'button');
-		
+
 		var icon = document.createElement("span");
 		icon.classList.add('icon-draw');
 		button.appendChild(icon);
@@ -26,7 +29,7 @@
 		text.classList.add('icon-text');
 		text.innerText = 'Copiar Shape';
 		button.appendChild(text);
-		
+
 		document.body.appendChild(button);
 
 		button.onclick = function (e) {
@@ -100,7 +103,7 @@
 			msg.classList.add("warning");
 			msg.style.width = "100%";
 			msg.style.textAlign = "center";
-			msg.innerHTML = "SHAPE " + titleCase(text) + ", copiada para o clipboard<br />Verificar -> <a id='shapetest' href='https://wkt-playground.zecompadre.com/' target='_shapetest'> Shape Test!</a>";
+			msg.innerHTML = "SHAPE " + titleCase(text) + ", copiada para o clipboard<br />Verificar -> <a id='shapetest' href='" + validator + "' target='_shapetest'> Shape Test!</a>";
 
 			var close = document.createElement("a");
 			close.classList.add("icon-close");
