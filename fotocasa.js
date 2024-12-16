@@ -137,9 +137,9 @@ function geoJsonToWKT(geoJson) {
 					close.onclick = closeMsg;
 
 					msg.appendChild(close);
-
-					var map = document.getElementById("map-placeholder");
-
+*/
+					var map = document.querySelector(".re-SearchMapWrapper");
+/*
 					var shapeclose = document.querySelector(".delete-cross-button.icon-close");
 					if (shapeclose) {
 						document.querySelector(".delete-cross-button.icon-close").onclick = closeMsg;
