@@ -53,29 +53,21 @@
 		var url = "https://geom.fotocasa.es/v104/geom_" + location + ".js";
 		var xhr = new XMLHttpRequest();
 
-		// Configure it: GET-request for the URL
 		xhr.open('GET', url, true);
-		
-		// Set up a callback function to handle the response
 		xhr.onreadystatechange = function () {
 			if (xhr.readyState === XMLHttpRequest.DONE) {
 				if (xhr.status === 200) {
-					// The request was successful, handle the response here
-					console.log(xhr.responseText);
 
-//var sss = ssss.replace("var geom_" + location + "", "");
+var jsonstr  = xhr.responseText.replace("var geom_" + location + "", "");
 
-//console.log(sss);
+var feature = JSON.parse(jsonstr);
 
 
 				} else {
-					// Handle error case here
 					console.error('Request failed with status:', xhr.status);
 				}
 			}
 		};
-		
-		// Send the request
 		xhr.send();
 
 
