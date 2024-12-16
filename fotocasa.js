@@ -94,7 +94,7 @@
 		const container = document.createElement('div');
 		container.classList.add('fc-Save-search');
 
-		container.innerHTML = `<button id="btn-copy" aria-label="Copiar Shape" class="sui-AtomButton sui-AtomButton--primary sui-AtomButton--solid sui-AtomButton--center sui-AtomButton--fullWidth">
+		container.innerHTML = `<button id="btn-copy" aria-label="Copiar Shape" class="sui-AtomButton sui-AtomButton--primary sui-AtomButton--solid sui-AtomButton--center sui-AtomButton--fullWidth" style="padding: 0;">
       <span class="sui-AtomButton-inner">
         <span class="sui-AtomButton-leftIcon">
           <div class="bell-animation">
