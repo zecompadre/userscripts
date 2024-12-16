@@ -6,6 +6,14 @@
 
 
 	function geojsonToWKT(geojson) {
+
+		var wkt_options = {};
+		var geojson_format = new OpenLayers.Format.GeoJSON();
+		var testFeature = geojson_format.read(geojson);
+		var wkt = new OpenLayers.Format.WKT(wkt_options);
+		return wkt.write(testFeature);
+
+
 		const geometryTypes = {
 			Point: 'POINT',
 			MultiPoint: 'MULTIPONT',
@@ -39,9 +47,14 @@
 				case 'MultiLineString':
 					return `${geometryTypes[type]} (${coordinates.map(convertCoordinates).join(', ')})`;
 				case 'Polygon':
-					return `${geometryTypes[type]} (${coordinates.map(convertCoordinates).join(', ')})`;
+					return `${geometryTypes[type]} (${convertCoordinates(coordinates)})`;
 				case 'MultiPolygon':
-					return `${geometryTypes[type]} (${coordinates.map(convertCoordinates).join(', ')})`;
+					let wkt = geometryTypes[type] + ' (';
+					coordinates.forEach(ring => {
+						wkt += '(' + convertCoordinates(ring) + '), ';
+					});
+					// Remove trailing comma and space
+					return wkt.slice(0, -2) + ')';
 				default:
 					throw new Error(`Unsupported geometry type: ${type}`);
 			}
@@ -52,7 +65,12 @@
 		}
 
 		return convertGeometry(geojson.geometry);
+
+
+
+
 	}
+
 
 
 	window.addEventListener('load', function () {
