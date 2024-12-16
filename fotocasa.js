@@ -5,29 +5,28 @@
 
 
 	(function() {
-		const originalFetch = window.fetch;
+		const originalOpen = XMLHttpRequest.prototype.open;
+		const originalSend = XMLHttpRequest.prototype.send;
 	
-		window.fetch = async function(resource, init) {
-			console.log('Intercepted Request:', resource);
-			if (init) {
-				console.log('Request Options:', init);
-			}
-	
-			// Optionally modify the request or options
-			const response = await originalFetch(resource, init);
-	
-			// Intercept and optionally modify the response
-			const clonedResponse = response.clone();
-			clonedResponse.text().then((text) => {
-				console.log('Response:', text);
-			});
-	
-			return response;
+		XMLHttpRequest.prototype.open = function(method, url, async, user, password) {
+			this._url = url; // Store the URL for later use
+			return originalOpen.apply(this, arguments);
 		};
+	
+		XMLHttpRequest.prototype.send = function(body) {
+			console.log(`Intercepted Request: ${this._url}`);
+			console.log('Request Body:', body);
+			
+			// Optionally modify the request body here
+			return originalSend.apply(this, arguments);
+		};
+	
+		this.addEventListener('load', function() {
+			console.log(`Response for ${this._url}:`, this.responseText);
+		});
 	})();
 
 	window.addEventListener('load', function () {
-		
 		//setTimeout(function() {
 		var closeMsg = function (e) {
 			var msg = document.getElementById("map-shape-message");
@@ -43,23 +42,6 @@
 
 		console.log(google.maps)
 
-
-		const drawingManager = new google.maps.drawing.DrawingManager({
-			drawingMode: google.maps.drawing.OverlayType.POLYGON,
-			drawingControlOptions: {
-			  drawingModes: ["polygon"]
-			},
-			polygonOptions: polyOptions,
-			map: this.map
-		  });
-
-
-		  var polygons = [];
-google.maps.event.addListener(drawingManager, 'polygoncomplete', function (polygon) {
-    polygons.push(polygon);
-});
-
-console.log(polygons)
 
 
 return;
