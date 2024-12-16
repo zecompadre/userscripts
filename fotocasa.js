@@ -109,13 +109,13 @@
 
 							var jsonstr = xhr.responseText.replace(/(var(:?.*)geom_(:?.*)(?:\s)\=(?:\s))+/gm, "");
 
-							console.log("jsonstr", jsonstr);
+							//console.log("jsonstr", jsonstr);
 
 							var feature = JSON.parse(jsonstr);
 
 							features.features.push(feature);
 
-							console.log("feature", feature);
+							//console.log("feature", feature);
 
 						} else {
 							console.error('Request failed with status:', xhr.status);
