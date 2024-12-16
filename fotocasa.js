@@ -87,6 +87,11 @@
 
 			var ids = JSON.parse(localStorage.getItem('LatestsSearches'))[0].combinedLocationIds.split(";");
 
+			var features = {
+				type: "FeatureCollection",
+				features: []
+			};
+
 			ids.forEach(function (id, index) {
 
 				var location = ids[index].replace(/,/g, '_')
@@ -107,6 +112,8 @@
 							console.log("jsonstr", jsonstr);
 
 							var feature = JSON.parse(jsonstr);
+
+							features.features.push(feature);
 
 							console.log("feature", feature);
 
@@ -145,6 +152,8 @@
 				};
 				xhr.send();
 			});
+
+			console.log("features", features);
 
 			return false;
 		};
