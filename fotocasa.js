@@ -50,8 +50,23 @@
 
 
 		const latestSearches = JSON.parse(localStorage.getItem('LatestsSearches'));
-		console.log(latestSearches.combinedLocationIds.join("_"));
+		var location  = latestSearches.combinedLocationIds.join("_");
 
+		var url = "https://geom.fotocasa.es/v104/geom_" + location + ".js";
+		fetch(url)
+		.then(response => {
+		  if (response.ok) {
+			console.log*response.json()(); // or response.text() if the response is not JSON
+		  } else {
+			throw new Error('Network response was not ok');
+		  }
+		})
+		.then(data => {
+		  console.log(data); // Handle the response data here
+		})
+		.catch(error => {
+		  console.error('There was a problem with the fetch operation:', error);
+		});
 
 
 return;
