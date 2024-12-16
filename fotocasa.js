@@ -50,46 +50,8 @@
 		console.log(google.maps)
 
 // Initialize the DrawingManager
-const drawingManager = new google.maps.drawing.DrawingManager({
-	drawingMode: google.maps.drawing.OverlayType.MARKER,
-	drawingControl: true,
-	drawingControlOptions: {
-	  position: google.maps.ControlPosition.TOP_CENTER,
-	  drawingModes: [
-		google.maps.drawing.OverlayType.MARKER,
-		google.maps.drawing.OverlayType.POLYGON,
-		google.maps.drawing.OverlayType.POLYLINE,
-		google.maps.drawing.OverlayType.RECTANGLE,
-		google.maps.drawing.OverlayType.CIRCLE,
-	  ],
-	},
-  });
-  
-  // Attach DrawingManager to the map
-  drawingManager.setMap(map);
-  
-  // Intercept the event when a feature is added
-  google.maps.event.addListener(drawingManager, "overlaycomplete", (event) => {
-	console.log("Feature added to map:", event.type, event.overlay);
-  
-	// Example: Perform custom actions for different types of features
-	switch (event.type) {
-	  case google.maps.drawing.OverlayType.MARKER:
-		console.log("Marker added at position:", event.overlay.getPosition().toJSON());
-		break;
-	  case google.maps.drawing.OverlayType.POLYGON:
-		console.log("Polygon added with path:", event.overlay.getPath().getArray());
-		break;
-	  case google.maps.drawing.OverlayType.POLYLINE:
-		console.log("Polyline added with path:", event.overlay.getPath().getArray());
-		break;
-	  case google.maps.drawing.OverlayType.RECTANGLE:
-		console.log("Rectangle bounds:", event.overlay.getBounds().toJSON());
-		break;
-	  case google.maps.drawing.OverlayType.CIRCLE:
-		console.log("Circle center:", event.overlay.getCenter().toJSON(), "Radius:", event.overlay.getRadius());
-		break;
-	}
+google.maps.event.addListener(map.data, "addfeature", (event) => {
+	console.log("GeoJSON feature added:", event.feature);
   });
   
 
