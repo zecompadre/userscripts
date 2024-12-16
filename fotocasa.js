@@ -117,34 +117,6 @@
 
 							console.log("feature", feature);
 
-							var wkt = geojsonToWKT(feature);
-
-							console.log("wkt", wkt);
-
-							copyToCipboard(wkt);
-
-							var msg = document.getElementById("map-undo-message");
-							if (msg)
-								msg.remove();
-
-							let element = document.getElementById("map-shape-message");
-
-							if (element)
-								element.remove();
-
-							msg = document.createElement("div");
-							msg.id = "map-shape-message";
-							msg.style.width = "100%";
-							msg.style.textAlign = "center";
-							msg.style.backgroundColor = "var(--c-secondary-dark-2)";
-							msg.style.color = "#fff";
-
-							msg.innerHTML = "SHAPE Zona visível, copiada para o clipboard<br />Verificar -> <a id='shapetest' href='" + validator + "' target='_shapetest' style='color: #fff; text-decoration: none; font-weight: 600;'> Shape Test!</a>";
-
-							var map = document.querySelector(".re-SearchMapWrapper");
-
-							map.insertBefore(msg, map.firstChild);
-
 						} else {
 							console.error('Request failed with status:', xhr.status);
 						}
@@ -154,6 +126,34 @@
 			});
 
 			console.log("features", features);
+
+			var wkt = geojsonToWKT(features);
+
+			console.log("wkt", wkt);
+
+			copyToCipboard(wkt);
+
+			var msg = document.getElementById("map-undo-message");
+			if (msg)
+				msg.remove();
+
+			let element = document.getElementById("map-shape-message");
+
+			if (element)
+				element.remove();
+
+			msg = document.createElement("div");
+			msg.id = "map-shape-message";
+			msg.style.width = "100%";
+			msg.style.textAlign = "center";
+			msg.style.backgroundColor = "var(--c-secondary-dark-2)";
+			msg.style.color = "#fff";
+
+			msg.innerHTML = "SHAPE Zona visível, copiada para o clipboard<br />Verificar -> <a id='shapetest' href='" + validator + "' target='_shapetest' style='color: #fff; text-decoration: none; font-weight: 600;'> Shape Test!</a>";
+
+			var map = document.querySelector(".re-SearchMapWrapper");
+
+			map.insertBefore(msg, map.firstChild);
 
 			return false;
 		};
