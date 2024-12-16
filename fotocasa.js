@@ -8,19 +8,26 @@
 		const originalFetch = window.fetch;
 	
 		window.fetch = async function(resource, init) {
+
+			var isgeo = resource.includes("/geo_");
+			if(isgeo)
+			{
 			console.log('Intercepted Request:', resource);
 			if (init) {
 				console.log('Request Options:', init);
 			}
+		}
 	
 			// Optionally modify the request or options
 			const response = await originalFetch(resource, init);
-	
+			if(isgeo)
+				{
 			// Intercept and optionally modify the response
 			const clonedResponse = response.clone();
 			clonedResponse.text().then((text) => {
 				console.log('Response:', text);
 			});
+		}
 	
 			return response;
 		};
