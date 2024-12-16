@@ -49,7 +49,7 @@
 		};
 
 
-		const latestSearches = JSON.parse(localStorage.getItem('LatestSearches'));
+		const latestSearches = localStorage.getItem('LatestSearches');
 		console.log(latestSearches);
 
 
