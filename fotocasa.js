@@ -54,9 +54,11 @@
 
 						var feature = JSON.parse(jsonstr);
 
+						console.log("feature", feature);
+
 						var wkt = geoJsonToWKT(feature);
 
-						console.log(wkt);
+						console.log("wkt", wkt);
 
 						copyToCipboard(wkt);
 						/*
