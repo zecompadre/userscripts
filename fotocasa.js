@@ -41,9 +41,9 @@ function geoJsonToWKT(geoJson) {
 	  return "POLYGON ((" + geoJson.geometry.coordinates[0].map(coord => coord.join(" ")).join(", ") + "))";
 	} else if (geoJson.geometry.type === "MultiPolygon") {
 	  // For MultiPolygon, loop through each polygon and join coordinates in WKT format
-	  return "MULTIPOLYGON (" + geoJson.geometry.coordinates.map(polygon => 
+	  return "MULTIPOLYGON ((" + geoJson.geometry.coordinates.map(polygon => 
 		"(" + polygon[0].map(coord => coord.join(" ")).join(", ") + ")"
-	  ).join(", ") + ")";
+	  ).join(", ") + "))";
 	} else {
 	  throw new Error("Unsupported geometry type: " + geoJson.geometry.type);
 	}
@@ -53,7 +53,7 @@ function geoJsonToWKT(geoJson) {
 	window.addEventListener('load', function () {
 
 		var button = document.createElement("button");
-		button.classList.add('button-copy');
+		button.classList.add('sui-AtomButton sui-AtomButton--primary sui-AtomButton--solid sui-AtomButton--center sui-AtomButton--negative re-SharedTopbar-loginButton-notLoggedButton');
 		button.setAttribute('role', 'button');
 
 		var icon = document.createElement("span");
@@ -65,7 +65,9 @@ function geoJsonToWKT(geoJson) {
 		text.innerText = 'Copiar Shape';
 		button.appendChild(text);
 
-		document.body.appendChild(button);
+		var  reSharedTopba = document.querySelector(".re-SharedTopbar");
+
+		reSharedTopba.appendChild(button);
 
 		button.onclick = function (e) {
 
