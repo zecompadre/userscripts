@@ -7,12 +7,34 @@
 
 	function geojsonToWKT(geojson) {
 
+		var val = geojson; // Your GeoJSON goes here
 		var wkt_options = {};
 		var geojson_format = new OpenLayers.Format.GeoJSON();
-		var testFeature = geojson_format.read(geojson);
-		var wkt = new OpenLayers.Format.WKT(wkt_options);
-		return wkt.write(testFeature);
+		var testFeatures = geojson_format.read(val); // Read GeoJSON
 
+		// Function to handle GeometryCollection
+		function flattenGeometry(feature) {
+			if (feature.geometry.CLASS_NAME === 'OpenLayers.Geometry.Collection') {
+				// Flatten the GeometryCollection into its components
+				return feature.geometry.components.map(function (component) {
+					return new OpenLayers.Feature.Vector(component);
+				});
+			}
+			return [feature]; // Return the feature as-is if not a GeometryCollection
+		}
+
+		// Flatten GeometryCollections
+		var flattenedFeatures = [];
+		testFeatures.forEach(function (feature) {
+			flattenedFeatures = flattenedFeatures.concat(flattenGeometry(feature));
+		});
+
+		var wkt = new OpenLayers.Format.WKT(wkt_options);
+		var out = flattenedFeatures.map(function (feature) {
+			return wkt.write(feature); // Write each feature to WKT
+		}).join('\n'); // Join multiple WKT strings if needed
+
+		return out;
 
 		const geometryTypes = {
 			Point: 'POINT',
