@@ -2,7 +2,7 @@
 
 	var validator = "https://wkt-playground.zecompadre.com";
 	//var validator = "https://wkt-plotter.zecompadre.com";
-	var fetchurl = "https://geom.fotocasa.es/v104/geom_[location].js";
+	var fetchurl = "https://geom.fotocasa.es/v104/geom_";
 
 	function geojsonToWKT(geojson) {
 
@@ -43,11 +43,10 @@
 
 		// Override the open method
 		XMLHttpRequest.prototype.open = function (...args) {
-			var fromWKTButton = button.dataset.wkt || false;
+			var loadGEOM = (args[1] || "").indexOf("/geom_") > -1;
 
-			console.log("fromWKTButton", args);
-
-			deleteElementOnAjax();
+			if (!loadGEOM)
+				deleteElementOnAjax();
 
 			return originalOpen.apply(this, args); // Call the original method
 		};
@@ -89,7 +88,7 @@
 
 			var location = JSON.parse(localStorage.getItem('LatestsSearches'))[0].combinedLocationIds.replace(/,/g, '_')
 
-			var url = fetchurl.replace("[location]", location);
+			var url = fetchurl + location + ".js";
 
 			var xhr = new XMLHttpRequest();
 
