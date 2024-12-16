@@ -4,40 +4,28 @@
 	//var validator = "https://wkt-plotter.zecompadre.com";
 	var fetchurl = "https://geom.fotocasa.es/v104/geom_";
 
-	function geojsonToWKT(geojson) {
-		if (geojson.type === 'FeatureCollection') {
-			return geojson.features.map(feature => geojsonToWKT(feature));
-		}
+	function geojsonToWKT(geoJson) {
 
-		const geometry = geojson.geometry;
-		let wkt = '';
-
-		if (geometry.type === 'Polygon') {
-			wkt = 'POLYGON((';
-			geometry.coordinates.forEach((ring, index) => {
-				if (index > 0) {
-					wkt += ', ';
+		// Check if there's only one feature or more
+		if (geoJson.features.length === 1) {
+			// Single feature: Convert to WKT Polygon
+			const feature = geoJson.features[0];
+			if (feature.geometry.type === "Polygon") {
+				let coordinates = feature.geometry.coordinates[0];
+				let wktCoordinates = coordinates.map(coord => coord.join(' ')).join(', ');
+				return `POLYGON((${wktCoordinates}))`;
+			}
+		} else if (geoJson.features.length > 1) {
+			// Multiple features: Convert to WKT MultiPolygon
+			let multiPolygonCoordinates = geoJson.features.map(feature => {
+				if (feature.geometry.type === "Polygon") {
+					let coordinates = feature.geometry.coordinates[0];
+					return `(${coordinates.map(coord => coord.join(' ')).join(', ')})`;
 				}
-				wkt += ring.map(coord => `${coord[0]} ${coord[1]}`).join(', ');
-			});
-			wkt += '))';
-		} else if (geometry.type === 'Point') {
-			wkt = `POINT(${geometry.coordinates[0]} ${geometry.coordinates[1]})`;
-		} else if (geometry.type === 'LineString') {
-			wkt = `LINESTRING(${geometry.coordinates.map(coord => `${coord[0]} ${coord[1]}`).join(', ')})`;
-		} else if (geometry.type === 'MultiPolygon') {
-			wkt = 'MULTIPOLYGON(';
-			wkt += geometry.coordinates.map(polygon => {
-				return '(' + polygon.map(ring => {
-					return ring.map(coord => `${coord[0]} ${coord[1]}`).join(', ');
-				}).join(', ') + ')';
 			}).join(', ');
-			wkt += ')';
-		} else if (geometry.type === 'FeatureCollection' || geometry.type === 'Feature') {
-			return geojson.features.map(feature => geojsonToWKT(feature)).join(',');
+			return `MULTIPOLYGON(${multiPolygonCoordinates})`;
 		}
-
-		return wkt;
+		return null; // Return null if no valid Polygon or MultiPolygon features
 	}
 
 	function geojsonToWKTx(geojson) {
