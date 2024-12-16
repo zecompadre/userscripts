@@ -96,10 +96,9 @@
 
 		// Override the open method
 		XMLHttpRequest.prototype.open = function (...args) {
-
-			console.log(args);
-
-			deleteElementOnAjax();
+			var fromWKTButton = button.dataset.wkt || false;
+			if (!fromWKTButton)
+				deleteElementOnAjax();
 
 			return originalOpen.apply(this, args); // Call the original method
 		};
@@ -137,6 +136,8 @@
 
 		button.onclick = function (e) {
 
+			button.dataset.wkt = true;
+
 			var location = JSON.parse(localStorage.getItem('LatestsSearches'))[0].combinedLocationIds.replace(/,/g, '_')
 
 			var url = fetchurl.replace("[location]", location);
@@ -147,6 +148,8 @@
 			xhr.onreadystatechange = function () {
 				if (xhr.readyState === XMLHttpRequest.DONE) {
 					if (xhr.status === 200) {
+
+						button.dataset.wkt = false;
 
 						var jsonstr = xhr.responseText.replace(/(var(:?.*)geom_(:?.*)(?:\s)\=(?:\s))+/gm, "");
 
