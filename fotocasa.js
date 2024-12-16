@@ -131,22 +131,31 @@
 
 			try {
 				// Iterate over each location id and fetch data asynchronously
-				for (let id of ids) {
+				const featurePromises = ids.map(async (id) => {
 					const location = id.replace(/,/g, '_');
 					const url = fetchurl + location + ".js";
 
-					const response = await fetch(url);
-					if (!response.ok) {
-						console.error('Request failed with status:', response.status);
-						continue;  // Skip to next location if request fails
+					try {
+						const response = await fetch(url);
+						if (!response.ok) {
+							console.error('Request failed with status:', response.status);
+							return null;  // Return null or skip the current fetch if it fails
+						}
+
+						let jsonstr = await response.text();
+						jsonstr = jsonstr.replace(/(var(:?.*)geom_(:?.*)(?:\s)\=(?:\s))+/gm, "");
+
+						const feature = JSON.parse(jsonstr);
+						return feature;
+					} catch (error) {
+						console.error('Error fetching data for location', location, error);
+						return null;  // Handle any errors in individual fetch requests
 					}
+				});
 
-					let jsonstr = await response.text();
-					jsonstr = jsonstr.replace(/(var(:?.*)geom_(:?.*)(?:\s)\=(?:\s))+/gm, "");
-
-					const feature = JSON.parse(jsonstr);
-					features.features.push(feature);
-				}
+				// Wait for all fetches to complete and filter out any failed responses (null values)
+				const featuresArray = await Promise.all(featurePromises);
+				features.features.push(...featuresArray.filter(feature => feature !== null));
 
 				console.log("features", features);
 
