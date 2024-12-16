@@ -27,6 +27,7 @@
 	})();
 
 	window.addEventListener('load', function () {
+		
 		//setTimeout(function() {
 		var closeMsg = function (e) {
 			var msg = document.getElementById("map-shape-message");
@@ -41,6 +42,26 @@
 		};
 
 		console.log(google.maps)
+
+
+		const drawingManager = new google.maps.drawing.DrawingManager({
+			drawingMode: google.maps.drawing.OverlayType.POLYGON,
+			drawingControlOptions: {
+			  drawingModes: ["polygon"]
+			},
+			polygonOptions: polyOptions,
+			map: this.map
+		  });
+
+
+		  var polygons = [];
+google.maps.event.addListener(drawingManager, 'polygoncomplete', function (polygon) {
+    polygons.push(polygon);
+});
+
+console.log(polygons)
+
+
 return;
 
 
