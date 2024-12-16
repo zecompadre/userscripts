@@ -5,18 +5,54 @@
 	var fetchurl = "https://geom.fotocasa.es/v104/geom_[location].js";
 
 
-	function geoJsonToWKT(geoJson) {
-		if (geoJson.geometry.type === "Polygon") {
-			// For Polygon, just join the coordinates in WKT format
-			return "POLYGON((" + geoJson.geometry.coordinates[0].map(coord => coord.join(" ")).join(", ") + "))";
-		} else if (geoJson.geometry.type === "MultiPolygon") {
-			// For MultiPolygon, loop through each polygon and join coordinates in WKT format
-			return "MULTIPOLYGON((" + geoJson.geometry.coordinates.map(polygon =>
-				"(" + polygon[0].map(coord => coord.join(" ")).join(", ") + ")"
-			).join(", ") + "))";
-		} else {
-			throw new Error("Unsupported geometry type: " + geoJson.geometry.type);
+	function geojsonToWKT(geojson) {
+		const geometryTypes = {
+			Point: 'POINT',
+			MultiPoint: 'MULTIPONT',
+			LineString: 'LINESTRING',
+			MultiLineString: 'MULTILINESTRING',
+			Polygon: 'POLYGON',
+			MultiPolygon: 'MULTIPOLYGON'
+		};
+
+		function convertCoordinates(coords) {
+			return coords.map(coord => coord.join(' ')).join(', ');
 		}
+
+		function convertGeometry(geometry) {
+			const {
+				type,
+				coordinates
+			} = geometry;
+
+			switch (type) {
+				case 'Point':
+					return `${geometryTypes[type]} (${convertCoordinates(coordinates)})`;
+				case 'MultiPoint':
+					return `${geometryTypes[type]} (${coordinates.map(convertCoordinates).join(', ')})`;
+				case 'LineString':
+					return `${geometryTypes[type]} (${convertCoordinates(coordinates)})`;
+				case 'MultiLineString':
+					return `${geometryTypes[type]} (${coordinates.map(convertCoordinates).join(', ')})`;
+				case 'Polygon':
+					return `${geometryTypes[type]} (${coordinates.map(convertCoordinates).join(', ')})`;
+				case 'MultiPolygon':
+					return `${geometryTypes[type]} (${coordinates.map(convertCoordinates).join(', ')})`;
+				default:
+					throw new Error(`Unsupported geometry type: ${type}`);
+			}
+		}
+
+		const {
+			type,
+			coordinates
+		} = geojson.geometry;
+
+		if (!geometryTypes[type]) {
+			throw new Error(`Unsupported geometry type: ${type}`);
+		}
+
+		return convertGeometry(geometry);
 	}
 
 
@@ -58,7 +94,7 @@
 
 						console.log("feature", feature);
 
-						var wkt = geoJsonToWKT(feature);
+						var wkt = geojsonToWKT(feature);
 
 						console.log("wkt", wkt);
 
