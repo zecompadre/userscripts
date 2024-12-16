@@ -91,6 +91,24 @@
 
 	window.addEventListener('load', function () {
 
+		// Save the original XMLHttpRequest open method
+		const originalOpen = XMLHttpRequest.prototype.open;
+
+		// Override the open method
+		XMLHttpRequest.prototype.open = function (...args) {
+			this.addEventListener('load', () => {
+				// After the request completes, delete the element
+				deleteElementOnAjax();
+			});
+
+			return originalOpen.apply(this, args); // Call the original method
+		};
+
+		// Function to delete the element
+		function deleteElementOnAjax() {
+			alert(2)
+		}
+
 		const container = document.createElement('div');
 		container.classList.add('fc-Save-search');
 
