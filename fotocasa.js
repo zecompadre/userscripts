@@ -28,38 +28,6 @@
 		return null; // Return null if no valid Polygon or MultiPolygon features
 	}
 
-	function geojsonToWKTx(geojson) {
-
-		var val = geojson; // Your GeoJSON goes here
-		var wkt_options = {};
-		var geojson_format = new OpenLayers.Format.GeoJSON();
-		var testFeatures = geojson_format.read(val); // Read GeoJSON
-
-		// Function to handle GeometryCollection
-		function flattenGeometry(feature) {
-			if (feature.geometry.CLASS_NAME === 'OpenLayers.Geometry.Collection') {
-				// Flatten the GeometryCollection into its components
-				return feature.geometry.components.map(function (component) {
-					return new OpenLayers.Feature.Vector(component);
-				});
-			}
-			return [feature]; // Return the feature as-is if not a GeometryCollection
-		}
-
-		// Flatten GeometryCollections
-		var flattenedFeatures = [];
-		testFeatures.forEach(function (feature) {
-			flattenedFeatures = flattenedFeatures.concat(flattenGeometry(feature));
-		});
-
-		var wkt = new OpenLayers.Format.WKT(wkt_options);
-		var out = flattenedFeatures.map(function (feature) {
-			return wkt.write(feature); // Write each feature to WKT
-		}).join('\n'); // Join multiple WKT strings if needed
-
-		return out;
-	}
-
 	window.addEventListener('load', function () {
 
 		// Save the original XMLHttpRequest open method
@@ -144,10 +112,10 @@
 				const featuresArray = await Promise.all(featurePromises);
 				features.features.push(...featuresArray.filter(feature => feature !== null));
 
-				console.log("features", features);
+				//console.log("features", features);
 
 				const wkt = geojsonToWKT(features);
-				console.log("wkt", wkt);
+				//console.log("wkt", wkt);
 
 				copyToCipboard(wkt);
 
