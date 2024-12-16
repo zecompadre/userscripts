@@ -52,6 +52,8 @@
 
 						var jsonstr = xhr.responseText.replace(/(var(:?.*)geom_(:?.*)(?:\s)\=(?:\s))+/gm, "");
 
+						console.log("jsonstr", jsonstr);
+
 						var feature = JSON.parse(jsonstr);
 
 						console.log("feature", feature);
