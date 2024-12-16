@@ -85,61 +85,66 @@
 
 			button.dataset.wkt = true;
 
-			var location = JSON.parse(localStorage.getItem('LatestsSearches'))[0].combinedLocationIds.replace(/,/g, '_')
+			var ids = JSON.parse(localStorage.getItem('LatestsSearches'))[0].combinedLocationIds.split(";");
 
-			var url = fetchurl + location + ".js";
+			ids.forEach(function (id, index) {
 
-			var xhr = new XMLHttpRequest();
+				var location = ids[index].replace(/,/g, '_')
 
-			xhr.open('GET', url, true);
-			xhr.onreadystatechange = function () {
-				if (xhr.readyState === XMLHttpRequest.DONE) {
-					if (xhr.status === 200) {
+				var url = fetchurl + location + ".js";
 
-						button.dataset.wkt = false;
+				var xhr = new XMLHttpRequest();
 
-						var jsonstr = xhr.responseText.replace(/(var(:?.*)geom_(:?.*)(?:\s)\=(?:\s))+/gm, "");
+				xhr.open('GET', url, true);
+				xhr.onreadystatechange = function () {
+					if (xhr.readyState === XMLHttpRequest.DONE) {
+						if (xhr.status === 200) {
 
-						console.log("jsonstr", jsonstr);
+							button.dataset.wkt = false;
 
-						var feature = JSON.parse(jsonstr);
+							var jsonstr = xhr.responseText.replace(/(var(:?.*)geom_(:?.*)(?:\s)\=(?:\s))+/gm, "");
 
-						console.log("feature", feature);
+							console.log("jsonstr", jsonstr);
 
-						var wkt = geojsonToWKT(feature);
+							var feature = JSON.parse(jsonstr);
 
-						console.log("wkt", wkt);
+							console.log("feature", feature);
 
-						copyToCipboard(wkt);
+							var wkt = geojsonToWKT(feature);
 
-						var msg = document.getElementById("map-undo-message");
-						if (msg)
-							msg.remove();
+							console.log("wkt", wkt);
 
-						let element = document.getElementById("map-shape-message");
+							copyToCipboard(wkt);
 
-						if (element)
-							element.remove();
+							var msg = document.getElementById("map-undo-message");
+							if (msg)
+								msg.remove();
 
-						msg = document.createElement("div");
-						msg.id = "map-shape-message";
-						msg.style.width = "100%";
-						msg.style.textAlign = "center";
-						msg.style.backgroundColor = "var(--c-secondary-dark-2)";
-						msg.style.color = "#fff";
+							let element = document.getElementById("map-shape-message");
 
-						msg.innerHTML = "SHAPE Zona visível, copiada para o clipboard<br />Verificar -> <a id='shapetest' href='" + validator + "' target='_shapetest' style='color: #fff; text-decoration: none; font-weight: 600;'> Shape Test!</a>";
+							if (element)
+								element.remove();
 
-						var map = document.querySelector(".re-SearchMapWrapper");
+							msg = document.createElement("div");
+							msg.id = "map-shape-message";
+							msg.style.width = "100%";
+							msg.style.textAlign = "center";
+							msg.style.backgroundColor = "var(--c-secondary-dark-2)";
+							msg.style.color = "#fff";
 
-						map.insertBefore(msg, map.firstChild);
+							msg.innerHTML = "SHAPE Zona visível, copiada para o clipboard<br />Verificar -> <a id='shapetest' href='" + validator + "' target='_shapetest' style='color: #fff; text-decoration: none; font-weight: 600;'> Shape Test!</a>";
 
-					} else {
-						console.error('Request failed with status:', xhr.status);
+							var map = document.querySelector(".re-SearchMapWrapper");
+
+							map.insertBefore(msg, map.firstChild);
+
+						} else {
+							console.error('Request failed with status:', xhr.status);
+						}
 					}
-				}
-			};
-			xhr.send();
+				};
+				xhr.send();
+			});
 
 			return false;
 		};
