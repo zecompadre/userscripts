@@ -8,8 +8,8 @@
 		const originalFetch = window.fetch;
 	
 		window.fetch = async function(resource, init) {
-			console.log('Intercepted Request:', resource);
-			var isgeo = resource.indexOf("/geo_") > -1;
+			console.log('Intercepted Request:', (resource.url || ''));
+			var isgeo =(resource.url || '').indexOf("/geo_") > -1;
 			if(isgeo)
 			{
 
