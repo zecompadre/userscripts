@@ -118,79 +118,66 @@
 
 		var button = document.getElementById("btn-copy");
 
-		button.onclick = function (e) {
-
+		button.onclick = async function (e) {
 			button.dataset.wkt = true;
 
-			var ids = JSON.parse(localStorage.getItem('LatestsSearches'))[0].combinedLocationIds.split(";");
+			// Get the latest searches from localStorage
+			const ids = JSON.parse(localStorage.getItem('LatestsSearches'))[0].combinedLocationIds.split(";");
 
-			var features = {
+			const features = {
 				type: "FeatureCollection",
 				features: []
 			};
 
-			ids.forEach(function (id, index) {
+			try {
+				// Iterate over each location id and fetch data asynchronously
+				for (let id of ids) {
+					const location = id.replace(/,/g, '_');
+					const url = fetchurl + location + ".js";
 
-				var location = ids[index].replace(/,/g, '_')
-
-				var url = fetchurl + location + ".js";
-
-				var xhr = new XMLHttpRequest();
-
-				xhr.open('GET', url, true);
-				xhr.onreadystatechange = function () {
-					if (xhr.readyState === XMLHttpRequest.DONE) {
-						if (xhr.status === 200) {
-
-							button.dataset.wkt = false;
-
-							var jsonstr = xhr.responseText.replace(/(var(:?.*)geom_(:?.*)(?:\s)\=(?:\s))+/gm, "");
-
-							//console.log("jsonstr", jsonstr);
-
-							var feature = JSON.parse(jsonstr);
-
-							features.features.push(feature);
-
-							//console.log("feature", feature);
-
-						} else {
-							console.error('Request failed with status:', xhr.status);
-						}
+					const response = await fetch(url);
+					if (!response.ok) {
+						console.error('Request failed with status:', response.status);
+						continue;  // Skip to next location if request fails
 					}
-				};
-				xhr.send();
-			});
 
-			console.log("features", features);
+					let jsonstr = await response.text();
+					jsonstr = jsonstr.replace(/(var(:?.*)geom_(:?.*)(?:\s)\=(?:\s))+/gm, "");
 
-			var wkt = geojsonToWKT(features);
+					const feature = JSON.parse(jsonstr);
+					features.features.push(feature);
+				}
 
-			console.log("wkt", wkt);
+				console.log("features", features);
 
-			copyToCipboard(wkt);
+				const wkt = geojsonToWKT(features);
+				console.log("wkt", wkt);
 
-			var msg = document.getElementById("map-undo-message");
-			if (msg)
-				msg.remove();
+				copyToCipboard(wkt);
 
-			let element = document.getElementById("map-shape-message");
+				// Remove existing messages
+				let msg = document.getElementById("map-undo-message");
+				if (msg) msg.remove();
 
-			if (element)
-				element.remove();
+				let element = document.getElementById("map-shape-message");
+				if (element) element.remove();
 
-			msg = document.createElement("div");
-			msg.id = "map-shape-message";
-			msg.style.width = "100%";
-			msg.style.textAlign = "center";
-			msg.style.backgroundColor = "var(--c-secondary-dark-2)";
-			msg.style.color = "#fff";
+				// Create and display new message
+				msg = document.createElement("div");
+				msg.id = "map-shape-message";
+				msg.style.width = "100%";
+				msg.style.textAlign = "center";
+				msg.style.backgroundColor = "var(--c-secondary-dark-2)";
+				msg.style.color = "#fff";
 
-			msg.innerHTML = "SHAPE Zona visível, copiada para o clipboard<br />Verificar -> <a id='shapetest' href='" + validator + "' target='_shapetest' style='color: #fff; text-decoration: none; font-weight: 600;'> Shape Test!</a>";
+				msg.innerHTML = "SHAPE Zona visível, copiada para o clipboard<br />Verificar -> <a id='shapetest' href='" + validator + "' target='_shapetest' style='color: #fff; text-decoration: none; font-weight: 600;'> Shape Test!</a>";
 
-			var map = document.querySelector(".re-SearchMapWrapper");
+				const map = document.querySelector(".re-SearchMapWrapper");
+				map.insertBefore(msg, map.firstChild);
 
-			map.insertBefore(msg, map.firstChild);
+			} catch (error) {
+				console.error('An error occurred:', error);
+			}
 
 			return false;
 		};
