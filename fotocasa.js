@@ -103,7 +103,7 @@
 						msg.classList.add("warning");
 						msg.style.width = "100%";
 						msg.style.textAlign = "center";
-						msg.innerHTML = "SHAPE " + titleCase(text) + ", copiada para o clipboard<br />Verificar -> <a id='shapetest' href='" + validator + "' target='_shapetest'> Shape Test!</a>";
+						msg.innerHTML = "SHAPE " + text + ", copiada para o clipboard<br />Verificar -> <a id='shapetest' href='" + validator + "' target='_shapetest'> Shape Test!</a>";
 
 						/*
 					var close = document.createElement("a");
