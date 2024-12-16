@@ -20,6 +20,10 @@
 		}
 
 		function convertGeometry(geometry) {
+			if (!geometry || !geometry.type || !geometry.coordinates) {
+				throw new Error('Invalid geometry object');
+			}
+
 			const {
 				type,
 				coordinates
@@ -43,16 +47,11 @@
 			}
 		}
 
-		const {
-			type,
-			coordinates
-		} = geojson.geometry;
-
-		if (!geometryTypes[type]) {
-			throw new Error(`Unsupported geometry type: ${type}`);
+		if (!geojson.geometry) {
+			throw new Error('Geometry not found in GeoJSON');
 		}
 
-		return convertGeometry(geometry);
+		return convertGeometry(geojson.geometry);
 	}
 
 
