@@ -23,6 +23,9 @@
 					return `(${coordinates.map(coord => coord.join(' ')).join(', ')})`;
 				}
 			}).join(', ');
+
+			multiPolygonCoordinates = multiPolygonCoordinates.replace(", , ", ", ");
+
 			return `MULTIPOLYGON((${multiPolygonCoordinates}))`;
 		}
 		return null; // Return null if no valid Polygon or MultiPolygon features
