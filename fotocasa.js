@@ -3,7 +3,7 @@
 	//var validator = "https://wkt-playground.zecompadre.com";
 	var validator = "https://wkt-plotter.zecompadre.com";
 
-
+/*
 	(function() {
 		const originalFetch = window.fetch;
 	
@@ -33,7 +33,7 @@
 			return response;
 		};
 	})();
-
+*/
 	window.addEventListener('load', function () {
 		//setTimeout(function() {
 		var closeMsg = function (e) {
@@ -48,13 +48,9 @@
 			return false;
 		};
 
-		console.log(google.maps)
 
-// Initialize the DrawingManager
-google.maps.event.addListener(map.data, "addfeature", (event) => {
-  console.log("GeoJSON feature added:", event.feature);
-});
-  
+		const latestSearches = JSON.parse(localStorage.getItem('LatestSearches'));
+		console.log(latestSearches);
 
 
 
