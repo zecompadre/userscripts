@@ -51,46 +51,7 @@ function geoJsonToWKT(geoJson) {
 
 
 	window.addEventListener('load', function () {
-		//setTimeout(function() {
-		var closeMsg = function (e) {
-			var msg = document.getElementById("map-shape-message");
-			if (msg) {
-				msg.remove();
-			}
-			msg = document.getElementById("map-undo-message");
-			if (msg) {
-				msg.remove();
-			}
-			return false;
-		};
 
-		var location  =		JSON.parse(localStorage.getItem('LatestsSearches'))[0].combinedLocationIds.replace(/,/g, '_')
-
-		var url = "https://geom.fotocasa.es/v104/geom_" + location + ".js";
-		var xhr = new XMLHttpRequest();
-
-		xhr.open('GET', url, true);
-		xhr.onreadystatechange = function () {
-			if (xhr.readyState === XMLHttpRequest.DONE) {
-				if (xhr.status === 200) {
-
-var jsonstr  = xhr.responseText.replace(/(var(:?.*)geom_(:?.*)(?:\s)\=(?:\s))+/gm, "");
-
-var feature = JSON.parse(jsonstr);
-
-
-console.log(geoJsonToWKT(feature));
-
-
-				} else {
-					console.error('Request failed with status:', xhr.status);
-				}
-			}
-		};
-		xhr.send();
-
-
-return;
 
 
 		var button = document.createElement("button");
@@ -110,39 +71,24 @@ return;
 
 		button.onclick = function (e) {
 
-			closeMsg();
+			var location  =		JSON.parse(localStorage.getItem('LatestsSearches'))[0].combinedLocationIds.replace(/,/g, '_')
 
-			var data = [];
-			var shapeType = "POLYGON((###))";
-			window.DrawManager.getCollection().forEach(collection => {
-				var polygons = collection.latLngs.getArray().reduce((accumulator_out, currentvalue_out, v) => {
-					var data = currentvalue_out.getArray().reduce((accumulator_in, currentvalue_in, u) => {
-						accumulator_in.push(currentvalue_in.lng() + " " + currentvalue_in.lat());
-						return accumulator_in;
-					}, []);
+		var url = "https://geom.fotocasa.es/v104/geom_" + location + ".js";
+		var xhr = new XMLHttpRequest();
 
-					if (data[0] !== data[data.length - 1]) {
-						console.log("must close");
-						data.push(data[0]);
-					}
-					else { console.log("already closed"); }
+		xhr.open('GET', url, true);
+		xhr.onreadystatechange = function () {
+			if (xhr.readyState === XMLHttpRequest.DONE) {
+				if (xhr.status === 200) {
 
-					accumulator_out.push(data);
+var jsonstr  = xhr.responseText.replace(/(var(:?.*)geom_(:?.*)(?:\s)\=(?:\s))+/gm, "");
 
-					return accumulator_out;
-				}, []);
+var feature = JSON.parse(jsonstr);
 
-				polygons.forEach(polygon => {
-					data.push(polygon.join(","));
-				});
+var wkt = geoJsonToWKT(feature);
+console.log(wkt);
 
-			});
-
-			if (data.length > 1) {
-				shapeType = "MULTIPOLYGON(((###)))";
-			}
-
-			copyToCipboard(shapeType.replace("###", data.join("),(")));
+copyToCipboard(wkt);
 
 			var bc = document.querySelectorAll(".breadcrumb-navigation > li > a");
 			var cur = document.querySelector(".breadcrumb-navigation-current-level");
@@ -201,6 +147,16 @@ return;
 			}
 
 			map.insertBefore(msg, map.firstChild);
+
+
+				} else {
+					console.error('Request failed with status:', xhr.status);
+				}
+			}
+		};
+		xhr.send();
+
+			
 
 			return false;
 		};
