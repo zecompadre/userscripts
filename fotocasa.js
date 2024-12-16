@@ -14,8 +14,9 @@
 		};
 	
 		XMLHttpRequest.prototype.send = function(body) {
-			console.log(`Intercepted Request: ${this._url}`);
-			console.log('Request Body:', body);
+
+			//console.log(`Intercepted Request: ${this._url}`);
+			//console.log('Request Body:', body);
 			
 			// Optionally modify the request body here
 			return originalSend.apply(this, arguments);
