@@ -51,25 +51,32 @@
 		var location  =		JSON.parse(localStorage.getItem('LatestsSearches'))[0].combinedLocationIds.replace(/,/g, '_')
 
 		var url = "https://geom.fotocasa.es/v104/geom_" + location + ".js";
-		fetch(url)
-		.then(response => {
-		  if (response.ok) {
-			console.log(response.text()); // or response.text() if the response is not JSON
+		var xhr = new XMLHttpRequest();
+
+		// Configure it: GET-request for the URL
+		xhr.open('GET', url, true);
+		
+		// Set up a callback function to handle the response
+		xhr.onreadystatechange = function () {
+			if (xhr.readyState === XMLHttpRequest.DONE) {
+				if (xhr.status === 200) {
+					// The request was successful, handle the response here
+					console.log(xhr.responseText);
 
 //var sss = ssss.replace("var geom_" + location + "", "");
 
 //console.log(sss);
 
-		  } else {
-			throw new Error('Network response was not ok');
-		  }
-		})
-		.then(data => {
-		  console.log(data); // Handle the response data here
-		})
-		.catch(error => {
-		  console.error('There was a problem with the fetch operation:', error);
-		});
+
+				} else {
+					// Handle error case here
+					console.error('Request failed with status:', xhr.status);
+				}
+			}
+		};
+		
+		// Send the request
+		xhr.send();
 
 
 return;
