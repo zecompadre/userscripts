@@ -106,7 +106,9 @@
 
 		// Function to delete the element
 		function deleteElementOnAjax() {
-			alert(2)
+			let element = document.getElementById("map-shape-message");
+			if (element)
+				element.remove();
 		}
 
 		const container = document.createElement('div');
