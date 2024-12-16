@@ -44,7 +44,6 @@
 		// Override the open method
 		XMLHttpRequest.prototype.open = function (...args) {
 			var loadGEOM = (args[1] || "").indexOf("/geom_") > -1;
-
 			if (!loadGEOM)
 				deleteElementOnAjax();
 
