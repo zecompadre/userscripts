@@ -97,6 +97,9 @@
 		// Override the open method
 		XMLHttpRequest.prototype.open = function (...args) {
 			var fromWKTButton = button.dataset.wkt || false;
+
+			console.log("fromWKTButton", fromWKTButton);
+
 			if (!fromWKTButton)
 				deleteElementOnAjax();
 
