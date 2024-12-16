@@ -24,7 +24,7 @@
 				}
 			}).join(', ');
 
-			multiPolygonCoordinates = multiPolygonCoordinates.replace(", , ", ", ");
+			multiPolygonCoordinates = multiPolygonCoordinates.replace(/, , /g, ", ");
 
 			return `MULTIPOLYGON((${multiPolygonCoordinates}))`;
 		}
