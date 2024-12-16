@@ -54,7 +54,7 @@
 		fetch(url)
 		.then(response => {
 		  if (response.ok) {
-			console.log*response.json()(); // or response.text() if the response is not JSON
+			console.log(response.json()); // or response.text() if the response is not JSON
 		  } else {
 			throw new Error('Network response was not ok');
 		  }
