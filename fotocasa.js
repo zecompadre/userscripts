@@ -63,34 +63,10 @@
 						console.log("wkt", wkt);
 
 						copyToCipboard(wkt);
-						/*
-												var bc = document.querySelectorAll(".breadcrumb-navigation > li > a");
-												var cur = document.querySelector(".breadcrumb-navigation-current-level");
 
-												if (bc.length === 0) {
-													bc = document.querySelectorAll(".breadcrumb-geo > ul > li > a");
-													cur = document.querySelector(".breadcrumb-geo > ul > li:last-child");
-												}
-						*/
-						var text = "Zona visível";
-						/*
-												if (bc) {
-													var bcText = [];
-													bc.forEach(a => {
-														bcText.push(a.innerText);
-													});
-													if (cur) {
-														bcText.push(cur.innerText);
-													}
-													if (bcText.length > 0) {
-														text = bcText.join(", ");
-													}
-												}
-						*/
 						var msg = document.getElementById("map-undo-message");
-						if (msg) {
+						if (msg)
 							msg.remove();
-						}
 
 						let element = document.getElementById("map-shape-message");
 
@@ -105,28 +81,10 @@
 						msg.classList.add("warning");
 						msg.style.width = "100%";
 						msg.style.textAlign = "center";
-						msg.innerHTML = "SHAPE " + text + ", copiada para o clipboard<br />Verificar -> <a id='shapetest' href='" + validator + "' target='_shapetest'> Shape Test!</a>";
+						msg.innerHTML = "SHAPE Zona visível, copiada para o clipboard<br />Verificar -> <a id='shapetest' href='" + validator + "' target='_shapetest'> Shape Test!</a>";
 
-						/*
-					var close = document.createElement("a");
-					close.classList.add("icon-close");
-					close.classList.add("close-btn");
-					close.style.cursor = "pointer";
-					close.style.position = "absolute";
-					close.style.right = "5px";
-					close.style.top = "5px";
-
-					close.onclick = closeMsg;
-
-					msg.appendChild(close);
-*/
 						var map = document.querySelector(".re-SearchMapWrapper");
-						/*
-											var shapeclose = document.querySelector(".delete-cross-button.icon-close");
-											if (shapeclose) {
-												document.querySelector(".delete-cross-button.icon-close").onclick = closeMsg;
-											}
-						*/
+
 						map.insertBefore(msg, map.firstChild);
 
 
