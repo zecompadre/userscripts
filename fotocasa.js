@@ -5,36 +5,37 @@
 	var fetchurl = "https://geom.fotocasa.es/v104/geom_";
 
 	function geojsonToWKT(geojson) {
-		if (geojson.type === 'FeatureCollection') {
-			return geojson.features.map(feature => geojsonToWKT(feature));
-		}
-
-		const geometry = geojson.geometry;
 		let wkt = '';
 
-		if (geometry.type === 'Polygon') {
+		if (geojson.type === 'FeatureCollection') {
+			// Handle FeatureCollection by processing each feature
+			wkt = geojson.features.map(feature => geojsonToWKT(feature)).join(',');
+		} else if (geojson.type === 'Feature') {
+			// Handle individual Feature geometry
+			wkt = geojsonToWKT(geojson.geometry);
+		} else if (geojson.type === 'Polygon') {
+			// Handle Polygon geometry
 			wkt = 'POLYGON((';
-			geometry.coordinates.forEach((ring, index) => {
-				if (index > 0) {
-					wkt += ', ';
-				}
+			geojson.coordinates.forEach((ring, index) => {
+				if (index > 0) wkt += ', ';
 				wkt += ring.map(coord => `${coord[0]} ${coord[1]}`).join(', ');
 			});
 			wkt += '))';
-		} else if (geometry.type === 'Point') {
-			wkt = `POINT(${geometry.coordinates[0]} ${geometry.coordinates[1]})`;
-		} else if (geometry.type === 'LineString') {
-			wkt = `LINESTRING(${geometry.coordinates.map(coord => `${coord[0]} ${coord[1]}`).join(', ')})`;
-		} else if (geometry.type === 'MultiPolygon') {
+		} else if (geojson.type === 'MultiPolygon') {
+			// Handle MultiPolygon geometry
 			wkt = 'MULTIPOLYGON(';
-			wkt += geometry.coordinates.map(polygon => {
+			wkt += geojson.coordinates.map(polygon => {
 				return '(' + polygon.map(ring => {
 					return ring.map(coord => `${coord[0]} ${coord[1]}`).join(', ');
 				}).join(', ') + ')';
 			}).join(', ');
 			wkt += ')';
-		} else if (geometry.type === 'FeatureCollection' || geometry.type === 'Feature') {
-			return geojson.features.map(feature => geojsonToWKT(feature)).join(',');
+		} else if (geojson.type === 'Point') {
+			// Handle Point geometry
+			wkt = `POINT(${geojson.coordinates[0]} ${geojson.coordinates[1]})`;
+		} else if (geojson.type === 'LineString') {
+			// Handle LineString geometry
+			wkt = `LINESTRING(${geojson.coordinates.map(coord => `${coord[0]} ${coord[1]}`).join(', ')})`;
 		}
 
 		return wkt;
