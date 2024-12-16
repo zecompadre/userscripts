@@ -41,14 +41,6 @@
 		};
 
 		console.log(google.maps)
-
-
-
-
-
-
-
-
 return;
 
 
