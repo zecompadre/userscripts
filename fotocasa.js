@@ -8,10 +8,10 @@
 	function geoJsonToWKT(geoJson) {
 		if (geoJson.geometry.type === "Polygon") {
 			// For Polygon, just join the coordinates in WKT format
-			return "POLYGON ((" + geoJson.geometry.coordinates[0].map(coord => coord.join(" ")).join(", ") + "))";
+			return "POLYGON((" + geoJson.geometry.coordinates[0].map(coord => coord.join(" ")).join(", ") + "))";
 		} else if (geoJson.geometry.type === "MultiPolygon") {
 			// For MultiPolygon, loop through each polygon and join coordinates in WKT format
-			return "MULTIPOLYGON ((" + geoJson.geometry.coordinates.map(polygon =>
+			return "MULTIPOLYGON((" + geoJson.geometry.coordinates.map(polygon =>
 				"(" + polygon[0].map(coord => coord.join(" ")).join(", ") + ")"
 			).join(", ") + "))";
 		} else {
