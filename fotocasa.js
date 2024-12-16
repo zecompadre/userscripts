@@ -55,32 +55,34 @@
 						var feature = JSON.parse(jsonstr);
 
 						var wkt = geoJsonToWKT(feature);
+
 						console.log(wkt);
 
 						copyToCipboard(wkt);
+						/*
+												var bc = document.querySelectorAll(".breadcrumb-navigation > li > a");
+												var cur = document.querySelector(".breadcrumb-navigation-current-level");
 
-						var bc = document.querySelectorAll(".breadcrumb-navigation > li > a");
-						var cur = document.querySelector(".breadcrumb-navigation-current-level");
-
-						if (bc.length === 0) {
-							bc = document.querySelectorAll(".breadcrumb-geo > ul > li > a");
-							cur = document.querySelector(".breadcrumb-geo > ul > li:last-child");
-						}
-
+												if (bc.length === 0) {
+													bc = document.querySelectorAll(".breadcrumb-geo > ul > li > a");
+													cur = document.querySelector(".breadcrumb-geo > ul > li:last-child");
+												}
+						*/
 						var text = "Zona visível";
-						if (bc) {
-							var bcText = [];
-							bc.forEach(a => {
-								bcText.push(a.innerText);
-							});
-							if (cur) {
-								bcText.push(cur.innerText);
-							}
-							if (bcText.length > 0) {
-								text = bcText.join(", ");
-							}
-						}
-
+						/*
+												if (bc) {
+													var bcText = [];
+													bc.forEach(a => {
+														bcText.push(a.innerText);
+													});
+													if (cur) {
+														bcText.push(cur.innerText);
+													}
+													if (bcText.length > 0) {
+														text = bcText.join(", ");
+													}
+												}
+						*/
 						var msg = document.getElementById("map-undo-message");
 						if (msg) {
 							msg.remove();
