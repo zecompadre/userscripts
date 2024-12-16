@@ -1,7 +1,7 @@
 (function () {
 
-	//var validator = "https://wkt-playground.zecompadre.com";
-	var validator = "https://wkt-plotter.zecompadre.com";
+	var validator = "https://wkt-playground.zecompadre.com";
+	//var validator = "https://wkt-plotter.zecompadre.com";
 	var fetchurl = "https://geom.fotocasa.es/v104/geom_[location].js";
 
 
