@@ -5,6 +5,42 @@
 	var fetchurl = "https://geom.fotocasa.es/v104/geom_";
 
 	function geojsonToWKT(geojson) {
+		if (geojson.type === 'FeatureCollection') {
+			return geojson.features.map(feature => geojsonToWKT(feature));
+		}
+
+		const geometry = geojson.geometry;
+		let wkt = '';
+
+		if (geometry.type === 'Polygon') {
+			wkt = 'POLYGON((';
+			geometry.coordinates.forEach((ring, index) => {
+				if (index > 0) {
+					wkt += ', ';
+				}
+				wkt += ring.map(coord => `${coord[0]} ${coord[1]}`).join(', ');
+			});
+			wkt += '))';
+		} else if (geometry.type === 'Point') {
+			wkt = `POINT(${geometry.coordinates[0]} ${geometry.coordinates[1]})`;
+		} else if (geometry.type === 'LineString') {
+			wkt = `LINESTRING(${geometry.coordinates.map(coord => `${coord[0]} ${coord[1]}`).join(', ')})`;
+		} else if (geometry.type === 'MultiPolygon') {
+			wkt = 'MULTIPOLYGON(';
+			wkt += geometry.coordinates.map(polygon => {
+				return '(' + polygon.map(ring => {
+					return ring.map(coord => `${coord[0]} ${coord[1]}`).join(', ');
+				}).join(', ') + ')';
+			}).join(', ');
+			wkt += ')';
+		} else if (geometry.type === 'FeatureCollection' || geometry.type === 'Feature') {
+			return geojson.features.map(feature => geojsonToWKT(feature)).join(',');
+		}
+
+		return wkt;
+	}
+
+	function geojsonToWKTx(geojson) {
 
 		var val = geojson; // Your GeoJSON goes here
 		var wkt_options = {};
