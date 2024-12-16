@@ -154,13 +154,12 @@
 
 						msg = document.createElement("div");
 						msg.id = "map-shape-message";
-						msg.classList.add("map-message");
-						msg.classList.add("feedback");
-						msg.classList.add("contextual");
-						msg.classList.add("warning");
 						msg.style.width = "100%";
 						msg.style.textAlign = "center";
-						msg.innerHTML = "SHAPE Zona visível, copiada para o clipboard<br />Verificar -> <a id='shapetest' href='" + validator + "' target='_shapetest'> Shape Test!</a>";
+						msg.style.backgroundColor = "var(--c-secondary-dark-2)";
+						msg.style.color = "#fff";
+
+						msg.innerHTML = "SHAPE Zona visível, copiada para o clipboard<br />Verificar -> <a id='shapetest' href='" + validator + "' target='_shapetest' style='color: #fff; text-decoration: none; font-weight: 600;'> Shape Test!</a>";
 
 						var map = document.querySelector(".re-SearchMapWrapper");
 
