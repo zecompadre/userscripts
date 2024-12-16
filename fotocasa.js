@@ -48,9 +48,7 @@
 			return false;
 		};
 
-
-		const latestSearches = JSON.parse(localStorage.getItem('LatestsSearches'));
-		var location  = latestSearches.combinedLocationIds.join("_");
+		var location  =		JSON.parse(localStorage.getItem('LatestsSearches'))[0].combinedLocationIds.replace(/,/g, '_')
 
 		var url = "https://geom.fotocasa.es/v104/geom_" + location + ".js";
 		fetch(url)
