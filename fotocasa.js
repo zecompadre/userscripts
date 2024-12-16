@@ -23,7 +23,7 @@
 					return `(${coordinates.map(coord => coord.join(' ')).join(', ')})`;
 				}
 			}).join(', ');
-			return `MULTIPOLYGON(${multiPolygonCoordinates})`;
+			return `MULTIPOLYGON((${multiPolygonCoordinates}))`;
 		}
 		return null; // Return null if no valid Polygon or MultiPolygon features
 	}
