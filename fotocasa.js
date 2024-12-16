@@ -49,8 +49,8 @@
 		};
 
 
-		const latestSearches = localStorage.getItem('LatestSearches');
-		console.log(latestSearches);
+		const latestSearches = JSON.parse(localStorage.getItem('LatestsSearches'));
+		console.log(latestSearches.combinedLocationIds.join("_"));
 
 
 
