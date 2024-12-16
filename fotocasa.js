@@ -53,7 +53,7 @@ function geoJsonToWKT(geoJson) {
 	window.addEventListener('load', function () {
 
 		var button = document.createElement("button");
-		button.classList.add('sui-AtomButton sui-AtomButton--primary sui-AtomButton--solid sui-AtomButton--center sui-AtomButton--negative re-SharedTopbar-loginButton-notLoggedButton');
+		button.classList.add('button-copy');
 		button.setAttribute('role', 'button');
 
 		var icon = document.createElement("span");
@@ -65,9 +65,7 @@ function geoJsonToWKT(geoJson) {
 		text.innerText = 'Copiar Shape';
 		button.appendChild(text);
 
-		var  reSharedTopba = document.querySelector(".re-SharedTopbar");
-
-		reSharedTopba.appendChild(button);
+		document.body.appendChild(button);
 
 		button.onclick = function (e) {
 
