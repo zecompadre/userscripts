@@ -34,59 +34,6 @@
 		}).join('\n'); // Join multiple WKT strings if needed
 
 		return out;
-
-		const geometryTypes = {
-			Point: 'POINT',
-			MultiPoint: 'MULTIPONT',
-			LineString: 'LINESTRING',
-			MultiLineString: 'MULTILINESTRING',
-			Polygon: 'POLYGON',
-			MultiPolygon: 'MULTIPOLYGON'
-		};
-
-		function convertCoordinates(coords) {
-			return coords.map(coord => coord.join(' ')).join(', ');
-		}
-
-		function convertGeometry(geometry) {
-			if (!geometry || !geometry.type || !geometry.coordinates) {
-				throw new Error('Invalid geometry object');
-			}
-
-			const {
-				type,
-				coordinates
-			} = geometry;
-
-			switch (type) {
-				case 'Point':
-					return `${geometryTypes[type]} (${convertCoordinates(coordinates)})`;
-				case 'MultiPoint':
-					return `${geometryTypes[type]} (${coordinates.map(convertCoordinates).join(', ')})`;
-				case 'LineString':
-					return `${geometryTypes[type]} (${convertCoordinates(coordinates)})`;
-				case 'MultiLineString':
-					return `${geometryTypes[type]} (${coordinates.map(convertCoordinates).join(', ')})`;
-				case 'Polygon':
-					return `${geometryTypes[type]} (${convertCoordinates(coordinates)})`;
-				case 'MultiPolygon':
-					let wkt = geometryTypes[type] + ' (';
-					coordinates.forEach(ring => {
-						wkt += '(' + convertCoordinates(ring) + '), ';
-					});
-					// Remove trailing comma and space
-					return wkt.slice(0, -2) + ')';
-				default:
-					throw new Error(`Unsupported geometry type: ${type}`);
-			}
-		}
-
-		if (!geojson.geometry) {
-			throw new Error('Geometry not found in GeoJSON');
-		}
-
-		return convertGeometry(geojson.geometry);
-
 	}
 
 	window.addEventListener('load', function () {
@@ -98,10 +45,9 @@
 		XMLHttpRequest.prototype.open = function (...args) {
 			var fromWKTButton = button.dataset.wkt || false;
 
-			console.log("fromWKTButton", fromWKTButton);
+			console.log("fromWKTButton", args);
 
-			if (!fromWKTButton)
-				deleteElementOnAjax();
+			deleteElementOnAjax();
 
 			return originalOpen.apply(this, args); // Call the original method
 		};
