@@ -8,7 +8,8 @@
 		const originalFetch = window.fetch;
 	
 		window.fetch = async function(resource, init) {
-			console.log('Intercepted Request:', (resource.url || ''));
+			console.log('Intercepted Request:', resource);
+			console.log('Intercepted Request URL:', (resource.url || ''));
 			var isgeo =(resource.url || '').indexOf("/geo_") > -1;
 			if(isgeo)
 			{
@@ -51,8 +52,8 @@
 
 // Initialize the DrawingManager
 google.maps.event.addListener(map.data, "addfeature", (event) => {
-	console.log("GeoJSON feature added:", event.feature);
-  });
+  console.log("GeoJSON feature added:", event.feature);
+});
   
 
 
