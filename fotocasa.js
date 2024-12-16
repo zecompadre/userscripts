@@ -92,10 +92,9 @@
 	window.addEventListener('load', function () {
 
 		const container = document.createElement('div');
+		container.classList.add('fc-Save-search');
 
-		container.innerHTML = `
-  <div class="fc-Save-search" data-testid="fc-Save-search">
-    <button id="btn-copy" aria-label="Copiar Shape" class="sui-AtomButton sui-AtomButton--primary sui-AtomButton--solid sui-AtomButton--center sui-AtomButton--fullWidth">
+		container.innerHTML = `<button id="btn-copy" aria-label="Copiar Shape" class="sui-AtomButton sui-AtomButton--primary sui-AtomButton--solid sui-AtomButton--center sui-AtomButton--fullWidth">
       <span class="sui-AtomButton-inner">
         <span class="sui-AtomButton-leftIcon">
           <div class="bell-animation">
@@ -109,17 +108,7 @@
           <span>Copiar Shape</span>
         </span>
       </span>
-    </button>
-  </div>
-`;
-
-		// Append the container's content to the body or any other target element
-		document.body.appendChild(container.firstElementChild);
-
-		var div = document.createElement("div");
-		div.classList.add('fc-Save-search');
-
-		//document.body.appendChild(container);
+    </button>`;
 
 		const targetDiv = document.querySelector('.fc-Save-search'); // Replace '.existing-div' with the selector for your target div
 
