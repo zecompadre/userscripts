@@ -52,8 +52,6 @@ function geoJsonToWKT(geoJson) {
 
 	window.addEventListener('load', function () {
 
-
-
 		var button = document.createElement("button");
 		button.classList.add('button-copy');
 		button.setAttribute('role', 'button');
@@ -81,14 +79,14 @@ function geoJsonToWKT(geoJson) {
 			if (xhr.readyState === XMLHttpRequest.DONE) {
 				if (xhr.status === 200) {
 
-var jsonstr  = xhr.responseText.replace(/(var(:?.*)geom_(:?.*)(?:\s)\=(?:\s))+/gm, "");
+			var jsonstr  = xhr.responseText.replace(/(var(:?.*)geom_(:?.*)(?:\s)\=(?:\s))+/gm, "");
 
-var feature = JSON.parse(jsonstr);
+			var feature = JSON.parse(jsonstr);
 
-var wkt = geoJsonToWKT(feature);
-console.log(wkt);
+			var wkt = geoJsonToWKT(feature);
+			console.log(wkt);
 
-copyToCipboard(wkt);
+			copyToCipboard(wkt);
 
 			var bc = document.querySelectorAll(".breadcrumb-navigation > li > a");
 			var cur = document.querySelector(".breadcrumb-navigation-current-level");
