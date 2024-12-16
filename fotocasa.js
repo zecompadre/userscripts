@@ -96,10 +96,7 @@
 
 		// Override the open method
 		XMLHttpRequest.prototype.open = function (...args) {
-			this.addEventListener('load', () => {
-				// After the request completes, delete the element
-				deleteElementOnAjax();
-			});
+			deleteElementOnAjax();
 
 			return originalOpen.apply(this, args); // Call the original method
 		};
