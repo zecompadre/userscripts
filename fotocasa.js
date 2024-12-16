@@ -54,7 +54,12 @@
 		fetch(url)
 		.then(response => {
 		  if (response.ok) {
-			console.log(response.json()); // or response.text() if the response is not JSON
+			var ssss =response.text; // or response.text() if the response is not JSON
+
+var sss = ssss.replace("var geom_" + location + "", "");
+
+console.log(sss);
+
 		  } else {
 			throw new Error('Network response was not ok');
 		  }
