@@ -125,6 +125,7 @@ function geoJsonToWKT(geoJson) {
 					msg.style.textAlign = "center";
 					msg.innerHTML = "SHAPE " + titleCase(text) + ", copiada para o clipboard<br />Verificar -> <a id='shapetest' href='" + validator + "' target='_shapetest'> Shape Test!</a>";
 
+					/*
 					var close = document.createElement("a");
 					close.classList.add("icon-close");
 					close.classList.add("close-btn");
@@ -143,7 +144,7 @@ function geoJsonToWKT(geoJson) {
 					if (shapeclose) {
 						document.querySelector(".delete-cross-button.icon-close").onclick = closeMsg;
 					}
-
+*/
 					map.insertBefore(msg, map.firstChild);
 
 
