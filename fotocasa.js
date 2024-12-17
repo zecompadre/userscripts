@@ -127,10 +127,18 @@
 			// Wait for all fetches to complete
 			const featuresArray = await Promise.all(featurePromises);
 
-			if (featuresArray.type === "FeatureCollection")
-				features = featuresArray;
-			else
-				features.features.push(...featuresArray.filter(feature => feature !== null));
+			console.log("featuresArray", featuresArray);
+
+			// Process fetched features
+			featuresArray.forEach((item) => {
+				if (item && item.type === "FeatureCollection") {
+					// If it's a FeatureCollection, merge its features into the main collection
+					features.features.push(...item.features);
+				} else if (item) {
+					// If it's a single feature, add it directly to the features array
+					features.features.push(item);
+				}
+			});
 
 			console.log('Features added successfully:', JSON.stringify(features.features));
 
