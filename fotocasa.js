@@ -19,39 +19,41 @@
 	}
 
 	function geojsonToWKT(geoJSON) {
-		return geoJSON.features.map(({ geometry }) => {
-			switch (geometry.type) {
-				case "Polygon":
-					return `POLYGON ((${geometry.coordinates[0].map(coord => coord.join(" ")).join(", ")}))`;
+		return geoJSON.features
+			.filter(({ geometry }) => geometry.coordinates && geometry.coordinates.length > 0)  // Filter out geometries with no coordinates
+			.map(({ geometry }) => {
+				switch (geometry.type) {
+					case "Polygon":
+						return `POLYGON ((${geometry.coordinates[0].map(coord => coord.join(" ")).join(", ")}))`;
 
-				case "MultiPolygon":
-					return `MULTIPOLYGON (${geometry.coordinates
-						.map(polygon => `((${polygon[0].map(coord => coord.join(" ")).join(", ")}))`)
-						.join(", ")})`;
+					case "MultiPolygon":
+						return `MULTIPOLYGON (${geometry.coordinates
+							.map(polygon => `((${polygon[0].map(coord => coord.join(" ")).join(", ")}))`)
+							.join(", ")})`;
 
-				case "Point":
-					return `POINT (${geometry.coordinates.join(" ")})`;
+					case "Point":
+						return `POINT (${geometry.coordinates.join(" ")})`;
 
-				case "MultiPoint":
-					return `MULTIPOINT (${geometry.coordinates.map(coord => `(${coord.join(" ")})`).join(", ")})`;
+					case "MultiPoint":
+						return `MULTIPOINT (${geometry.coordinates.map(coord => `(${coord.join(" ")})`).join(", ")})`;
 
-				case "LineString":
-					return `LINESTRING (${geometry.coordinates.map(coord => coord.join(" ")).join(", ")})`;
+					case "LineString":
+						return `LINESTRING (${geometry.coordinates.map(coord => coord.join(" ")).join(", ")})`;
 
-				case "MultiLineString":
-					return `MULTILINESTRING (${geometry.coordinates
-						.map(line => `(${line.map(coord => coord.join(" ")).join(", ")})`)
-						.join(", ")})`;
+					case "MultiLineString":
+						return `MULTILINESTRING (${geometry.coordinates
+							.map(line => `(${line.map(coord => coord.join(" ")).join(", ")})`)
+							.join(", ")})`;
 
-				case "GeometryCollection":
-					return `GEOMETRYCOLLECTION (${geometry.geometries
-						.map(geom => geojsonToWKT({ features: [{ geometry: geom }] })[0])  // Recursive call for each geometry in the collection
-						.join(", ")})`;
+					case "GeometryCollection":
+						return `GEOMETRYCOLLECTION (${geometry.geometries
+							.map(geom => geojsonToWKT({ features: [{ geometry: geom }] })[0])  // Recursive call for each geometry in the collection
+							.join(", ")})`;
 
-				default:
-					throw new Error(`Unsupported geometry type: ${geometry.type}`);
-			}
-		});
+					default:
+						throw new Error(`Unsupported geometry type: ${geometry.type}`);
+				}
+			});
 	}
 
 	async function fetchFeature(location) {
