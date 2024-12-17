@@ -4,7 +4,51 @@
 	//var validator = "https://wkt-plotter.zecompadre.com";
 	var fetchurl = "https://geom.fotocasa.es/v104/geom_";
 
-	function geojsonToWKT(geoJson) {
+	function geoJSONToWKT(geoJSON) {
+		if (geoJSON.type !== "FeatureCollection" || !geoJSON.features) {
+			throw new Error("Invalid GeoJSON format");
+		}
+
+		// Helper function to convert a polygon's coordinates to WKT
+		function polygonToWKT(polygonCoordinates) {
+			return polygonCoordinates
+				.map(ring =>
+					"(" + ring.map(coord => coord.join(" ")).join(", ") + ")"
+				)
+				.join(", ");
+		}
+
+		// Iterate over features to extract geometries and convert them
+		const wktGeometries = geoJSON.features.map(feature => {
+			const {
+				geometry
+			} = feature;
+
+			if (geometry.type === "MultiPolygon") {
+				const multiPolygonWKT = geometry.coordinates
+					.map(polygonToWKT)
+					.map(wkt => `(${wkt})`)
+					.join(", ");
+				return `MULTIPOLYGON ((${multiPolygonWKT}))`;
+			} else if (geometry.type === "Polygon") {
+				const polygonWKT = polygonToWKT(geometry.coordinates);
+				return `POLYGON (${polygonWKT})`;
+			} else {
+				throw new Error(`Unsupported geometry type: ${geometry.type}`);
+			}
+		});
+
+		// If there's more than one geometry, return a MULTIPOLYGON
+		if (wktGeometries.length > 1) {
+			const allPolygons = wktGeometries.map(wkt => wkt.replace(/^POLYGON /, "")).join(", ");
+			return `MULTIPOLYGON ((${allPolygons}))`;
+		}
+
+		// Return the single geometry as-is
+		return wktGeometries[0];
+	}
+
+	function geojsonToWKT1(geoJson) {
 
 		// Check if there's only one feature or more
 		if (geoJson.features.length === 1) {
