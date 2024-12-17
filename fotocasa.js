@@ -9,6 +9,18 @@
 		var wkt_options = {};
 		var geojson_format = new OpenLayers.Format.GeoJSON();
 		var testFeature = geojson_format.read(geojson);
+
+		var wkt = new OpenLayers.Format.WKT(wkt_options);
+
+		// Ensure each feature is processed individually
+		return testFeature.map(function (feature) {
+			return wkt.write(feature);
+		}).join(" "); // Join the WKT outputs, if multiple features exist
+
+
+		var wkt_options = {};
+		var geojson_format = new OpenLayers.Format.GeoJSON();
+		var testFeature = geojson_format.read(geojson);
 		var wkt = new OpenLayers.Format.WKT(wkt_options);
 		return wkt.write(testFeature);
 
