@@ -122,7 +122,7 @@
 
 			// Convert features to WKT and copy to clipboard
 			const wkt = geojsonToWKT(features);
-			//console.log("wkt", wkt.join("\n"));
+			console.log("wkt", wkt.join("\n"));
 			copyToCipboard(wkt.join("\n"));
 
 			// Create success message
