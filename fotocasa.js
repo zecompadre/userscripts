@@ -5,6 +5,7 @@
 	var fetchurl = "https://geom.fotocasa.es/v104/geom_";
 
 	function geojsonToWKT(geoJSON) {
+
 		if (geoJSON.type !== "FeatureCollection" || !geoJSON.features) {
 			throw new Error("Invalid GeoJSON format");
 		}
@@ -18,8 +19,7 @@
 				.join(", ");
 		}
 
-		// Iterate over features to extract geometries and convert them
-		const wktGeometries = geoJSON.features.map(feature => {
+		const wktParts = geoJSON.features.map(feature => {
 			const {
 				geometry
 			} = feature;
@@ -38,14 +38,16 @@
 			}
 		});
 
-		// If there's more than one geometry, return a MULTIPOLYGON
-		if (wktGeometries.length > 1) {
-			const allPolygons = wktGeometries.map(wkt => wkt.replace(/^POLYGON /, "")).join(", ");
-			return `MULTIPOLYGON (${allPolygons})`;
+		// Check if the GeoJSON contains multiple distinct geometries
+		if (wktParts.length > 1) {
+			const combinedPolygons = wktParts
+				.map(wkt => (wkt.startsWith("POLYGON") ? wkt.replace(/^POLYGON /, "") : wkt.replace(/^MULTIPOLYGON /, "")))
+				.join(", ");
+			return `MULTIPOLYGON (${combinedPolygons})`;
 		}
 
-		// Return the single geometry as-is
-		return wktGeometries[0];
+		// If there's only one geometry, return it directly
+		return wktParts[0];
 	}
 
 	function geojsonToWKT1(geoJson) {
