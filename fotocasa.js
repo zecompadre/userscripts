@@ -6,7 +6,7 @@
 
 	function geojsonToWKT(geoJson) {
 		const wktArray = geoJson.features.map(feature => {
-			return turfWkt.stringify(feature); // Convert each feature to WKT
+			return turf.wkt.stringify(feature); // Convert each feature to WKT
 		});
 		return wktArray;
 	}
