@@ -104,10 +104,6 @@
 
 			const wkt = geojsonToWKT(features);
 
-			const locationNames = features.map(feature => feature.properties.LocationName);
-
-			console.log(locationNames)
-
 			copyToClipboard(wkt.join("\n"));
 
 			showMessage(`
