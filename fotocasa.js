@@ -18,7 +18,7 @@
 		});
 	}
 
-	function geojsonToWKT(geoJSON) {
+	function geojsonToWKTxx(geoJSON) {
 		return geoJSON.features
 			.filter(({ geometry }) => geometry.coordinates && geometry.coordinates.length > 0)  // Filter out geometries with no coordinates
 			.map(({ geometry }) => {
@@ -54,6 +54,57 @@
 						throw new Error(`Unsupported geometry type: ${geometry.type}`);
 				}
 			});
+	}
+
+	function geojsonToWKT(geoJSON) {
+		return geoJSON.features
+			.map(({ geometry }) => {
+				// Ensure geometry has coordinates before processing
+				if (!geometry.coordinates || geometry.coordinates.length === 0) {
+					return null; // Skip geometries without coordinates
+				}
+
+				switch (geometry.type) {
+					case "Polygon":
+						return `POLYGON ((${geometry.coordinates[0].map(coord => coord.join(" ")).join(", ")}))`;
+
+					case "MultiPolygon":
+						return `MULTIPOLYGON (${geometry.coordinates
+							.map(polygon => `((${polygon[0].map(coord => coord.join(" ")).join(", ")})`)
+							.join(", ")})`;
+
+					case "Point":
+						return `POINT (${geometry.coordinates.join(" ")})`;
+
+					case "MultiPoint":
+						return `MULTIPOINT (${geometry.coordinates.map(coord => `(${coord.join(" ")})`).join(", ")})`;
+
+					case "LineString":
+						return `LINESTRING (${geometry.coordinates.map(coord => coord.join(" ")).join(", ")})`;
+
+					case "MultiLineString":
+						return `MULTILINESTRING (${geometry.coordinates
+							.map(line => `(${line.map(coord => coord.join(" ")).join(", ")})`)
+							.join(", ")})`;
+
+					case "GeometryCollection":
+						// Handle GeometryCollection, ensure each geometry is correctly converted
+						return `GEOMETRYCOLLECTION (${geometry.geometries
+							.map(geom => {
+								// Recursively handle each geometry in the collection
+								if (geom.coordinates && geom.coordinates.length > 0) {
+									return geojsonToWKT({ features: [{ geometry: geom }] })[0];
+								}
+								return null; // Skip invalid geometries in the collection
+							})
+							.filter(geom => geom !== null) // Filter out null results
+							.join(", ")})`;
+
+					default:
+						return null;  // Return null for unsupported geometry types
+				}
+			})
+			.filter(result => result !== null);  // Filter out null values from the final result
 	}
 
 	async function fetchFeature(location) {
