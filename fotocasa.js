@@ -69,6 +69,9 @@
 			const localStorageIds1 = storedData1 ? storedData1.flatMap(item => item.combinedLocationIds.split(";")) : [];
 
 			const localStorageIds2 = JSON.parse(localStorage.getItem('MyLastSearch'));
+
+			console.log(localStorageIds2)
+
 			if (localStorageIds2)
 				localStorageIds2 = localStorageIds2.combinedLocationIds.split(";");
 			//const localStorageIds2 = storedData2 ? storedData2.flatMap(item => item.combinedLocationIds.split(";")) : [];
