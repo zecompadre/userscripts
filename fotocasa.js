@@ -56,29 +56,12 @@
 			button.dataset.wkt = true;
 
 			console.log("LatestsSearches", localStorage.getItem('LatestsSearches'));
-			console.log("MyLastSearch", localStorage.getItem('MyLastSearch'));
 
 			// Get the latest searches from localStorage
 			//const ids = JSON.parse(localStorage.getItem('LatestsSearches'))[0].combinedLocationIds.split(";");
 
-			//const data = JSON.parse(localStorage.getItem('LatestsSearches')); // Parse the stored JSON data
-			//const ids = data.flatMap(item => item.combinedLocationIds.split(";")); // Extract and split all combinedLocationIds into a single array
-
-			// Extract data from localStorage
-			const LatestsSearches = JSON.parse(localStorage.getItem('LatestsSearches'));
-			const idsLatestsSearches = LatestsSearches ? LatestsSearches.flatMap(item => item.combinedLocationIds.split(";")) : [];
-
-			const MyLastSearch = JSON.parse(localStorage.getItem('MyLastSearch'));
-
-			var idsMyLastSearch = MyLastSearch.combinedLocationIds.split(";").map(segment => segment.replace(/,/g, "_"));
-
-			//console.log(idsMyLastSearch)
-
-			// Combine both arrays and ensure distinct values
-			//...localStorageIds, 
-			const allIds = [...new Set([...idsMyLastSearch])];
-
-			console.log(allIds);
+			const data = JSON.parse(localStorage.getItem('LatestsSearches')); // Parse the stored JSON data
+			const ids = data.flatMap(item => item.combinedLocationIds.split(";")); // Extract and split all combinedLocationIds into a single array
 
 			//console.dir("ids", ids);
 
@@ -87,15 +70,13 @@
 				features: []
 			};
 
-			const featurePromises = allIds.map(id => {
+			const featurePromises = ids.map(id => {
 
-				console.log("id", id);
+				//console.log("id", id);
 
-				const primaryUrl = `${fetchurl}${id}_g.js`;
-				const fallbackUrl = `${fetchurl}${id}.js`;
-
-				console.log("primaryUrl", primaryUrl);
-				console.log("fallbackUrl", fallbackUrl);
+				const location = id.replace(/,/g, '_');
+				const primaryUrl = `${fetchurl}${location}_g.js`;
+				const fallbackUrl = `${fetchurl}${location}.js`;
 
 				// Fetch data and handle fallback
 				return fetchAndParse(primaryUrl).catch(() => fetchAndParse(fallbackUrl));
@@ -122,7 +103,7 @@
 
 			// Convert features to WKT and copy to clipboard
 			const wkt = geojsonToWKT(features);
-			console.log("wkt", wkt.join("\n"));
+			//console.log("wkt", wkt.join("\n"));
 			copyToCipboard(wkt.join("\n"));
 
 			// Create success message
