@@ -28,19 +28,19 @@
 	}
 
 	window.addEventListener('load', function () {
+		/*
+				// Save the original XMLHttpRequest open method
+				const originalOpen = XMLHttpRequest.prototype.open;
 
-		// Save the original XMLHttpRequest open method
-		const originalOpen = XMLHttpRequest.prototype.open;
+				// Override the open method
+				XMLHttpRequest.prototype.open = function (...args) {
+					var loadGEOM = (args[1] || "").indexOf("/geom_") > -1;
+					if (!loadGEOM)
+						deleteElementOnAjax();
 
-		// Override the open method
-		XMLHttpRequest.prototype.open = function (...args) {
-			var loadGEOM = (args[1] || "").indexOf("/geom_") > -1;
-			if (!loadGEOM)
-				deleteElementOnAjax();
-
-			return originalOpen.apply(this, args); // Call the original method
-		};
-
+					return originalOpen.apply(this, args); // Call the original method
+				};
+		*/
 		// Function to delete the element
 		function deleteElementOnAjax() {
 			let element = document.getElementById("map-shape-message");
@@ -73,6 +73,9 @@
 		var button = document.getElementById("btn-copy");
 
 		button.onclick = async function (e) {
+
+			deleteElementOnAjax();
+
 			button.dataset.wkt = true;
 
 			// Get the latest searches from localStorage
