@@ -87,29 +87,41 @@
 
 			const featurePromises = ids.map(async (id) => {
 				const location = id.replace(/,/g, '_');
-				const url = fetchurl + location + ".js";
+				const primaryUrl = `${fetchurl}${location}_g.js`; // Primary URL
+				const fallbackUrl = `${fetchurl}${location}.js`; // Fallback URL
 
-				try {
-					const response = await fetch(url);
-					if (!response.ok) {
-						console.error('Request failed with status:', response.status, 'for URL:', url);
-						return null; // Skip if fetch fails
-					}
-
-					let jsonstr = await response.text();
-					jsonstr = jsonstr.replace(/(var(:?.*)geom_(:?.*)(?:\s)\=(?:\s))+/gm, "");
-
+				// Helper function to fetch and process data
+				const fetchAndParse = async (url) => {
 					try {
-						const feature = JSON.parse(jsonstr);
-						return feature; // Successfully parsed JSON
-					} catch (parseError) {
-						console.error('Failed to parse JSON:', parseError, 'for URL:', url);
-						return null;
+						const response = await fetch(url);
+						if (!response.ok) {
+							console.error('Request failed with status:', response.status, 'for URL:', url);
+							return null; // Skip if fetch fails
+						}
+
+						let jsonstr = await response.text();
+						jsonstr = jsonstr.replace(/(var(:?.*)geom_(:?.*)(?:\s)\=(?:\s))+/gm, ""); // Clean up the string
+
+						try {
+							return JSON.parse(jsonstr); // Parse JSON
+						} catch (parseError) {
+							console.error('Failed to parse JSON:', parseError, 'for URL:', url);
+							return null;
+						}
+					} catch (error) {
+						console.error('Error fetching data for URL:', url, error);
+						return null; // Handle fetch errors
 					}
-				} catch (error) {
-					console.error('Error fetching data for location', location, error);
-					return null; // Handle any errors in the fetch
+				};
+
+				// Attempt primary URL first, then fallback if needed
+				let feature = await fetchAndParse(primaryUrl);
+				if (!feature) {
+					console.warn('Primary URL failed. Trying fallback URL for location:', location);
+					feature = await fetchAndParse(fallbackUrl);
 				}
+
+				return feature; // Return feature or null if both URLs fail
 			});
 
 			// Wait for all fetches to complete
