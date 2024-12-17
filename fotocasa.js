@@ -84,7 +84,7 @@
 
 			// Combine both arrays and ensure distinct values
 			//...localStorageIds, 
-			const allIds = [...new Set([...localStorageIds1, ...localStorageIds2])];
+			const allIds = [...new Set([...localStorageIds2])];
 
 			console.log(allIds);
 
