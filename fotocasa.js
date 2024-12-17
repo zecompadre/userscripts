@@ -5,9 +5,7 @@
 	var fetchurl = "https://geom.fotocasa.es/v104/geom_";
 
 
-	function geojsonToWKT(geojsonString) {
-		// Parse the GeoJSON string
-		const geojson = JSON.parse(geojsonString);
+	function geojsonToWKT(geojson) {
 
 		// Function to convert coordinates to WKT format
 		function coordsToWkt(coords) {
