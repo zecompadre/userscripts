@@ -29,7 +29,7 @@
 					.map(polygonToWKT)
 					.map(wkt => `(${wkt})`)
 					.join(", ");
-				return `MULTIPOLYGON ((${multiPolygonWKT}))`;
+				return `MULTIPOLYGON (${multiPolygonWKT})`;
 			} else if (geometry.type === "Polygon") {
 				const polygonWKT = polygonToWKT(geometry.coordinates);
 				return `POLYGON (${polygonWKT})`;
