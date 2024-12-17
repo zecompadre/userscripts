@@ -4,7 +4,14 @@
 	//var validator = "https://wkt-plotter.zecompadre.com";
 	var fetchurl = "https://geom.fotocasa.es/v104/geom_";
 
-	function geojsonToWKT(geojson) {
+	function geojsonToWKT(geoJson) {
+		const wktArray = geoJson.features.map(feature => {
+			return turf.wkt.stringify(feature); // Convert each feature to WKT
+		});
+		return wktArray;
+	}
+
+	function geojsonToWKT3(geojson) {
 
 		var wkt_options = {};
 		var geojson_format = new OpenLayers.Format.GeoJSON();
