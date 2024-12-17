@@ -6,13 +6,13 @@
 
 	function geojsonToWKT(geojson) {
 
-
-		var wkt_options = {};
-		var geojson_format = new OpenLayers.Format.GeoJSON();
-		var testFeature = geojson_format.read(geojson);
-		var wkt = new OpenLayers.Format.WKT(wkt_options);
-		return wkt.write(testFeature);
-
+		/*
+				var wkt_options = {};
+				var geojson_format = new OpenLayers.Format.GeoJSON();
+				var testFeature = geojson_format.read(geojson);
+				var wkt = new OpenLayers.Format.WKT(wkt_options);
+				return wkt.write(testFeature);
+		*/
 
 		const geometryTypes = {
 			Point: 'POINT',
