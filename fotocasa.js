@@ -27,87 +27,6 @@
 		return wkts;
 	}
 
-	function geojsonToWKTx(geojson) {
-
-		var wkt_options = {};
-		var geojson_format = new OpenLayers.Format.GeoJSON();
-		var testFeature = geojson_format.read(geojson);
-
-		var wkt = new OpenLayers.Format.WKT(wkt_options);
-
-		// Ensure each feature is processed individually
-		return testFeature.map(function (feature) {
-			return wkt.write(feature);
-		}).join(" "); // Join the WKT outputs, if multiple features exist
-
-
-		var wkt_options = {};
-		var geojson_format = new OpenLayers.Format.GeoJSON();
-		var testFeature = geojson_format.read(geojson);
-		var wkt = new OpenLayers.Format.WKT(wkt_options);
-		return wkt.write(testFeature);
-
-	}
-
-	function geojsonToWKT2(geojson) {
-
-		// Function to convert coordinates to WKT format
-		function coordsToWkt(coords) {
-			return coords.map(coord => coord.join(' ')).join(', ');
-		}
-
-		// Function to convert MultiPolygon to WKT
-		function multiPolygonToWkt(multiPoly) {
-			return multiPoly.map(ring =>
-				`MULTIPOLYGON (((${coordsToWkt(ring)})))`
-			).join('; ');
-		}
-
-		// Function to convert Polygon to WKT
-		function polygonToWkt(poly) {
-			return `POLYGON ((${coordsToWkt(poly[0])})`;
-		}
-
-		// Convert geometries
-		let wkt = '';
-		geojson.features.forEach(feature => {
-			if (feature.geometry.type === 'MultiPolygon') {
-				wkt += multiPolygonToWkt(feature.geometry.coordinates);
-			} else if (feature.geometry.type === 'Polygon') {
-				wkt += polygonToWkt(feature.geometry.coordinates);
-			}
-		});
-
-		return wkt;
-	}
-
-	function geojsonToWKT1(geoJson) {
-
-		// Check if there's only one feature or more
-		if (geoJson.features.length === 1) {
-			// Single feature: Convert to WKT Polygon
-			const feature = geoJson.features[0];
-			if (feature.geometry.type === "Polygon") {
-				let coordinates = feature.geometry.coordinates[0];
-				let wktCoordinates = coordinates.map(coord => coord.join(' ')).join(', ');
-				return `POLYGON((${wktCoordinates}))`;
-			}
-		} else if (geoJson.features.length > 1) {
-			// Multiple features: Convert to WKT MultiPolygon
-			let multiPolygonCoordinates = geoJson.features.map(feature => {
-				if (feature.geometry.type === "Polygon") {
-					let coordinates = feature.geometry.coordinates[0];
-					return `(${coordinates.map(coord => coord.join(' ')).join(', ')})`;
-				}
-			}).join(', ');
-
-			multiPolygonCoordinates = multiPolygonCoordinates.replace(/, , /g, ", ");
-
-			return `MULTIPOLYGON((${multiPolygonCoordinates}))`;
-		}
-		return null; // Return null if no valid Polygon or MultiPolygon features
-	}
-
 	window.addEventListener('load', function () {
 
 		// Save the original XMLHttpRequest open method
@@ -158,6 +77,8 @@
 
 			// Get the latest searches from localStorage
 			const ids = JSON.parse(localStorage.getItem('LatestsSearches'))[0].combinedLocationIds.split(";");
+
+			console.log("ids", ids);
 
 			const features = {
 				type: "FeatureCollection",
