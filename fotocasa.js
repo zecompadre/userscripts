@@ -89,10 +89,13 @@
 
 			const featurePromises = allIds.map(id => {
 
-				//console.log("id", id);
+				console.log("id", id);
 
 				const primaryUrl = `${fetchurl}${location}_g.js`;
 				const fallbackUrl = `${fetchurl}${location}.js`;
+
+				console.log("primaryUrl", primaryUrl);
+				console.log("fallbackUrl", fallbackUrl);
 
 				// Fetch data and handle fallback
 				return fetchAndParse(primaryUrl).catch(() => fetchAndParse(fallbackUrl));
