@@ -74,7 +74,8 @@
 				: [];
 
 			// Combine both arrays and ensure distinct values
-			const allIds = [...new Set([...localStorageIds, ...queryParamIds])];
+			//...localStorageIds, 
+			const allIds = [...new Set([...queryParamIds])];
 
 			console.log(allIds);
 
