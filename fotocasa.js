@@ -119,11 +119,11 @@
 
 			// Add features, filtering out nulls
 			features.features.push(...featuresArray.filter(feature => feature !== null));
-			console.log('Features added successfully:', features.features);
+			console.log('Features added successfully:', JSON.stringify(features.features));
 
 
 
-			console.log("features", features);
+			console.log("features", JSON.stringify(features));
 
 			const wkt = geojsonToWKT(features);
 			console.log("wkt", wkt);
