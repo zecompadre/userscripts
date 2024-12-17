@@ -97,7 +97,7 @@
 						const response = await fetch(url);
 						if (!response.ok) {
 							console.error('Request failed with status:', response.status);
-							return null;  // Return null or skip the current fetch if it fails
+							return null; // Return null or skip the current fetch if it fails
 						}
 
 						let jsonstr = await response.text();
@@ -107,7 +107,7 @@
 						return feature;
 					} catch (error) {
 						console.error('Error fetching data for location', location, error);
-						return null;  // Handle any errors in individual fetch requests
+						return null; // Handle any errors in individual fetch requests
 					}
 				});
 
@@ -115,10 +115,10 @@
 				const featuresArray = await Promise.all(featurePromises);
 				features.features.push(...featuresArray.filter(feature => feature !== null));
 
-				//console.log("features", features);
+				console.log("features", features);
 
 				const wkt = geojsonToWKT(features);
-				//console.log("wkt", wkt);
+				console.log("wkt", wkt);
 
 				copyToCipboard(wkt);
 
