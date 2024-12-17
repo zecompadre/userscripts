@@ -4,42 +4,7 @@
 	//var validator = "https://wkt-plotter.zecompadre.com";
 	var fetchurl = "https://geom.fotocasa.es/v104/geom_";
 
-	function geojsonToWKT(geoJson) {
-		const wktArray = geoJson.features.map(feature => {
-			return turf.wkt.stringify(feature); // Convert each feature to WKT
-		});
-		return wktArray;
-	}
-
 	function geojsonToWKT3(geojson) {
-
-		var wkt_options = {};
-		var geojson_format = new OpenLayers.Format.GeoJSON();
-		var testFeatures = geojson_format.read(geojson);
-
-		// Ensure all geometries are polygons and merge into a single MULTIPOLYGON
-		var polygons = testFeatures
-			.filter(feature => feature.geometry.CLASS_NAME === "OpenLayers.Geometry.Polygon")
-			.map(feature => feature.geometry);
-
-		if (polygons.length > 0) {
-			var multiPolygon = new OpenLayers.Geometry.MultiPolygon(polygons);
-			var wkt = new OpenLayers.Format.WKT(wkt_options);
-			return wkt.write(new OpenLayers.Feature.Vector(multiPolygon));
-		} else {
-			throw new Error("No valid Polygon geometries found in GeoJSON.");
-		}
-
-		var wkt_options = {};
-		var geojson_format = new OpenLayers.Format.GeoJSON();
-		var testFeature = geojson_format.read(geojson);
-
-		// Ensure testFeature is an array and handle the first feature
-		var geometry = Array.isArray(testFeature) ? testFeature[0].geometry : testFeature.geometry;
-
-		// Convert the geometry to WKT
-		var wkt = new OpenLayers.Format.WKT(wkt_options);
-		return wkt.write(new OpenLayers.Feature.Vector(geometry));
 
 
 		var wkt_options = {};
