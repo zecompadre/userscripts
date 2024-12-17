@@ -100,6 +100,8 @@
 				}
 			});
 
+			console.log(features)
+
 			const wkt = geojsonToWKT(features);
 			copyToClipboard(wkt.join("\n"));
 
