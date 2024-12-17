@@ -60,8 +60,23 @@
 			// Get the latest searches from localStorage
 			//const ids = JSON.parse(localStorage.getItem('LatestsSearches'))[0].combinedLocationIds.split(";");
 
-			const data = JSON.parse(localStorage.getItem('LatestsSearches')); // Parse the stored JSON data
-			const ids = data.flatMap(item => item.combinedLocationIds.split(";")); // Extract and split all combinedLocationIds into a single array
+			//const data = JSON.parse(localStorage.getItem('LatestsSearches')); // Parse the stored JSON data
+			//const ids = data.flatMap(item => item.combinedLocationIds.split(";")); // Extract and split all combinedLocationIds into a single array
+
+			// Extract data from localStorage
+			const storedData = JSON.parse(localStorage.getItem('LatestsSearches'));
+			const localStorageIds = storedData ? storedData.flatMap(item => item.combinedLocationIds.split(";")) : [];
+
+			// Extract 'combinedLocationIds' from the query string
+			const urlParams = new URLSearchParams(window.location.search);
+			const queryParamIds = urlParams.get('combinedLocationIds')
+				? urlParams.get('combinedLocationIds').split(";")
+				: [];
+
+			// Combine both arrays and ensure distinct values
+			const allIds = [...new Set([...localStorageIds, ...queryParamIds])];
+
+			console.log(allIds);
 
 			//console.dir("ids", ids);
 
@@ -70,7 +85,7 @@
 				features: []
 			};
 
-			const featurePromises = ids.map(id => {
+			const featurePromises = allIds.map(id => {
 
 				//console.log("id", id);
 
