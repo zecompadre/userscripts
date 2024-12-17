@@ -135,7 +135,7 @@
 					features.features.push(item);
 				}
 			});
-
+			console.log("features", features);
 			const wkt = geojsonToWKT(features);
 
 			copyToClipboard(wkt.join("\n"));
