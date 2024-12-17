@@ -104,6 +104,9 @@
 						jsonstr = jsonstr.replace(/(var(:?.*)geom_(:?.*)(?:\s)\=(?:\s))+/gm, "");
 
 						const feature = JSON.parse(jsonstr);
+
+
+
 						return feature;
 					} catch (error) {
 						console.error('Error fetching data for location', location, error);
@@ -113,7 +116,12 @@
 
 				// Wait for all fetches to complete and filter out any failed responses (null values)
 				const featuresArray = await Promise.all(featurePromises);
-				features.features.push(...featuresArray.filter(feature => feature !== null));
+
+				setTimeout(function () {
+					features.features.push(...featuresArray.filter(feature => feature !== null));
+				}, 1000)
+
+
 
 				console.log("features", features);
 
