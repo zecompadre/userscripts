@@ -60,7 +60,7 @@
 			// Get the latest searches from localStorage
 			const ids = JSON.parse(localStorage.getItem('LatestsSearches'))[0].combinedLocationIds.split(";");
 
-			console.dir("ids", ids);
+			//console.dir("ids", ids);
 
 			const features = {
 				type: "FeatureCollection",
@@ -69,7 +69,7 @@
 
 			const featurePromises = ids.map(id => {
 
-				console.log("id", id);
+				//console.log("id", id);
 
 				const location = id.replace(/,/g, '_');
 				const primaryUrl = `${fetchurl}${location}_g.js`;
@@ -100,7 +100,7 @@
 
 			// Convert features to WKT and copy to clipboard
 			const wkt = geojsonToWKT(features);
-			console.log("wkt", wkt.join("\n"));
+			//console.log("wkt", wkt.join("\n"));
 			copyToCipboard(wkt.join("\n"));
 
 			// Create success message
