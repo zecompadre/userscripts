@@ -65,18 +65,18 @@
 			//const ids = data.flatMap(item => item.combinedLocationIds.split(";")); // Extract and split all combinedLocationIds into a single array
 
 			// Extract data from localStorage
-			const storedData1 = JSON.parse(localStorage.getItem('LatestsSearches'));
-			const localStorageIds1 = storedData1 ? storedData1.flatMap(item => item.combinedLocationIds.split(";")) : [];
+			const LatestsSearches = JSON.parse(localStorage.getItem('LatestsSearches'));
+			const idsLatestsSearches = LatestsSearches ? LatestsSearches.flatMap(item => item.combinedLocationIds.split(";")) : [];
 
-			const MyLastSearch = JSON.parse(localStorage.getItem('MyLastSearch'));
+			//const MyLastSearch = JSON.parse(localStorage.getItem('MyLastSearch'));
 
-			var idsMyLastSearch = MyLastSearch.combinedLocationIds.split(";").map(segment => segment.replace(/,/g, "_"));
+			//var idsMyLastSearch = MyLastSearch.combinedLocationIds.split(";").map(segment => segment.replace(/,/g, "_"));
 
-			console.log(idsMyLastSearch)
+			//console.log(idsMyLastSearch)
 
 			// Combine both arrays and ensure distinct values
 			//...localStorageIds, 
-			const allIds = [...new Set([...idsMyLastSearch])];
+			const allIds = [...new Set([...idsLatestsSearches])];
 
 			console.log(allIds);
 
