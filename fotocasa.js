@@ -4,50 +4,39 @@
 	//var validator = "https://wkt-plotter.zecompadre.com";
 	var fetchurl = "https://geom.fotocasa.es/v104/geom_";
 
-	function geojsonToWKT(geoJSON) {
 
-		if (geoJSON.type !== "FeatureCollection" || !geoJSON.features) {
-			throw new Error("Invalid GeoJSON format");
+	function geojsonToWKT(geojsonString) {
+		// Parse the GeoJSON string
+		const geojson = JSON.parse(geojsonString);
+
+		// Function to convert coordinates to WKT format
+		function coordsToWkt(coords) {
+			return coords.map(coord => coord.join(' ')).join(', ');
 		}
 
-		// Helper function to convert a polygon's coordinates to WKT
-		function polygonToWKT(polygonCoordinates) {
-			return polygonCoordinates
-				.map(ring =>
-					"(" + ring.map(coord => coord.join(" ")).join(", ") + ")"
-				)
-				.join(", ");
+		// Function to convert MultiPolygon to WKT
+		function multiPolygonToWkt(multiPoly) {
+			return multiPoly.map(ring =>
+				`MULTIPOLYGON (((${coordsToWkt(ring)})))`
+			).join('; ');
 		}
 
-		const wktParts = geoJSON.features.map(feature => {
-			const {
-				geometry
-			} = feature;
+		// Function to convert Polygon to WKT
+		function polygonToWkt(poly) {
+			return `POLYGON ((${coordsToWkt(poly[0])})`;
+		}
 
-			if (geometry.type === "MultiPolygon") {
-				const multiPolygonWKT = geometry.coordinates
-					.map(polygonToWKT)
-					.map(wkt => `(${wkt})`)
-					.join(", ");
-				return `MULTIPOLYGON (${multiPolygonWKT})`;
-			} else if (geometry.type === "Polygon") {
-				const polygonWKT = polygonToWKT(geometry.coordinates);
-				return `POLYGON (${polygonWKT})`;
-			} else {
-				throw new Error(`Unsupported geometry type: ${geometry.type}`);
+		// Convert geometries
+		let wkt = '';
+		geojson.features.forEach(feature => {
+			if (feature.geometry.type === 'MultiPolygon') {
+				wkt += multiPolygonToWkt(feature.geometry.coordinates);
+			} else if (feature.geometry.type === 'Polygon') {
+				wkt += polygonToWkt(feature.geometry.coordinates);
 			}
 		});
 
-		// Check if the GeoJSON contains multiple distinct geometries
-		if (wktParts.length > 1) {
-			const combinedPolygons = wktParts
-				.map(wkt => (wkt.startsWith("POLYGON") ? wkt.replace(/^POLYGON /, "") : wkt.replace(/^MULTIPOLYGON /, "")))
-				.join(", ");
-			return `MULTIPOLYGON (${combinedPolygons})`;
-		}
-
-		// If there's only one geometry, return it directly
-		return wktParts[0];
+		return wkt;
 	}
 
 	function geojsonToWKT1(geoJson) {
