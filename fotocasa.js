@@ -41,7 +41,7 @@
 		// If there's more than one geometry, return a MULTIPOLYGON
 		if (wktGeometries.length > 1) {
 			const allPolygons = wktGeometries.map(wkt => wkt.replace(/^POLYGON /, "")).join(", ");
-			return `MULTIPOLYGON ((${allPolygons}))`;
+			return `MULTIPOLYGON (${allPolygons})`;
 		}
 
 		// Return the single geometry as-is
