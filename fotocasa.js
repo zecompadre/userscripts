@@ -70,7 +70,7 @@
 
 					case "MultiPolygon":
 						return `MULTIPOLYGON (${geometry.coordinates
-							.map(polygon => `((${polygon[0].map(coord => coord.join(" ")).join(", ")})`)
+							.map(polygon => `((${polygon[0].map(coord => coord.join(" ")).join(", ")}))`)
 							.join(", ")})`;
 
 					case "Point":
