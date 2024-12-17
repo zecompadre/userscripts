@@ -4,7 +4,30 @@
 	//var validator = "https://wkt-plotter.zecompadre.com";
 	var fetchurl = "https://geom.fotocasa.es/v104/geom_";
 
-	function geojsonToWKT(geojson) {
+
+	function geojsonToWKT(geoJSON) {
+		const features = geoJSON.features;
+		const wkts = features.map(feature => {
+			const geometry = feature.geometry;
+			switch (geometry.type) {
+				case "Polygon":
+					return `POLYGON ((${geometry.coordinates[0]
+						.map(coord => coord.join(" "))
+						.join(", ")}))`;
+				case "MultiPolygon":
+					return `MULTIPOLYGON (${geometry.coordinates
+						.map(polygon => `((${polygon[0]
+							.map(coord => coord.join(" "))
+							.join(", ")}))`)
+						.join(", ")})`;
+				default:
+					throw new Error(`Unsupported geometry type: ${geometry.type}`);
+			}
+		});
+		return wkts;
+	}
+
+	function geojsonToWKTx(geojson) {
 
 		var wkt_options = {};
 		var geojson_format = new OpenLayers.Format.GeoJSON();
