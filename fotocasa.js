@@ -127,8 +127,11 @@
 			// Wait for all fetches to complete
 			const featuresArray = await Promise.all(featurePromises);
 
-			// Add features, filtering out nulls
-			features.features.push(...featuresArray.filter(feature => feature !== null));
+			if (featuresArray.type === "FeatureCollection")
+				features = featuresArray;
+			else
+				features.features.push(...featuresArray.filter(feature => feature !== null));
+
 			console.log('Features added successfully:', JSON.stringify(features.features));
 
 
