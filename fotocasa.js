@@ -203,7 +203,7 @@
 			console.log("features", JSON.stringify(features));
 
 			const wkt = geojsonToWKT(features);
-			console.log("wkt", wkt);
+			console.log("wkt", wkt.join("\n"));
 
 			copyToCipboard(wkt.join("\n"));
 
