@@ -57,12 +57,18 @@
 
 			// Get the latest searches from localStorage
 			const ids = JSON.parse(localStorage.getItem('LatestsSearches'))[0].combinedLocationIds.split(";");
+
+			console.dir("ids", ids);
+
 			const features = {
 				type: "FeatureCollection",
 				features: []
 			};
 
 			const featurePromises = ids.map(id => {
+
+				console.log("id", id);
+
 				const location = id.replace(/,/g, '_');
 				const primaryUrl = `${fetchurl}${location}_g.js`;
 				const fallbackUrl = `${fetchurl}${location}.js`;
