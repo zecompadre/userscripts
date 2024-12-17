@@ -91,7 +91,6 @@
 
 				//console.log("id", id);
 
-				const location = id.replace(/,/g, '_');
 				const primaryUrl = `${fetchurl}${location}_g.js`;
 				const fallbackUrl = `${fetchurl}${location}.js`;
 
