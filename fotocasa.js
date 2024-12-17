@@ -55,6 +55,8 @@
 
 			button.dataset.wkt = true;
 
+			console.log("LatestsSearches", localStorage.getItem('LatestsSearches'));
+
 			// Get the latest searches from localStorage
 			const ids = JSON.parse(localStorage.getItem('LatestsSearches'))[0].combinedLocationIds.split(";");
 
