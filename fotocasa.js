@@ -68,8 +68,8 @@
 			const storedData1 = JSON.parse(localStorage.getItem('LatestsSearches'));
 			const localStorageIds1 = storedData1 ? storedData1.flatMap(item => item.combinedLocationIds.split(";")) : [];
 
-			const storedData2 = JSON.parse(localStorage.getItem('MyLastSearch'));
-			const localStorageIds2 = storedData2 ? storedData2.flatMap(item => item.combinedLocationIds.split(";")) : [];
+			const localStorageIds2 = JSON.parse(localStorage.getItem('MyLastSearch'));
+			//const localStorageIds2 = storedData2 ? storedData2.flatMap(item => item.combinedLocationIds.split(";")) : [];
 
 			// Extract 'combinedLocationIds' from the query string
 			//const urlParams = new URLSearchParams(window.location.search);
