@@ -91,8 +91,8 @@
 
 				console.log("id", id);
 
-				const primaryUrl = `${fetchurl}${location}_g.js`;
-				const fallbackUrl = `${fetchurl}${location}.js`;
+				const primaryUrl = `${fetchurl}${id}_g.js`;
+				const fallbackUrl = `${fetchurl}${id}.js`;
 
 				console.log("primaryUrl", primaryUrl);
 				console.log("fallbackUrl", fallbackUrl);
