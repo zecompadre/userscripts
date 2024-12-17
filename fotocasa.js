@@ -4,7 +4,7 @@
 	//var validator = "https://wkt-plotter.zecompadre.com";
 	var fetchurl = "https://geom.fotocasa.es/v104/geom_";
 
-	function geoJSONToWKT(geoJSON) {
+	function geojsonToWKT(geoJSON) {
 		if (geoJSON.type !== "FeatureCollection" || !geoJSON.features) {
 			throw new Error("Invalid GeoJSON format");
 		}
