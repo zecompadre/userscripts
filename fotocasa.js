@@ -205,7 +205,7 @@
 			const wkt = geojsonToWKT(features);
 			console.log("wkt", wkt);
 
-			copyToCipboard(wkt);
+			copyToCipboard(wkt.join("\n"));
 
 			// Remove existing messages
 			let msg = document.getElementById("map-undo-message");
