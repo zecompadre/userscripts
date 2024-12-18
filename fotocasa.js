@@ -257,19 +257,19 @@
 			const latestSearches = JSON.parse(localStorage.getItem("LatestsSearches"));
 			const ids = latestSearches[0].combinedLocationIds.split(";");
 
-			const features = { type: "FeatureCollection", features: [] };
+			const geoJSON = { type: "FeatureCollection", features: [] };
 			const fetchPromises = ids.map((id) => fetchFeature(id.replace(/,/g, "_")));
 
 			const results = await Promise.all(fetchPromises);
 			results.forEach((item) => {
 				if (item?.type === "FeatureCollection") {
-					features.features.push(...item.features);
+					geoJSON.features.push(...item.features);
 				} else if (item) {
-					features.features.push(item);
+					geoJSON.features.push(item);
 				}
 			});
 
-			const wkt = new GeoJSONToWKT(geojson).convert();
+			const wkt = new GeoJSONToWKT(geoJSON).convert();
 
 			copyToClipboard(wkt.join("\n"));
 
