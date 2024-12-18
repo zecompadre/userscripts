@@ -2,7 +2,84 @@
 	const VALIDATOR_URL = "https://wkt-playground.zecompadre.com";
 	const FETCH_URL_BASE = "https://geom.fotocasa.es/v104/geom_";
 
-	function geojsonToWKTx(geoJSON) {
+	function geojsonToWKT(geojson) {
+		const wktArray = [];
+
+		function convertPoint(point) {
+			return `POINT (${point[0]} ${point[1]})`;
+		}
+
+		function convertMultiPoint(multiPoint) {
+			return `MULTIPOINT (${multiPoint.map(point => convertPoint(point)).join(', ')})`;
+		}
+
+		function convertLineString(lineString) {
+			return `LINESTRING (${lineString.map(point => `${point[0]} ${point[1]}`).join(', ')})`;
+		}
+
+		function convertMultiLineString(multiLineString) {
+			return `MULTILINESTRING (${multiLineString.map(line =>
+				`(${line.map(point => `${point[0]} ${point[1]}`).join(', ')})`
+			).join(', ')})`;
+		}
+
+		function convertPolygon(polygon) {
+			const rings = polygon.coordinates;
+			return `POLYGON ((${rings.map(ring =>
+				ring.map(point => `${point[0]} ${point[1]}`).join(' ')
+			)})`;
+		}
+
+		function convertMultiPolygon(multiPolygon) {
+			return `MULTIPOLYGON (${multiPolygon.map(polygon =>
+				`(${convertPolygon(polygon)})`
+			).join(', ')})`;
+		}
+
+		function convertGeometry(geometry) {
+			switch (geometry.type) {
+				case 'Point':
+					wktArray.push(convertPoint(geometry.coordinates));
+					break;
+				case 'MultiPoint':
+					wktArray.push(convertMultiPoint(geometry.coordinates));
+					break;
+				case 'LineString':
+					wktArray.push(convertLineString(geometry.coordinates));
+					break;
+				case 'MultiLineString':
+					wktArray.push(convertMultiLineString(geometry.coordinates));
+					break;
+				case 'Polygon':
+					wktArray.push(convertPolygon(geometry));
+					break;
+				case 'MultiPolygon':
+					wktArray.push(convertMultiPolygon(geometry));
+					break;
+				case 'GeometryCollection':
+					geometry.geometries.forEach(convertGeometry);
+					break;
+				default:
+					console.warn(`Unsupported geometry type: ${geometry.type}`);
+			}
+		}
+
+		if (geojson.features && Array.isArray(geojson.features)) {
+			geojson.features.forEach(convertGeometry);
+		} else if (geojson.type === 'FeatureCollection') {
+			geojson.features.forEach(convertGeometry);
+		} else if (geojson.type === 'Feature') {
+			convertGeometry(geojson.geometry);
+		} else if (geojson.type === 'GeometryCollection') {
+			geojson.geometries.forEach(convertGeometry);
+		} else {
+			console.error('Invalid GeoJSON structure');
+		}
+
+		return wktArray;
+	}
+
+	function geojsonToWKT_1(geoJSON) {
 		return geoJSON.features.map(({ geometry }) => {
 			switch (geometry.type) {
 				case "Polygon":
@@ -18,7 +95,7 @@
 		});
 	}
 
-	function geojsonToWKT(geoJSON) {
+	function geojsonToWKT_2(geoJSON) {
 		return geoJSON.features
 			.filter(({ geometry }) => geometry.coordinates && geometry.coordinates.length > 0)  // Filter out geometries with no coordinates
 			.map(({ geometry }) => {
