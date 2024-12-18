@@ -31,11 +31,11 @@
 		}
 
 		function convertMultiPolygon(multiPolygon) {
-			return `MULTIPOLYGON ((${multiPolygon.coordinates.map(polygon =>
+			return `MULTIPOLYGON (${multiPolygon.coordinates.map(polygon =>
 				`(${polygon.map(ring =>
 					`(${ring.map(point => `${point[0]} ${point[1]}`).join(', ')})`
 				).join(', ')})`
-			).join(', ')}))`;
+			).join(', ')})`;
 		}
 
 		function convertGeometry(geometry) {
