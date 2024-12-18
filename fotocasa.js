@@ -10,7 +10,7 @@
 		}
 
 		function convertMultiPoint(multiPoint) {
-			return `MULTIPOINT (${multiPoint.map(point => convertPoint(point)).join(', ')})`;
+			return `MULTIPOINT (${multiPoint.map(point => `(${point[0]} ${point[1]})`).join(', ')})`;
 		}
 
 		function convertLineString(lineString) {
@@ -24,10 +24,10 @@
 		}
 
 		function convertPolygon(polygon) {
-			const rings = polygon.coordinates;
-			return `POLYGON ((${rings.map(ring =>
-				ring.map(point => `${point[0]} ${point[1]}`).join(' ')
-			)})`;
+			const rings = polygon.map(ring =>
+				`(${ring.map(point => `${point[0]} ${point[1]}`).join(', ')})`
+			);
+			return `POLYGON (${rings.join(', ')})`;
 		}
 
 		function convertMultiPolygon(multiPolygon) {
@@ -37,6 +37,10 @@
 		}
 
 		function convertGeometry(geometry) {
+			if (!geometry || !geometry.type) {
+				console.error('Invalid geometry object:', geometry);
+				return;
+			}
 			switch (geometry.type) {
 				case 'Point':
 					wktArray.push(convertPoint(geometry.coordinates));
@@ -51,10 +55,10 @@
 					wktArray.push(convertMultiLineString(geometry.coordinates));
 					break;
 				case 'Polygon':
-					wktArray.push(convertPolygon(geometry));
+					wktArray.push(convertPolygon(geometry.coordinates));
 					break;
 				case 'MultiPolygon':
-					wktArray.push(convertMultiPolygon(geometry));
+					wktArray.push(convertMultiPolygon(geometry.coordinates));
 					break;
 				case 'GeometryCollection':
 					geometry.geometries.forEach(convertGeometry);
@@ -64,35 +68,25 @@
 			}
 		}
 
-		if (geojson.features && Array.isArray(geojson.features)) {
-			geojson.features.forEach(convertGeometry);
-		} else if (geojson.type === 'FeatureCollection') {
-			geojson.features.forEach(convertGeometry);
-		} else if (geojson.type === 'Feature') {
+		if (geojson.type === 'FeatureCollection' && Array.isArray(geojson.features)) {
+			geojson.features.forEach(feature => {
+				if (feature.geometry) {
+					convertGeometry(feature.geometry);
+				} else {
+					console.warn('Feature has no geometry:', feature);
+				}
+			});
+		} else if (geojson.type === 'Feature' && geojson.geometry) {
 			convertGeometry(geojson.geometry);
 		} else if (geojson.type === 'GeometryCollection') {
 			geojson.geometries.forEach(convertGeometry);
+		} else if (geojson.type && geojson.coordinates) {
+			convertGeometry(geojson);
 		} else {
-			console.error('Invalid GeoJSON structure');
+			console.error('Invalid GeoJSON structure:', geojson);
 		}
 
 		return wktArray;
-	}
-
-	function geojsonToWKT_1(geoJSON) {
-		return geoJSON.features.map(({ geometry }) => {
-			switch (geometry.type) {
-				case "Polygon":
-					return `POLYGON ((${geometry.coordinates[0].map(coord => coord.join(" ")).join(", ")}))`;
-				case "MultiPolygon":
-					return `MULTIPOLYGON (${geometry.coordinates
-						.map(polygon => `((${polygon[0].map(coord => coord.join(" ")).join(", ")
-							}))`)
-						.join(", ")})`;
-				default:
-					throw new Error(`Unsupported geometry type: ${geometry.type}`);
-			}
-		});
 	}
 
 	function geojsonToWKT_2(geoJSON) {
