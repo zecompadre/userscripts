@@ -21,12 +21,20 @@
 					return `LINESTRING (${formatCoordinates(geometry.coordinates)})`;
 				case "MultiLineString":
 					return `MULTILINESTRING (${geometry.coordinates.map((line) => `(${formatCoordinates(line)})`).join(", ")})`;
-				case "Polygon":
-					return `POLYGON (${geometry.coordinates.map((ring) => `(${formatCoordinates(ring)})`).join(", ")})`;
-				case "MultiPolygon":
-					return `MULTIPOLYGON (${geometry.coordinates.map((polygon) => `(${polygon.map((ring) => `(${formatCoordinates(ring)})`).join(", ")})`).join(", ")})`;
+				case "Polygon": {
+					const validRings = geometry.coordinates.filter((ring) => ring.length > 0);
+					if (validRings.length === 0) return null; // Skip empty polygons
+					return `POLYGON (${validRings.map((ring) => `(${formatCoordinates(ring)})`).join(", ")})`;
+				}
+				case "MultiPolygon": {
+					const validPolygons = geometry.coordinates
+						.map((polygon) => polygon.filter((ring) => ring.length > 0))
+						.filter((polygon) => polygon.length > 0);
+					if (validPolygons.length === 0) return null; // Skip empty multipolygons
+					return `MULTIPOLYGON (${validPolygons.map((polygon) => `(${polygon.map((ring) => `(${formatCoordinates(ring)})`).join(", ")})`).join(", ")})`;
+				}
 				case "GeometryCollection":
-					return `GEOMETRYCOLLECTION (${geometry.geometries.map(convertGeometry).join(", ")})`;
+					return `GEOMETRYCOLLECTION (${geometry.geometries.map(convertGeometry).filter(Boolean).join(", ")})`;
 				default:
 					throw new Error(`Unsupported geometry type: ${geometry.type}`);
 			}
