@@ -18,7 +18,7 @@
 		});
 	}
 
-	function geojsonToWKTxx(geoJSON) {
+	function geojsonToWKT(geoJSON) {
 		return geoJSON.features
 			.filter(({ geometry }) => geometry.coordinates && geometry.coordinates.length > 0)  // Filter out geometries with no coordinates
 			.map(({ geometry }) => {
@@ -56,7 +56,7 @@
 			});
 	}
 
-	function geojsonToWKT(geoJSON) {
+	function geojsonToWKTy(geoJSON) {
 		return geoJSON.features
 			.map(({ geometry }) => {
 				// Ensure geometry has coordinates before processing
