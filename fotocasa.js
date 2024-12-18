@@ -8,49 +8,94 @@
 	 * @returns {string[]} - Array of WKT strings.
 	 */
 	function geojsonToWKT(geojson) {
-		const convertGeometry = (geometry) => {
-			const formatCoordinates = (coordinates) =>
-				coordinates.map((point) => point.join(" ")).join(", ");
+		const wktArray = [];
 
+		function convertPoint(point) {
+			return `POINT (${point[0]} ${point[1]})`;
+		}
+
+		function convertMultiPoint(multiPoint) {
+			return `MULTIPOINT (${multiPoint.map(point => `(${point[0]} ${point[1]})`).join(', ')})`;
+		}
+
+		function convertLineString(lineString) {
+			if (lineString.length === 0) return null; // Skip empty LineString
+			return `LINESTRING (${lineString.map(point => `${point[0]} ${point[1]}`).join(', ')})`;
+		}
+
+		function convertMultiLineString(multiLineString) {
+			const validLines = multiLineString.filter(line => line.length > 0); // Skip empty LineStrings
+			if (validLines.length === 0) return null;
+			return `MULTILINESTRING (${validLines.map(line =>
+				`(${line.map(point => `${point[0]} ${point[1]}`).join(', ')})`
+			).join(', ')})`;
+		}
+
+		function convertPolygon(polygon) {
+			const rings = polygon.coordinates.filter(ring => ring.length > 0); // Skip empty rings
+			if (rings.length === 0) return null; // Skip entirely empty polygons
+			return `POLYGON (${rings.map(ring =>
+				`(${ring.map(point => `${point[0]} ${point[1]}`).join(', ')})`
+			).join(', ')})`;
+		}
+
+		function convertMultiPolygon(multiPolygon) {
+			const validPolygons = multiPolygon.coordinates.filter(polygon => polygon.length > 0); // Skip empty polygons
+			if (validPolygons.length === 0) return null; // Skip entirely empty MultiPolygons
+			return `MULTIPOLYGON (${validPolygons.map(polygon =>
+				`(${polygon.map(ring =>
+					`(${ring.map(point => `${point[0]} ${point[1]}`).join(', ')})`
+				).join(', ')})`
+			).join(', ')})`;
+		}
+
+		function convertGeometry(geometry) {
 			switch (geometry.type) {
-				case "Point":
-					return `POINT (${geometry.coordinates.join(" ")})`;
-				case "MultiPoint":
-					return `MULTIPOINT (${geometry.coordinates.map((point) => `(${point.join(" ")})`).join(", ")})`;
-				case "LineString":
-					return `LINESTRING (${formatCoordinates(geometry.coordinates)})`;
-				case "MultiLineString":
-					return `MULTILINESTRING (${geometry.coordinates.map((line) => `(${formatCoordinates(line)})`).join(", ")})`;
-				case "Polygon": {
-					const validRings = geometry.coordinates.filter((ring) => ring.length > 0);
-					if (validRings.length === 0) return null; // Skip empty polygons
-					return `POLYGON (${validRings.map((ring) => `(${formatCoordinates(ring)})`).join(", ")})`;
+				case 'Point':
+					return convertPoint(geometry.coordinates);
+				case 'MultiPoint':
+					return convertMultiPoint(geometry.coordinates);
+				case 'LineString':
+					return convertLineString(geometry.coordinates);
+				case 'MultiLineString':
+					return convertMultiLineString(geometry.coordinates);
+				case 'Polygon':
+					return convertPolygon(geometry);
+				case 'MultiPolygon':
+					return convertMultiPolygon(geometry);
+				case 'GeometryCollection': {
+					const polygons = geometry.geometries.filter(g => g.type === 'Polygon' || g.type === 'MultiPolygon');
+					const multiPolygonCoordinates = polygons.flatMap(p =>
+						p.type === 'Polygon' ? [p.coordinates] : p.coordinates
+					);
+					return convertMultiPolygon({ coordinates: multiPolygonCoordinates });
 				}
-				case "MultiPolygon": {
-					const validPolygons = geometry.coordinates
-						.map((polygon) => polygon.filter((ring) => ring.length > 0))
-						.filter((polygon) => polygon.length > 0);
-					if (validPolygons.length === 0) return null; // Skip empty multipolygons
-					return `MULTIPOLYGON (${validPolygons.map((polygon) => `(${polygon.map((ring) => `(${formatCoordinates(ring)})`).join(", ")})`).join(", ")})`;
-				}
-				case "GeometryCollection":
-					return `GEOMETRYCOLLECTION (${geometry.geometries.map(convertGeometry).filter(Boolean).join(", ")})`;
 				default:
 					throw new Error(`Unsupported geometry type: ${geometry.type}`);
 			}
-		};
-
-		if (geojson.type === "FeatureCollection") {
-			return geojson.features
-				.map((feature) => convertGeometry(feature.geometry))
-				.filter(Boolean);
-		} else if (geojson.type === "Feature") {
-			return [convertGeometry(geojson.geometry)].filter(Boolean);
-		} else if (geojson.type === "GeometryCollection") {
-			return [convertGeometry(geojson)].filter(Boolean);
-		} else {
-			throw new Error("Invalid GeoJSON structure");
 		}
+
+		if (geojson.features && Array.isArray(geojson.features)) {
+			geojson.features.forEach(feature => {
+				const wkt = convertGeometry(feature.geometry);
+				if (wkt) wktArray.push(wkt); // Only add non-null geometries
+			});
+		} else if (geojson.type === 'FeatureCollection') {
+			geojson.features.forEach(feature => {
+				const wkt = convertGeometry(feature.geometry);
+				if (wkt) wktArray.push(wkt); // Only add non-null geometries
+			});
+		} else if (geojson.type === 'Feature') {
+			const wkt = convertGeometry(geojson.geometry);
+			if (wkt) wktArray.push(wkt); // Only add non-null geometries
+		} else if (geojson.type === 'GeometryCollection') {
+			const wkt = convertGeometry(geojson);
+			if (wkt) wktArray.push(wkt); // Only add non-null geometries
+		} else {
+			throw new Error('Invalid GeoJSON structure');
+		}
+
+		return wktArray;
 	}
 
 	/**
