@@ -10,87 +10,78 @@
 	function geojsonToWKT(geojson) {
 		const wktArray = [];
 
-		function convertPoint(point) {
-			return `POINT (${point[0]} ${point[1]})`;
-		}
+		// Helper function to convert points
+		const convertPoint = (point) => `POINT (${point[0]} ${point[1]})`;
 
-		function convertMultiPoint(multiPoint) {
-			return `MULTIPOINT (${multiPoint.map(point => `(${point[0]} ${point[1]})`).join(', ')})`;
-		}
+		// Helper function to convert multipoints
+		const convertMultiPoint = (multiPoint) => `MULTIPOINT (${multiPoint.map(point => `(${point[0]} ${point[1]})`).join(', ')})`;
 
-		function convertLineString(lineString) {
-			if (lineString.length === 0) return null; // Skip empty LineString
-			return `LINESTRING (${lineString.map(point => `${point[0]} ${point[1]}`).join(', ')})`;
-		}
+		// Helper function to convert LineString, skipping empty ones
+		const convertLineString = (lineString) =>
+			lineString.length > 0 ? `LINESTRING (${lineString.map(point => `${point[0]} ${point[1]}`).join(', ')})` : null;
 
-		function convertMultiLineString(multiLineString) {
-			const validLines = multiLineString.filter(line => line.length > 0); // Skip empty LineStrings
-			if (validLines.length === 0) return null;
-			return `MULTILINESTRING (${validLines.map(line =>
-				`(${line.map(point => `${point[0]} ${point[1]}`).join(', ')})`
-			).join(', ')})`;
-		}
+		// Helper function to convert MultiLineString, skipping empty lines
+		const convertMultiLineString = (multiLineString) => {
+			const validLines = multiLineString.filter(line => line.length > 0);
+			return validLines.length > 0 ? `MULTILINESTRING (${validLines.map(line =>
+				`(${line.map(point => `${point[0]} ${point[1]}`).join(', ')})`).join(', ')})` : null;
+		};
 
-		function convertPolygon(polygon) {
-			const rings = polygon.coordinates.filter(ring => ring.length > 0); // Skip empty rings
-			if (rings.length === 0) return null; // Skip entirely empty polygons
-			return `POLYGON (${rings.map(ring =>
-				`(${ring.map(point => `${point[0]} ${point[1]}`).join(', ')})`
-			).join(', ')})`;
-		}
+		// Helper function to convert Polygons, skipping empty rings
+		const convertPolygon = (polygon) => {
+			const rings = polygon.coordinates.filter(ring => ring.length > 0);
+			return rings.length > 0 ? `POLYGON (${rings.map(ring =>
+				`(${ring.map(point => `${point[0]} ${point[1]}`).join(', ')})`).join(', ')})` : null;
+		};
 
-		function convertMultiPolygon(multiPolygon) {
-			const validPolygons = multiPolygon.coordinates.filter(polygon => polygon.length > 0); // Skip empty polygons
-			if (validPolygons.length === 0) return null; // Skip entirely empty MultiPolygons
-			return `MULTIPOLYGON (${validPolygons.map(polygon =>
+		// Helper function to convert MultiPolygon, skipping empty polygons
+		const convertMultiPolygon = (multiPolygon) => {
+			const validPolygons = multiPolygon.coordinates.filter(polygon => polygon.length > 0);
+			return validPolygons.length > 0 ? `MULTIPOLYGON (${validPolygons.map(polygon =>
 				`(${polygon.map(ring =>
-					`(${ring.map(point => `${point[0]} ${point[1]}`).join(', ')})`
-				).join(', ')})`
-			).join(', ')})`;
-		}
+					`(${ring.map(point => `${point[0]} ${point[1]}`).join(', ')})`).join(', ')})`).join(', ')})` : null;
+		};
 
-		function convertGeometry(geometry) {
+		// Helper function to convert GeometryCollection (only Polygons and MultiPolygons)
+		const convertGeometryCollection = (geometryCollection) => {
+			const polygons = geometryCollection.geometries.filter(g => ['Polygon', 'MultiPolygon'].includes(g.type));
+			const multiPolygonCoordinates = polygons.flatMap(p =>
+				p.type === 'Polygon' ? [p.coordinates] : p.coordinates
+			);
+			return convertMultiPolygon({ coordinates: multiPolygonCoordinates });
+		};
+
+		// Convert a geometry based on its type
+		const convertGeometry = (geometry) => {
 			switch (geometry.type) {
-				case 'Point':
-					return convertPoint(geometry.coordinates);
-				case 'MultiPoint':
-					return convertMultiPoint(geometry.coordinates);
-				case 'LineString':
-					return convertLineString(geometry.coordinates);
-				case 'MultiLineString':
-					return convertMultiLineString(geometry.coordinates);
-				case 'Polygon':
-					return convertPolygon(geometry);
-				case 'MultiPolygon':
-					return convertMultiPolygon(geometry);
-				case 'GeometryCollection': {
-					const polygons = geometry.geometries.filter(g => g.type === 'Polygon' || g.type === 'MultiPolygon');
-					const multiPolygonCoordinates = polygons.flatMap(p =>
-						p.type === 'Polygon' ? [p.coordinates] : p.coordinates
-					);
-					return convertMultiPolygon({ coordinates: multiPolygonCoordinates });
-				}
-				default:
-					throw new Error(`Unsupported geometry type: ${geometry.type}`);
+				case 'Point': return convertPoint(geometry.coordinates);
+				case 'MultiPoint': return convertMultiPoint(geometry.coordinates);
+				case 'LineString': return convertLineString(geometry.coordinates);
+				case 'MultiLineString': return convertMultiLineString(geometry.coordinates);
+				case 'Polygon': return convertPolygon(geometry);
+				case 'MultiPolygon': return convertMultiPolygon(geometry);
+				case 'GeometryCollection': return convertGeometryCollection(geometry);
+				default: throw new Error(`Unsupported geometry type: ${geometry.type}`);
 			}
-		}
+		};
 
-		if (geojson.features && Array.isArray(geojson.features)) {
+		// Process the GeoJSON structure
+		if (geojson.features) {
 			geojson.features.forEach(feature => {
 				const wkt = convertGeometry(feature.geometry);
-				if (wkt) wktArray.push(wkt); // Only add non-null geometries
+				if (wkt) wktArray.push(wkt);
 			});
 		} else if (geojson.type === 'FeatureCollection') {
 			geojson.features.forEach(feature => {
 				const wkt = convertGeometry(feature.geometry);
-				if (wkt) wktArray.push(wkt); // Only add non-null geometries
+				if (wkt) wktArray.push(wkt);
 			});
 		} else if (geojson.type === 'Feature') {
 			const wkt = convertGeometry(geojson.geometry);
-			if (wkt) wktArray.push(wkt); // Only add non-null geometries
+			if (wkt) wktArray.push(wkt);
 		} else if (geojson.type === 'GeometryCollection') {
 			const wkt = convertGeometry(geojson);
-			if (wkt) wktArray.push(wkt); // Only add non-null geometries
+			if (wkt) wktArray.push(wkt);
 		} else {
 			throw new Error('Invalid GeoJSON structure');
 		}
