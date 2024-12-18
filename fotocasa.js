@@ -39,35 +39,38 @@
 		}
 
 		function convertGeometry(geometry) {
-			switch (geometry.type) {
-				case 'Point':
-					wktArray.push(convertPoint(geometry.coordinates));
-					break;
-				case 'MultiPoint':
-					wktArray.push(convertMultiPoint(geometry.coordinates));
-					break;
-				case 'LineString':
-					wktArray.push(convertLineString(geometry.coordinates));
-					break;
-				case 'MultiLineString':
-					wktArray.push(convertMultiLineString(geometry.coordinates));
-					break;
-				case 'Polygon':
-					wktArray.push(convertPolygon(geometry));
-					break;
-				case 'MultiPolygon':
-					wktArray.push(convertMultiPolygon(geometry));
-					break;
-				case 'GeometryCollection':
-					// Convert all polygons in the GeometryCollection to a single MULTIPOLYGON
-					const polygons = geometry.geometries.filter(g => g.type === 'Polygon' || g.type === 'MultiPolygon');
-					const multiPolygonCoordinates = polygons.flatMap(p =>
-						p.type === 'Polygon' ? [p.coordinates] : p.coordinates
-					);
-					wktArray.push(convertMultiPolygon({ coordinates: multiPolygonCoordinates }));
-					break;
-				default:
-					throw new Error(`Unsupported geometry type: ${geometry.type}`);
+			if (geometry.coordinates && geometry.coordinates.length > 0)  // Filter out geometries with no coordinates
+			{
+				switch (geometry.type) {
+					case 'Point':
+						wktArray.push(convertPoint(geometry.coordinates));
+						break;
+					case 'MultiPoint':
+						wktArray.push(convertMultiPoint(geometry.coordinates));
+						break;
+					case 'LineString':
+						wktArray.push(convertLineString(geometry.coordinates));
+						break;
+					case 'MultiLineString':
+						wktArray.push(convertMultiLineString(geometry.coordinates));
+						break;
+					case 'Polygon':
+						wktArray.push(convertPolygon(geometry));
+						break;
+					case 'MultiPolygon':
+						wktArray.push(convertMultiPolygon(geometry));
+						break;
+					case 'GeometryCollection':
+						// Convert all polygons in the GeometryCollection to a single MULTIPOLYGON
+						const polygons = geometry.geometries.filter(g => g.type === 'Polygon' || g.type === 'MultiPolygon');
+						const multiPolygonCoordinates = polygons.flatMap(p =>
+							p.type === 'Polygon' ? [p.coordinates] : p.coordinates
+						);
+						wktArray.push(convertMultiPolygon({ coordinates: multiPolygonCoordinates }));
+						break;
+					default:
+						throw new Error(`Unsupported geometry type: ${geometry.type}`);
+				}
 			}
 		}
 
