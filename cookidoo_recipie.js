@@ -30,11 +30,11 @@
 
 				var hasGroups = true;
 				groups = ingredients.querySelectorAll(".recipe-content__inner-section h5");
-				if (!groups) {
+				if (groups.length > 0) {
 					hasGroups = false;
 					groups = ingredients.querySelectorAll(".recipe-content__inner-section");
 				}
-				console.log(groups)
+				console.log("groups", groups);
 				groups.forEach(section => {
 					allText.push('');
 					var wrapper = null;
