@@ -57,6 +57,7 @@
 		}
 
 		console.log(allText.join('\n'));
-		copyToClipboard(allText.join('\n'));
+
+		copyToCipboard(allText.join('\n'));
 	};
 })();
