@@ -29,7 +29,7 @@
 				allText.push('Ingredientes');
 
 				var hasGroups = true;
-				groups = ingredients.querySelectorAll(".recipe-content__inner-section");
+				groups = ingredients.querySelectorAll(".recipe-content__inner-section h5");
 				if (!groups) {
 					hasGroups = false;
 					groups = ingredients.querySelectorAll(".recipe-content__inner-section");
@@ -39,9 +39,8 @@
 					allText.push('');
 					var wrapper = null;
 					if (hasGroups) {
-						var title = section.querySelector("h5");
-						wrapper = title.nextElementSibling;
-						allText.push(title.innerText);
+						wrapper = section.nextElementSibling;
+						allText.push(section.innerText);
 						allText.push('');
 					}
 					else {
