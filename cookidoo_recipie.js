@@ -113,7 +113,7 @@
 				groups.forEach(section => {
 
 					let name = section.querySelector(".rdp-collection-tile__name")?.innerText.trim() || "";
-					let country = section.querySelector(".rdp-collection-tile__info")?.innerText.trim() || "";
+					let country = section.querySelector(".rdp-collection-tile__info")?.innerHTML.trim() || "";
 
 					console.log("country", country)
 
