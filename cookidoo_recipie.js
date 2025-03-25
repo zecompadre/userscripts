@@ -11,7 +11,7 @@
 		document.body.appendChild(button);
 
 		button.onclick = function () {
-
+			console.clear();
 			var allText = [];
 
 			allText.push(window.location.href);
@@ -114,7 +114,6 @@
 				});
 			}
 
-			console.clear();
 			console.log(allText.join('\n'));
 
 			copyToCipboard(allText.join('\n'));
