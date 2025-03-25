@@ -1,42 +1,33 @@
 (function () {
 	'use strict';
-	var holder = document.querySelector(".core-nav__container .core-nav__main-links.authenticated-only");
-	if (holder) {
-		var button = document.createElement("button");
-		button.classList.add('button-copy');
-		button.setAttribute('role', 'button');
-		button.innerText = 'Copiar';
 
-		document.body.appendChild(button);
+	const holder = document.querySelector(".core-nav__container .core-nav__main-links.authenticated-only");
+	if (!holder) return;
 
-		button.onclick = function () {
+	const button = document.createElement("button");
+	button.classList.add('button-copy');
+	button.setAttribute('role', 'button');
+	button.innerText = 'Copiar';
+	document.body.appendChild(button);
 
-			var allText = [];
+	button.onclick = function () {
+		console.clear();
+		const allText = [];
 
-			var title = document.querySelector('.cdp-header__wrapper .cdp-header__title');
-			allText.push("Cookidoo®: Colecção \"" + title.innerText + "\"");
-			allText.push('');
-			var number = document.querySelector('.cdp-header__count');
-			allText.push(number.innerText);
-			allText.push('');
-			var description = document.querySelector('.cdp-header__text');
-			allText.push(description.innerText);
-			allText.push('');
-			allText.push('Lista');
-			allText.push('');
-			var recipies = document.querySelectorAll('.core-tile--expanded .core-tile__description');
-			recipies.forEach(li => {
-				allText.push(li.innerText);
-			});
-			allText.push('');
-			allText.push("[cookidoo url='" + window.location.href + "']");
+		const title = document.querySelector('.cdp-header__wrapper .cdp-header__title');
+		const number = document.querySelector('.cdp-header__count');
+		const description = document.querySelector('.cdp-header__text');
+		const recipes = document.querySelectorAll('.core-tile--expanded .core-tile__description');
 
-			console.clear();
+		if (title) allText.push(`Cookidoo®: Colecção "${title.innerText}"`, '');
+		if (number) allText.push(number.innerText, '');
+		if (description) allText.push(description.innerText, '');
 
-			console.log(allText.join('\n'));
+		allText.push('Lista', '');
+		recipes.forEach(li => allText.push(li.innerText));
+		allText.push('', `[cookidoo url='${window.location.href}']`);
 
-			copyToCipboard(allText.join('\n'));
-			return false;
-		};
-	}
+		console.log(allText.join('\n'));
+		copyToClipboard(allText.join('\n'));
+	};
 })();
