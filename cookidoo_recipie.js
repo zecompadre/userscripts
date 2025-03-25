@@ -52,6 +52,8 @@
 						allText.push(formattedIngredient);
 					});
 				});
+
+				allText.push('');
 			}
 
 			var preparations = document.getElementById("preparation-steps-section");
@@ -78,6 +80,8 @@
 						allText.push(preparation);
 					});
 				});
+
+				allText.push('');
 			}
 
 			var tips = document.getElementById("tips-section");
@@ -94,6 +98,8 @@
 					let tip = li.innerText.trim();
 					allText.push(tip);
 				});
+
+				allText.push('');
 			}
 
 			var collections = document.getElementById("in-collections");
