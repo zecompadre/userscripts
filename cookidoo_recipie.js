@@ -25,12 +25,22 @@
 
 			var ingredients = document.getElementById("ingredients-section");
 			if (ingredients) {
-				groups = ingredients.querySelectorAll(".recipe-content__inner-section h5");
+
 				allText.push('Ingredientes');
+
+				var hasGroups = true;
+				groups = ingredients.querySelectorAll(".recipe-content__inner-section h5");
+				if (!groups) {
+					hasGroups = false;
+					groups = ingredients.querySelectorAll(".recipe-content__inner-section");
+				}
+
 				groups.forEach(section => {
 					allText.push('');
-
-					allText.push(section.innerText);
+					if (hasGroups) {
+						allText.push(section.innerText);
+						allText.push('');
+					}
 					var inner = section.nextElementSibling;
 
 					let items = inner.querySelectorAll("li");
