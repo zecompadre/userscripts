@@ -115,6 +115,9 @@
 					let country = section.querySelector(".recipe-rdp-collection-tile__info")?.innerText.trim() || "";
 					var countryName = "Portugal";
 					if (country) {
+
+						console.log("country", country)
+
 						var countryName = country.split("<br>")[1].trim();
 					}
 
