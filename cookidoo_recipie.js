@@ -10,7 +10,6 @@
 
 		document.body.appendChild(button);
 
-
 		button.onclick = function () {
 
 			var allText = [];
@@ -18,15 +17,15 @@
 			allText.push(window.location.href);
 			allText.push('');
 
-			var title = document.querySelector(".recipe-card__title");
+			var title = document.querySelector(".recipe-card__section.recipe-card__name");
 			allText.push(title.innerText);
 			allText.push('');
 
 			var groups = [];
 
-			var ingredients = document.getElementById("ingredients");
+			var ingredients = document.getElementById("ingredients-section");
 			if (ingredients) {
-				groups = ingredients.querySelectorAll("core-list-section h4");
+				groups = ingredients.querySelectorAll(".recipe-content__inner-section h5");
 				allText.push('Ingredientes');
 				groups.forEach(h => {
 					allText.push('');
