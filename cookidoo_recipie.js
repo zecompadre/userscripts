@@ -54,19 +54,28 @@
 				});
 			}
 
-			var preparation = document.getElementById("preparation-steps");
-			if (preparation) {
-				groups = preparation.querySelectorAll("core-list-section h4,core-list-section h3");
-				allText.push('');
-				allText.push('Preparação');
-				groups.forEach(h => {
+			var preparations = document.getElementById("preparation-steps-section");
+			if (preparations) {
+
+				allText.push('IngrPreparaçãoedientes');
+
+				groups = preparations.querySelectorAll(".recipe-content__inner-section");
+				console.log("groups", groups);
+				groups.forEach(section => {
 					allText.push('');
-					if (h.innerText !== 'Preparação') {
-						allText.push(h.innerText);
+					var group = section.querySelector("h5");
+					var wrapper = section.querySelector("ol");
+					if (group) {
+						allText.push(group.innerText);
+						allText.push('');
 					}
-					var inner = h.nextElementSibling;
-					inner.querySelectorAll('li').forEach(li => {
-						allText.push(li.innerText);
+
+					let items = wrapper.querySelectorAll("li");
+
+					items.forEach(li => {
+
+						let preparation = li.innerText.trim();
+						allText.push(preparation);
 					});
 				});
 			}
