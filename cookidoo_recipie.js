@@ -34,7 +34,7 @@
 					hasGroups = false;
 					groups = ingredients.querySelectorAll(".recipe-content__inner-section");
 				}
-
+				console.log(groups)
 				groups.forEach(section => {
 					allText.push('');
 					var wrapper = null;
