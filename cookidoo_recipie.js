@@ -1,138 +1,62 @@
 (function () {
 	'use strict';
-	var holder = document.querySelector(".core-nav__container .core-nav__main-links.authenticated-only");
-	if (holder) {
 
-		var button = document.createElement("button");
-		button.classList.add('button-copy');
-		button.setAttribute('role', 'button');
-		button.innerText = 'Copiar';
+	const holder = document.querySelector(".core-nav__container .core-nav__main-links.authenticated-only");
+	if (!holder) return;
 
-		document.body.appendChild(button);
+	const button = document.createElement("button");
+	button.classList.add('button-copy');
+	button.setAttribute('role', 'button');
+	button.innerText = 'Copiar';
+	document.body.appendChild(button);
 
-		button.onclick = function () {
-			console.clear();
-			var allText = [];
+	button.onclick = function () {
+		console.clear();
+		const allText = [window.location.href, ''];
 
-			allText.push(window.location.href);
-			allText.push('');
+		const title = document.querySelector(".recipe-card__section.recipe-card__name");
+		if (title) allText.push(title.innerText, '');
 
-			var title = document.querySelector(".recipe-card__section.recipe-card__name");
-			allText.push(title.innerText);
-			allText.push('');
+		const extractSection = (id, header) => {
+			const section = document.getElementById(id);
+			if (!section) return;
 
-			var groups = [];
+			allText.push(header, '');
+			section.querySelectorAll(".recipe-content__inner-section").forEach(group => {
+				const groupTitle = group.querySelector("h5");
+				const wrapper = group.querySelector("ul, ol");
+				if (groupTitle) allText.push(groupTitle.innerText, '');
 
-			var ingredients = document.getElementById("ingredients-section");
-			if (ingredients) {
-
-				allText.push('Ingredientes');
-
-				groups = ingredients.querySelectorAll(".recipe-content__inner-section");
-
-				groups.forEach(section => {
-					allText.push('');
-					var group = section.querySelector("h5");
-					var wrapper = section.querySelector("ul");
-					if (group) {
-						allText.push(group.innerText);
-						allText.push('');
+				wrapper?.querySelectorAll("li").forEach(li => {
+					let text = li.innerText.trim();
+					if (id === "ingredients-section") {
+						const name = li.querySelector(".recipe-ingredient__name")?.innerText.trim() || "";
+						const amount = li.querySelector(".recipe-ingredient__amount")?.innerText.trim() || "";
+						const description = li.querySelector(".recipe-ingredient__description")?.innerText.trim().replace(/[()]/g, "") || "";
+						text = `${amount} ${name}${description ? " (" + description + ")" : ""}`;
 					}
-
-					let items = wrapper.querySelectorAll("li");
-
-					items.forEach(li => {
-
-						let name = li.querySelector(".recipe-ingredient__name")?.innerText.trim() || "";
-						let amount = li.querySelector(".recipe-ingredient__amount")?.innerText.trim() || "";
-						let description = li.querySelector(".recipe-ingredient__description")?.innerText.trim() || "";
-						description = description.replace("(", "").replace(")", "");
-
-						let formattedIngredient = `${amount} ${name}${description ? " (" + description + ")" : ""}`;
-						allText.push(formattedIngredient);
-					});
+					allText.push(text);
 				});
-
 				allText.push('');
-			}
+			});
+		};
 
-			var preparations = document.getElementById("preparation-steps-section");
-			if (preparations) {
+		extractSection("ingredients-section", "Ingredientes");
+		extractSection("preparation-steps-section", "Preparação");
+		extractSection("tips-section", "Dicas");
 
-				allText.push('Preparação');
-
-				groups = preparations.querySelectorAll(".recipe-content__inner-section");
-
-				groups.forEach(section => {
-					allText.push('');
-					var group = section.querySelector("h5");
-					var wrapper = section.querySelector("ol");
-					if (group) {
-						allText.push(group.innerText);
-						allText.push('');
-					}
-
-					let items = wrapper.querySelectorAll("li");
-
-					items.forEach(li => {
-
-						let preparation = li.innerText.trim();
-						allText.push(preparation);
-					});
-				});
-
-				allText.push('');
-			}
-
-			var tips = document.getElementById("tips-section");
-			if (tips) {
-
-				allText.push('Dicas');
-				allText.push('');
-
-				var wrapper = tips.querySelector("ul");
-
-				let items = wrapper.querySelectorAll("li");
-
-				items.forEach(li => {
-
-					let tip = li.innerText.trim();
-					allText.push(tip);
-				});
-
-				allText.push('');
-			}
-
-			var collections = document.getElementById("also-featured-in-section");
-			if (collections) {
-
-				allText.push('Coleções');
-				allText.push('');
-				groups = collections.querySelectorAll(".rdp-collection-tile__content");
-
-				groups.forEach(section => {
-
-					let name = section.querySelector(".rdp-collection-tile__name")?.innerText.trim() || "";
-					let country = section.querySelector(".rdp-collection-tile__info")?.innerHTML.trim() || "";
-
-					console.log("country", country)
-
-					var countryName = "Portugal";
-					if (country) {
-
-						var countryName = country.split("<br>")[1].trim();
-					}
-
-					allText.push("Cookidoo® " + countryName + ": Colecção \"" + name + "\"");
-				});
-			}
-
-			console.log(allText.join('\n'));
-
-			copyToCipboard(allText.join('\n'));
-
-			return false;
+		const collections = document.getElementById("also-featured-in-section");
+		if (collections) {
+			allText.push('Coleções', '');
+			collections.querySelectorAll(".rdp-collection-tile__content").forEach(section => {
+				const name = section.querySelector(".rdp-collection-tile__name")?.innerText.trim() || "";
+				const countryHTML = section.querySelector(".rdp-collection-tile__info")?.innerHTML.trim() || "";
+				const countryName = countryHTML.split("<br>")[1]?.trim() || "Portugal";
+				allText.push(`Cookidoo® ${countryName}: Colecção "${name}"`);
+			});
 		}
-	};
 
+		console.log(allText.join('\n'));
+		copyToClipboard(allText.join('\n'));
+	};
 })();
