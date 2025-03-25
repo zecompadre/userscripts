@@ -13,18 +13,18 @@
 
 			var allText = [];
 
-			var title = document.querySelector('.collection-header__title');
+			var title = document.querySelector('.cdp-header__wrapper .cdp-header__title');
 			allText.push("Cookidoo®: Colecção \"" + title.innerText + "\"");
 			allText.push('');
-			var number = document.querySelector('.collection-header__subtitle');
+			var number = document.querySelector('.cdp-header__count');
 			allText.push(number.innerText);
 			allText.push('');
-			var description = number.nextElementSibling;
+			var description = document.querySelector('.cdp-header__text');
 			allText.push(description.innerText);
 			allText.push('');
 			allText.push('Lista');
 			allText.push('');
-			var recipies = document.querySelectorAll('core-tiles-list p.core-tile__description-text');
+			var recipies = document.querySelectorAll('.core-tile--expanded .core-tile__description');
 			recipies.forEach(li => {
 				allText.push(li.innerText);
 			});
