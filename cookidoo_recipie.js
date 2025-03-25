@@ -124,13 +124,13 @@
 					allText.push("Cookidoo® " + countryName + ": Colecção \"" + name.innerText + "\"");
 				});
 			}
+
+			console.log(allText.join('\n'));
+
+			copyToCipboard(allText.join('\n'));
+
+			return false;
 		}
-
-		console.log(allText.join('\n'));
-
-		copyToCipboard(allText.join('\n'));
-
-		return false;
 	};
 
 })();
