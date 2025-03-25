@@ -113,10 +113,11 @@
 
 					let name = section.querySelector(".rdp-collection-tile__name")?.innerText.trim() || "";
 					let country = section.querySelector(".recipe-rdp-collection-tile__info")?.innerText.trim() || "";
+
+					console.log("country", country)
+
 					var countryName = "Portugal";
 					if (country) {
-
-						console.log("country", country)
 
 						var countryName = country.split("<br>")[1].trim();
 					}
