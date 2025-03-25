@@ -29,7 +29,11 @@
 				allText.push('Ingredientes');
 				groups.forEach(section => {
 					allText.push('');
-					let items = section.querySelectorAll("li");
+
+					allText.push(section.innerText);
+					var inner = section.nextElementSibling;
+
+					let items = inner.querySelectorAll("li");
 
 					items.forEach(li => {
 
