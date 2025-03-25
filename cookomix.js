@@ -1,103 +1,60 @@
 (function () {
 	'use strict';
 
-	var button = document.createElement("button");
+	const button = document.createElement("button");
 	button.classList.add('button-copy');
 	button.setAttribute('role', 'button');
 	button.innerText = 'Copiar';
-
 	document.body.appendChild(button);
 
 	button.onclick = function () {
+		console.clear();
+		const allText = [window.location.href, ''];
 
-		var allText = [];
+		const title = document.querySelector(".content-title .entry-title");
+		if (title) allText.push(title.innerText);
 
-		allText.push(window.location.href);
-		allText.push('');
+		const author = document.querySelector(".content-title a");
+		if (author) allText.push(`Cookomix [${author.innerText}]`);
 
-		var title = document.querySelector(".content-title .entry-title");
+		const sidebar = document.querySelector("#sidebar");
+		const groups = sidebar?.querySelectorAll(".ribbon.ingredients") || [];
 
-		allText.push(title.innerText);
-
-		var author = document.querySelector(".content-title a");
-		allText.push('Cookomix [' + author.innerText + ']');
-
-		var sidebar = document.querySelector("#sidebar");
-
-		var groups = sidebar.querySelectorAll(".ribbon.ingredients");
-
-		if (groups.length > 0) {
-
-			groups.forEach(g => {
-				allText.push('');
-				allText.push(g.innerText);
-
-				var next = g.nextElementSibling;
-
-				var ingredients = next.querySelectorAll('DT,DD');
-
-				var tmpIngredient = "";
-				ingredients.forEach(i => {
-					if (i.tagName == "DT") {
-						tmpIngredient = i.innerText;
-					}
-					else if (i.tagName == "DD") {
-						tmpIngredient += " " + i.innerText;
-						allText.push(tmpIngredient);
-						tmpIngredient = '';
-					}
-				});
-
-			});
-		}
-		else {
-			allText.push('');
-
-			var next = sidebar.querySelector("dl.ingredients");
-			var ingredients = next.querySelectorAll('DT,DD');
-
-			var tmpIngredient = "";
-			ingredients.forEach(i => {
-				if (i.tagName == "DT") {
+		const extractIngredients = (container) => {
+			if (!container) return;
+			let tmpIngredient = "";
+			container.querySelectorAll("DT,DD").forEach(i => {
+				if (i.tagName === "DT") {
 					tmpIngredient = i.innerText;
-				}
-				else if (i.tagName == "DD") {
-					tmpIngredient += " " + i.innerText;
-					allText.push(tmpIngredient);
+				} else if (i.tagName === "DD") {
+					allText.push(`${tmpIngredient} ${i.innerText}`);
 					tmpIngredient = '';
 				}
 			});
+		};
+
+		if (groups.length > 0) {
+			groups.forEach(g => {
+				allText.push('', g.innerText);
+				extractIngredients(g.nextElementSibling);
+			});
+		} else {
+			allText.push('');
+			extractIngredients(sidebar?.querySelector("dl.ingredients"));
 		}
 
 		allText.push('');
 
-		var inside = document.querySelector(".instructions.dsb-select");
-		
-		//var next = inside.querySelector("ol");
-		var steps = inside.querySelectorAll('.step-title,li');
-		if (steps.length > 0) {
-
-			steps.forEach(s => {
-				if (s.classList.contains('step-title')) {
-					allText.push('');
-					allText.push(s.innerText);
-				}
-				else {
-					if (s.tagName == "LI") {
-						allText.push(s.innerText);
-					}
-				}
-			});
-
-		}
-
-		console.clear();
+		const inside = document.querySelector(".instructions.dsb-select");
+		inside?.querySelectorAll(".step-title,li").forEach(s => {
+			if (s.classList.contains("step-title")) {
+				allText.push('', s.innerText);
+			} else if (s.tagName === "LI") {
+				allText.push(s.innerText);
+			}
+		});
 
 		console.log(allText.join('\n'));
-
 		copyToCipboard(allText.join('\n'));
-
-		return false;
 	};
-
 })();
