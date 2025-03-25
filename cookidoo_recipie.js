@@ -113,15 +113,12 @@
 
 					let name = section.querySelector(".rdp-collection-tile__name")?.innerText.trim() || "";
 					let country = section.querySelector(".recipe-rdp-collection-tile__info")?.innerText.trim() || "";
-
+					var countryName = "Portugal";
 					if (country) {
-						var countryName = country.innerText.split("<br>")[1].trim();
-						country.remove();
+						var countryName = country.split("<br>")[1].trim();
 					}
-					else
-						countryName = "Portugal"
 
-					allText.push("Cookidoo® " + countryName + ": Colecção \"" + name.innerText + "\"");
+					allText.push("Cookidoo® " + countryName + ": Colecção \"" + name + "\"");
 				});
 			}
 
