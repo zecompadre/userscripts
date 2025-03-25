@@ -88,9 +88,10 @@
 			if (tips) {
 
 				allText.push('Dicas');
+				allText.push('');
 
 				var wrapper = tips.querySelector("ul");
-				allText.push('');
+
 				let items = wrapper.querySelectorAll("li");
 
 				items.forEach(li => {
@@ -106,7 +107,7 @@
 			if (collections) {
 
 				allText.push('Coleções');
-
+				allText.push('');
 				groups = collections.querySelectorAll(".rdp-collection-tile__content");
 
 				groups.forEach(section => {
