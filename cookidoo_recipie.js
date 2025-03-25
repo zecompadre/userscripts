@@ -102,33 +102,35 @@
 				allText.push('');
 			}
 
-			var collections = document.getElementById("in-collections");
+			var collections = document.getElementById("also-featured-in-section");
 			if (collections) {
-				groups = collections.querySelectorAll("h3");
-				allText.push('');
-				groups.forEach(h => {
-					allText.push(h.innerText);
-					var inner = h.nextElementSibling;
-					inner.querySelectorAll('li').forEach(li => {
-						//Cookidoo® Itália: Colecção "Dolci americani"
-						var name = li.querySelector("div");
-						var country = name.querySelector("span");
-						if (country) {
-							var countryName = country.innerText.split(",")[1].trim();
-							country.remove();
-						}
-						else
-							countryName = "Portugal"
-						allText.push("Cookidoo® " + countryName + ": Colecção \"" + name.innerText + "\"");
-					});
+
+				allText.push('Coleções');
+
+				groups = collections.querySelectorAll(".rdp-collection-tile__content");
+
+				groups.forEach(section => {
+
+					let name = section.querySelector(".rdp-collection-tile__name")?.innerText.trim() || "";
+					let country = section.querySelector(".recipe-rdp-collection-tile__info")?.innerText.trim() || "";
+
+					if (country) {
+						var countryName = country.innerText.split("<br>")[1].trim();
+						country.remove();
+					}
+					else
+						countryName = "Portugal"
+
+					allText.push("Cookidoo® " + countryName + ": Colecção \"" + name.innerText + "\"");
 				});
 			}
+		}
 
-			console.log(allText.join('\n'));
+		console.log(allText.join('\n'));
 
-			copyToCipboard(allText.join('\n'));
+		copyToCipboard(allText.join('\n'));
 
-			return false;
-		};
-	}
+		return false;
+	};
+
 })();
