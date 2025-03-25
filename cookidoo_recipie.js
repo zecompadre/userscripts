@@ -29,7 +29,7 @@
 				allText.push('Ingredientes');
 
 				groups = ingredients.querySelectorAll(".recipe-content__inner-section");
-				console.log("groups", groups);
+
 				groups.forEach(section => {
 					allText.push('');
 					var group = section.querySelector("h5");
@@ -57,10 +57,10 @@
 			var preparations = document.getElementById("preparation-steps-section");
 			if (preparations) {
 
-				allText.push('IngrPreparaçãoedientes');
+				allText.push('Preparação');
 
 				groups = preparations.querySelectorAll(".recipe-content__inner-section");
-				console.log("groups", groups);
+
 				groups.forEach(section => {
 					allText.push('');
 					var group = section.querySelector("h5");
@@ -80,16 +80,19 @@
 				});
 			}
 
-			var tips = document.getElementById("hints-and-tricks");
+			var tips = document.getElementById("tips-section");
 			if (tips) {
-				groups = tips.querySelectorAll("h3");
+
+				allText.push('Dicas');
+
+				var wrapper = tips.querySelector("ul");
 				allText.push('');
-				groups.forEach(h => {
-					allText.push(h.innerText);
-					var inner = h.nextElementSibling;
-					inner.querySelectorAll('li').forEach(li => {
-						allText.push(li.innerText);
-					});
+				let items = wrapper.querySelectorAll("li");
+
+				items.forEach(li => {
+
+					let tip = li.innerText.trim();
+					allText.push(tip);
 				});
 			}
 
