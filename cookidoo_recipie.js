@@ -40,6 +40,7 @@
 						let name = li.querySelector(".recipe-ingredient__name")?.innerText.trim() || "";
 						let amount = li.querySelector(".recipe-ingredient__amount")?.innerText.trim() || "";
 						let description = li.querySelector(".recipe-ingredient__description")?.innerText.trim() || "";
+						description = description.replace("(", "").replace(")", "");
 
 						let formattedIngredient = `${amount} ${name}${description ? " (" + description + ")" : ""}`;
 						allText.push(formattedIngredient);
