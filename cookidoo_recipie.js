@@ -28,23 +28,15 @@
 
 				allText.push('Ingredientes');
 
-				var hasGroups = true;
-				groups = ingredients.querySelectorAll(".recipe-content__inner-section h5");
-				if (groups.length > 0) {
-					hasGroups = false;
-					groups = ingredients.querySelectorAll(".recipe-content__inner-section");
-				}
+				groups = ingredients.querySelectorAll(".recipe-content__inner-section");
 				console.log("groups", groups);
 				groups.forEach(section => {
 					allText.push('');
-					var wrapper = null;
-					if (hasGroups) {
-						wrapper = section.nextElementSibling;
-						allText.push(section.innerText);
+					var group = section.querySelector("h5");
+					var wrapper = section.querySelector("ul");
+					if (group) {
+						allText.push(group.innerText);
 						allText.push('');
-					}
-					else {
-						wrapper = section.querySelector("ul");
 					}
 
 					let items = wrapper.querySelectorAll("li");
