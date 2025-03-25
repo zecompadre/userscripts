@@ -25,40 +25,23 @@
 
 			var ingredients = document.getElementById("ingredients-section");
 			if (ingredients) {
-				let groups = ingredients.querySelectorAll(".recipe-content__inner-section h5");
+				groups = ingredients.querySelectorAll(".recipe-content__inner-section h5");
 				allText.push('Ingredientes');
-				groups.forEach(h => {
-					let sectionTitle = h.innerText.trim();
-					let inner = h.nextElementSibling;
-					let items = inner.querySelectorAll('li');
+				groups.forEach(section => {
+					allText.push('');
+					let items = section.querySelectorAll("li");
 
-					items.forEach((li, index) => {
-						if (index === 0 && sectionTitle) {
-							allText.push(`${sectionTitle} ${li.innerText}`);
-						} else {
-							allText.push(li.innerText);
-						}
+					items.forEach(li => {
+
+						let name = li.querySelector(".recipe-ingredient__name")?.innerText.trim() || "";
+						let amount = li.querySelector(".recipe-ingredient__amount")?.innerText.trim() || "";
+						let description = li.querySelector(".recipe-ingredient__description")?.innerText.trim() || "";
+
+						let formattedIngredient = `${amount} ${name}${description ? " (" + description + ")" : ""}`;
+						allText.push(formattedIngredient);
 					});
 				});
-
-				console.log(allText.join('\n'));
 			}
-
-			// var ingredients = document.getElementById("ingredients-section");
-			// if (ingredients) {
-			// 	groups = ingredients.querySelectorAll(".recipe-content__inner-section h5");
-
-			// 	groups.forEach(h => {
-			// 		allText.push('');
-			// 		if (h.innerText !== '') {
-			// 			allText.push(h.innerText);
-			// 		}
-			// 		var inner = h.nextElementSibling;
-			// 		inner.querySelectorAll('li').forEach(li => {
-			// 			allText.push(li.innerText);
-			// 		});
-			// 	});
-			// }
 
 			var preparation = document.getElementById("preparation-steps");
 			if (preparation) {
