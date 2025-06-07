@@ -42,8 +42,8 @@
 						const description = item.querySelector(".recipe-ingredient__description")?.innerText.trim().replace(/[()]/g, "") || "";
 						text = `${amount} ${name}${description ? " (" + description + ")" : ""}`;
 					} else if (id === "also-featured-in-section") {
-						const name = section.querySelector(".rdp-collection-tile__name")?.innerText.trim() || "";
-						const countryHTML = section.querySelector(".rdp-collection-tile__info")?.innerHTML.trim() || "";
+						const name = item.querySelector(".rdp-collection-tile__name")?.innerText.trim() || "";
+						const countryHTML = item.querySelector(".rdp-collection-tile__info")?.innerHTML.trim() || "";
 						const countryName = countryHTML.split("<br>")[1]?.trim() || "Portugal";
 						text = `Cookidoo® ${countryName}: Colecção "${name}"`;
 					}
