@@ -41,8 +41,8 @@
 			});
 		};
 
-		extractSection("ingredients-section", ".recipe-content__unordered-list", "Ingredientes");
-		extractSection("preparation-steps-section", ".recipe-content__unordered-list", "Preparação");
+		extractSection("ingredients-section", ".recipe-content__inner-section", "Ingredientes");
+		extractSection("preparation-steps-section", ".recipe-content__inner-section", "Preparação");
 		extractSection("tips-section", ".recipe-content__unordered-list", "Dicas");
 
 		const collections = document.getElementById("also-featured-in-section");
