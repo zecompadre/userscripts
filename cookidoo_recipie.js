@@ -35,7 +35,7 @@
 				if (groupTitle) allText.push(groupTitle.innerText, '');
 
 				wrapper?.querySelectorAll(itens).forEach(item => {
-					let text = item.innerText.trim();
+					let text = '';
 					if (id === "ingredients-section") {
 						const name = item.querySelector(".recipe-ingredient__name")?.innerText.trim() || "";
 						const amount = item.querySelector(".recipe-ingredient__amount")?.innerText.trim() || "";
@@ -46,6 +46,9 @@
 						const countryHTML = section.querySelector(".rdp-collection-tile__info")?.innerHTML.trim() || "";
 						const countryName = countryHTML.split("<br>")[1]?.trim() || "Portugal";
 						text = `Cookidoo® ${countryName}: Colecção "${name}"`;
+					}
+					else {
+						text = item.innerText.trim();
 					}
 					allText.push(text);
 					if (id === "tips-section") {
