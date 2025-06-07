@@ -17,12 +17,12 @@
 		const title = document.querySelector(".recipe-card__section.recipe-card__name");
 		if (title) allText.push(title.innerText, '');
 
-		const extractSection = (id, header) => {
+		const extractSection = (id, inner, header) => {
 			const section = document.getElementById(id);
 			if (!section) return;
 
 			allText.push(header, '');
-			section.querySelectorAll(".recipe-content__inner-section").forEach(group => {
+			section.querySelectorAll(inner).forEach(group => {
 				const groupTitle = group.querySelector("h5");
 				const wrapper = group.querySelector("ul, ol");
 				if (groupTitle) allText.push(groupTitle.innerText, '');
@@ -41,9 +41,9 @@
 			});
 		};
 
-		extractSection("ingredients-section", "Ingredientes");
-		extractSection("preparation-steps-section", "Preparação");
-		extractSection("tips-section", "Dicas");
+		extractSection("ingredients-section", ".recipe-content__unordered-list", "Ingredientes");
+		extractSection("preparation-steps-section", ".recipe-content__unordered-list", "Preparação");
+		extractSection("tips-section", ".recipe-content__unordered-list", "Dicas");
 
 		const collections = document.getElementById("also-featured-in-section");
 		if (collections) {
