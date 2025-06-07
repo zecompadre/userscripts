@@ -27,7 +27,7 @@
 				const wrapper = group.querySelector("ul, ol");
 				if (groupTitle) allText.push(groupTitle.innerText, '');
 
-				console.log(header, wrapper)
+				console.log(header, group, wrapper)
 
 				wrapper?.querySelectorAll("li").forEach(li => {
 					let text = li.innerText.trim();
