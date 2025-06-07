@@ -27,6 +27,8 @@
 				const wrapper = group.querySelector("ul, ol");
 				if (groupTitle) allText.push(groupTitle.innerText, '');
 
+				console.log(header, wrapper)
+
 				wrapper?.querySelectorAll("li").forEach(li => {
 					let text = li.innerText.trim();
 					if (id === "ingredients-section") {
