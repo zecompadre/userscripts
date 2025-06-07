@@ -34,14 +34,12 @@
 
 				if (groupTitle) allText.push(groupTitle.innerText, '');
 
-				//console.log(header, group, wrapper, itens)
-
-				wrapper?.querySelectorAll(itens).forEach(li => {
-					let text = li.innerText.trim();
+				wrapper?.querySelectorAll(itens).forEach(item => {
+					let text = item.innerText.trim();
 					if (id === "ingredients-section") {
-						const name = li.querySelector(".recipe-ingredient__name")?.innerText.trim() || "";
-						const amount = li.querySelector(".recipe-ingredient__amount")?.innerText.trim() || "";
-						const description = li.querySelector(".recipe-ingredient__description")?.innerText.trim().replace(/[()]/g, "") || "";
+						const name = item.querySelector(".recipe-ingredient__name")?.innerText.trim() || "";
+						const amount = item.querySelector(".recipe-ingredient__amount")?.innerText.trim() || "";
+						const description = item.querySelector(".recipe-ingredient__description")?.innerText.trim().replace(/[()]/g, "") || "";
 						text = `${amount} ${name}${description ? " (" + description + ")" : ""}`;
 					} else if (id === "also-featured-in-section") {
 						const name = section.querySelector(".rdp-collection-tile__name")?.innerText.trim() || "";
@@ -61,7 +59,7 @@
 		extractSection("ingredients-section", ".recipe-content__inner-section", "li", "Ingredientes");
 		extractSection("preparation-steps-section", ".recipe-content__inner-section", "li", "Preparação");
 		extractSection("tips-section", ".recipe-content__unordered-list", "li", "Dicas");
-		extractSection("also-featured-in-section", "rdp-collections", "rdp-collection-tile", "Coleções");
+		extractSection("also-featured-in-section", "rdp-collections", ".rdp-collection-tile__content", "Coleções");
 
 		// const collections = document.getElementById("also-featured-in-section");
 		// if (collections) {
