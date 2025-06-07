@@ -25,6 +25,11 @@
 			section.querySelectorAll(inner).forEach(group => {
 				const groupTitle = group.querySelector("h5");
 				const wrapper = group.querySelector("ul, ol");
+
+				if (id === "tips-section") {
+					wrapper = group;
+				}
+
 				if (groupTitle) allText.push(groupTitle.innerText, '');
 
 				console.log(header, group, wrapper)
